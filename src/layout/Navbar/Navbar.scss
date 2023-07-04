@@ -1,0 +1,27 @@
+header{
+    
+    height: 50px;
+    width: 100%;
+    background: #c2c2c2;
+    nav{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        margin: 0 30px;
+
+
+        .user{
+            .userIcon{
+                width: 40px;
+                height: 40px;
+                border: 1px solid black;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}
