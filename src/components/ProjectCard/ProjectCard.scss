@@ -1,0 +1,44 @@
+article {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    height: 160px;
+    padding: 10px;
+    // margin: 10px;
+    border-radius: 10px;
+    background: #dfdfdf;
+    box-shadow: 1px 3px 2px 0px rgba(0, 0, 0, 0.2);
+    .header {
+        display: flex;
+        align-items: center;
+
+        height: 20%;
+        h4{margin: 0;}
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        height: 60%;
+        
+    }
+    .footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 20%;
+
+        button {
+            display: flex;
+            width: 70px;
+            height: 30px;
+            padding: 5px 16px  ;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+    }
+    p{
+        margin: 5px 0;
+    }
+}

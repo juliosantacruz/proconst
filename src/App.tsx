@@ -1,4 +1,6 @@
- 
+
+
+import Inicio from './pages/Inicio'
 import './App.css'
 
 
@@ -6,10 +8,8 @@ function App() {
    
 
   return (
-    
-     
     <>
-    asdfasdf
+    <Inicio/> 
     </>
   )
 }

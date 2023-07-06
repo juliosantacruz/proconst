@@ -1,0 +1,15 @@
+.workspace{
+    height: calc(100vh - 100px);
+    overflow: scroll;
+
+    .Title{
+
+    }
+    .Presupuestos{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px;
+    }
+}
