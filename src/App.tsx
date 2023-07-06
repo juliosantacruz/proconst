@@ -1,17 +1,16 @@
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from './routes/router'
 
+import "./App.css";
 
-import Inicio from './pages/Inicio'
-import './App.css'
 
 
 function App() {
-   
-
   return (
-    <>
-    <Inicio/> 
-    </>
-  )
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

@@ -3,13 +3,16 @@
     overflow: scroll;
 
     .Title{
-
+        
+        border-bottom: 1px solid black;
+        margin: 0 10px;
+        
     }
     .Presupuestos{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         gap: 10px;
-        margin: 20px;
+        margin: 10px 20px;
     }
 }
