@@ -1,6 +1,6 @@
 import React from 'react'
-import AsideMenu from './Menu/AsideMenu'
-import Navbar from './Navbar/Navbar'
+import AsideMenu from './AsideMenu/AsideMenu'
+import Navbar from './TopMenu/Navbar'
 import Footer from './Footer/Footer'
 import './MainLayout.scss'
 

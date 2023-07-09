@@ -15,7 +15,7 @@ export default function ProjectCard() {
       </div>
 
       <div className="footer">
-        <p className="amountCard">$3,430,200.00</p>
+        <p className="amountCard"><b>$3,430,200.00</b></p>
         <button>Abrir</button>
       </div>
     </article>

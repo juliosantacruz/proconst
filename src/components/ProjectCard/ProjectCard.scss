@@ -1,7 +1,7 @@
 article {
     display: flex;
     flex-direction: column;
-    width: 240px;
+    width: 200px;
     height: 160px;
     padding: 10px;
     // margin: 10px;
@@ -13,12 +13,19 @@ article {
         align-items: center;
 
         height: 20%;
-        h4{margin: 0;}
+        h4{margin: 0; font-size: 18px;}
     }
     .content {
         display: flex;
         flex-direction: column;
         height: 60%;
+        .descriptionCard{
+            font-size: 14px;
+        }
+        .dateCard{
+            font-size: 12px;
+            font-style: oblique;
+        }
         
     }
     .footer {
@@ -36,6 +43,8 @@ article {
             justify-content: center;
             align-items: center;
             flex-shrink: 0;
+            border: 1px solid black;
+            border-radius: 10px;
         }
     }
     p{

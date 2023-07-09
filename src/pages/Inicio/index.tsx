@@ -2,13 +2,15 @@ import React from "react";
 import ProjectCard from "../../components/ProjectCard";
 
 import './Inicio.scss'
+import PageTitle from "../../components/PageTitle";
 
 export default function Index() {
   return (
     <section className="workspace">
-      <div className="Title">
-        <h2>Mis Presupuestos</h2>
-      </div>
+      <PageTitle>
+        Mis Presupuestos
+      </PageTitle>
+      
       <div className="Presupuestos">
       <ProjectCard/>
         <ProjectCard/>

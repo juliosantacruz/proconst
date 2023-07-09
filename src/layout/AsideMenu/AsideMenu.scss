@@ -1,0 +1,33 @@
+aside{
+     
+    width: 20%;
+    height: calc(100vh - 100px);
+    background: #bdafaf;
+
+    nav{
+        ul{
+            padding: 0;
+            margin: 15px 20px;
+            
+            li{
+                list-style: none;
+                margin: 10px 0;
+                
+
+                a{
+                    width: 100%;
+                    text-decoration: none;
+                }
+            }
+            li:has(a.active){
+                
+                box-shadow: rgba(0, 0, 0, 0.336) 0px 8px 15px,rgba(0, 0, 0, 0.336) 0px 6px 6px;
+                border: 1px solid black;
+                a{
+                    color: red; 
+                }
+            }
+        }
+         
+    }
+}
