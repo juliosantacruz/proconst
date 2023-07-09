@@ -6,12 +6,15 @@ import './AddButton.scss'
 type AddButtonProps = {
     children:string,
     bgColor:string,
-    fontColor:string
+    fontColor:string,
+    onClick:()=>void,
 
 }
 
-export default function AddButton({children, bgColor, fontColor}:AddButtonProps) {
+export default function AddButton({children, bgColor, fontColor, onClick}:AddButtonProps) {
   return (
-    <button style={{background:bgColor, color:fontColor}}>{children}</button>
+    <button 
+    onClick={onClick}
+    style={{background:bgColor, color:fontColor}}>{children}</button>
   )
 }
