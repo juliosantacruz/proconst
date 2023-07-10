@@ -1,14 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { Insumo } from "../types/Insumo";
 
-export interface Insumo {
-  id: string;
-  clave: string;
-  descripcion: string;
-  unidad: string;
-  precio: number;
-  categoria: string;
-}
 
 interface InsumoState {
   insumos: Insumo[];

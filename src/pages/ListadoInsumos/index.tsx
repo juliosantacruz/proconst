@@ -1,13 +1,17 @@
 import React from "react";
+import { v4 } from "uuid";
+
 import PageTitle from "../../components/PageTitle";
 import "./ListadoInsumos.scss";
 import AddButton from "../../components/AddButton";
 import { useInsumoStore } from "../../store/projectStore";
+import InsumoForm from "../../components/InsumoForm";
 
 export default function ListadoInsumos() {
-  const { addInsumo } = useInsumoStore();
+  const { insumos, addInsumo } = useInsumoStore();
+  console.log(insumos)
   const test = {
-    id: "234234",
+    id: v4(),
     clave: "001",
     descripcion: "test",
     unidad: "kg",
@@ -29,7 +33,13 @@ export default function ListadoInsumos() {
       >
         Agregar Insumo
       </AddButton>
-      <div className="insumosGroup"></div>
+      <div className="insumosGroup">
+
+        {insumos.map((element)=>{
+          return(<li key={element.id}>{element.descripcion}</li>)
+        })}
+        <InsumoForm/>
+      </div>
     </section>
   );
 }

@@ -14,6 +14,7 @@ type AddButtonProps = {
 export default function AddButton({children, bgColor, fontColor, onClick}:AddButtonProps) {
   return (
     <button 
+    className='addButton'
     onClick={onClick}
     style={{background:bgColor, color:fontColor}}>{children}</button>
   )
