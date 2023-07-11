@@ -6,6 +6,7 @@ import "./ListadoInsumos.scss";
 import AddButton from "../../components/AddButton";
 import { useInsumoStore } from "../../store/projectStore";
 import InsumoForm from "../../components/InsumoForm";
+import TableInsumo from "../../components/TableInsumo1";
 
 export default function ListadoInsumos() {
   const { insumos, addInsumo } = useInsumoStore();
@@ -35,9 +36,11 @@ export default function ListadoInsumos() {
       </AddButton>
       <div className="insumosGroup">
 
-        {insumos.map((element)=>{
+        {/* {insumos.map((element)=>{
           return(<li key={element.id}>{element.descripcion}</li>)
-        })}
+        })} */}
+        <TableInsumo/>
+        
         <InsumoForm/>
       </div>
     </section>
