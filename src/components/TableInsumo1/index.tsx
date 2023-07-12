@@ -9,15 +9,37 @@ import { useInsumoStore } from "../../store/projectStore";
 
 type DataIndex = keyof Insumo;
 
-import searchIcon from '../../assets/icons/bx-search.svg'
-const SearchIcon = () =>{
-    return(<img src={searchIcon} style={{width:'12px'}}/>)
-}
+import searchIcon from "../../assets/icons/bx-search.svg";
+import editIcon from "../../assets/icons/bx-edit.svg";
+import deleteIcon from "../../assets/icons/bx-trash.svg";
 
-export default function TableInsumo() {
+type AnyIconType = {
+  iconSrc: string;
+  iconWidth?: number | undefined;
+  iconHeight?: number | undefined;
+  className?: string;
+};
+
+const AnyIcon = ({
+  iconSrc,
+  iconWidth,
+  iconHeight,
+  className,
+}: AnyIconType) => {
+  const styleIcon = {
+    width: `${iconWidth}px`,
+    height: `${iconHeight}px`,
+  };
+  // width:{iconWidth},
+  // height:{iconHeight}
+
+  return <img src={iconSrc} style={styleIcon} className={className} />;
+};
+
+export default function TableInsumo({insumosData}:any) {
   const { insumos, deleteInsumo } = useInsumoStore();
 
-  const data: Insumo[] = insumos;
+   const data:Insumo[] = insumosData;
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -65,7 +87,9 @@ export default function TableInsumo() {
             onClick={() =>
               handleSearch(selectedKeys as string[], confirm, dataIndex)
             }
-            icon={<SearchIcon/>}
+            icon={
+              <AnyIcon iconSrc={searchIcon} iconWidth={10} iconHeight={10} />
+            }
             size="small"
             style={{ width: 90 }}
           >
@@ -101,7 +125,9 @@ export default function TableInsumo() {
         </Space>
       </div>
     ),
-    filterIcon: (filtered: boolean) => <SearchIcon/>,
+    filterIcon: (filtered: boolean) => (
+      <AnyIcon iconSrc={searchIcon} iconWidth={10} iconHeight={10} />
+    ),
     onFilter: (value, record) =>
       record[dataIndex]
         .toString()
@@ -125,9 +151,12 @@ export default function TableInsumo() {
       ),
   });
 
-  const handleDelete = (id:string) => {
-    deleteInsumo(id)
+  const handleDelete = (id: string) => {
+    deleteInsumo(id);
     console.log(`se eliminar ${id}`);
+  };
+  const handleEdit = (id: string) => {
+    console.log(`se editar ${id}`);
   };
 
   const columns: ColumnsType<Insumo> = [
@@ -164,18 +193,38 @@ export default function TableInsumo() {
       title: "Categoria",
       dataIndex: "categoria",
       key: "categoria",
-      width: "10%",
-      ...getColumnSearchProps("categoria"),
     },
     {
       title: "",
       key: "action",
       width: "10%",
       render: (_, record) => {
-        return (<a onClick={() => handleDelete(record.id)}>Eliminar</a>)
+        return (
+          <>
+            <a onClick={() => handleEdit(record.id)}>
+              <AnyIcon
+                className={"icon"}
+                iconSrc={editIcon}
+                iconWidth={14}
+                iconHeight={14}
+              />
+            </a>{" "}
+            |
+            <a onClick={() => handleDelete(record.id)}>
+              <AnyIcon iconSrc={deleteIcon} iconWidth={14} iconHeight={14} />
+            </a>
+          </>
+        );
       },
     },
   ];
 
-  return <Table columns={columns} dataSource={data} rowKey={(record) => record.id} pagination={false}/>;
+  return (
+    <Table
+      columns={columns}
+      dataSource={data}
+      rowKey={(record) => record.id}
+      pagination={false}
+    />
+  );
 }
