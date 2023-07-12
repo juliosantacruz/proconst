@@ -1,0 +1,41 @@
+.asideModal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40vw;
+    max-width: 400px;
+    height: 100%;
+    background-color: #ffffff;
+    /* background-image: linear-gradient(135deg, #4b5ca7 0%rgb(118, 75, 162) 100%); */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+    transform: translate(110%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.719);
+    z-index: 2;
+
+    .header {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .closeIconBtn {
+            border: none;
+            background: none;
+            margin: 0 10px 0 0;
+            cursor: pointer;
+            :hover{
+                border: 1px solid black;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+.spread {
+    transform: translate(0);
+}

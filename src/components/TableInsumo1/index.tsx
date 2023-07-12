@@ -6,35 +6,16 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
 import { Insumo } from "../../types/Insumo";
 import { useInsumoStore } from "../../store/projectStore";
+import { setFormat } from "../../utils/CurrencyFormat";
 
 type DataIndex = keyof Insumo;
 
 import searchIcon from "../../assets/icons/bx-search.svg";
 import editIcon from "../../assets/icons/bx-edit.svg";
 import deleteIcon from "../../assets/icons/bx-trash.svg";
+import AnyIcon from "../AnyIcon";
 
-type AnyIconType = {
-  iconSrc: string;
-  iconWidth?: number | undefined;
-  iconHeight?: number | undefined;
-  className?: string;
-};
-
-const AnyIcon = ({
-  iconSrc,
-  iconWidth,
-  iconHeight,
-  className,
-}: AnyIconType) => {
-  const styleIcon = {
-    width: `${iconWidth}px`,
-    height: `${iconHeight}px`,
-  };
-  // width:{iconWidth},
-  // height:{iconHeight}
-
-  return <img src={iconSrc} style={styleIcon} className={className} />;
-};
+ 
 
 export default function TableInsumo({insumosData}:any) {
   const { insumos, deleteInsumo } = useInsumoStore();
@@ -159,6 +140,8 @@ export default function TableInsumo({insumosData}:any) {
     console.log(`se editar ${id}`);
   };
 
+  
+
   const columns: ColumnsType<Insumo> = [
     {
       title: "Clave",
@@ -171,7 +154,7 @@ export default function TableInsumo({insumosData}:any) {
       title: "Descripcion",
       dataIndex: "descripcion",
       key: "descripcion",
-      width: "50%",
+      width: "40%",
       ...getColumnSearchProps("descripcion"),
     },
     {
@@ -187,7 +170,10 @@ export default function TableInsumo({insumosData}:any) {
       title: "Precio",
       dataIndex: "precio",
       key: "precio",
-      width: "10%",
+      width: "15%",
+      render:(_, record)=>{
+        return(<p>{setFormat(record.precio)}</p>)
+      }
     },
     {
       title: "Categoria",
@@ -197,7 +183,7 @@ export default function TableInsumo({insumosData}:any) {
     {
       title: "",
       key: "action",
-      width: "10%",
+      width: "15%",
       render: (_, record) => {
         return (
           <>

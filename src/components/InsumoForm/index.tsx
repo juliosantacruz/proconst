@@ -13,7 +13,7 @@ const insumoDefaultValue = {
   categoria: "",
 };
 
-export default function InsumoForm() {
+export default function InsumoForm({setSpreadModal}:any) {
   const { addInsumo } = useInsumoStore();
   const [formData, setFormData] = useState<Insumo>(insumoDefaultValue);
 
@@ -34,6 +34,11 @@ export default function InsumoForm() {
   const onClear = () => {
     setFormData(insumoDefaultValue);
   };
+
+  const onCancel = () => {
+    onClear()
+    setSpreadModal(false)
+  }
 
   return (
     <form onSubmit={(event) => onSubmit(event)}>
@@ -93,7 +98,7 @@ export default function InsumoForm() {
         />
       </div>
       <div className="btn-group">
-        <button type="button" onClick={onClear}>
+        <button type="button" onClick={onCancel}>
           Cancelar
         </button>
         <button type="submit">Guardar</button>
