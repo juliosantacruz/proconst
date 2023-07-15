@@ -13,7 +13,7 @@ interface InsumoState {
 interface ConceptoState {
   conceptos: Concepto[];
   addConcepto: (concepto: Concepto) => void;
-  // deleteConcepto: (id: string) => void;
+  deleteConcepto: (id: string) => void;
   //   updateInsumo: (insumo: Insumo) => void;
 }
 
@@ -46,11 +46,11 @@ export const useConceptoStore = create<ConceptoState>()(
         set((state) => ({
           conceptos: [...state.conceptos, concepto],
         })),
-      // deleteConcepto: (id: string) => {
-      //   set((state) => ({
-      //     insumos: state.insumos.filter((insumo) => insumo.id !== id),
-      //   }));
-      // },
+      deleteConcepto: (id: string) => {
+        set((state) => ({
+          conceptos: state.conceptos.filter((concepto) => concepto.id !== id),
+        }));
+      },
     }),
     {
       name: "conceptos-storage",

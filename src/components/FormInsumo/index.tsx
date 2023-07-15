@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Insumo } from "../../types/Insumo";
 import { v4 } from "uuid";
-import "./InsumoForm.scss";
+import "./FormInsumo.scss";
 import { useInsumoStore } from "../../store/projectStore";
 
 const insumoDefaultValue = {

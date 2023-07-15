@@ -4,7 +4,7 @@ import { Tabs } from "antd";
 import PageTitle from "../../components/PageTitle";
 import AddButton from "../../components/AddButton";
 import { useInsumoStore } from "../../store/projectStore";
-import InsumoForm from "../../components/InsumoForm";
+import InsumoForm from "../../components/FormInsumo";
 import TableInsumo from "../../components/TableInsumo1";
 import { Insumo } from "../../types/Insumo";
 import AsideModal from "../../components/AsideModal";
@@ -89,7 +89,7 @@ export default function ListadoInsumos() {
 
         <Tabs onChange={onChange} type="card" items={InsumosTabs} />
       </div>
-      <AsideModal spreadModal={spreadModal} setSpreadModal={setSpreadModal} title='Agregar Insumo'>
+      <AsideModal widthModal={'40vw'} spreadModal={spreadModal} setSpreadModal={setSpreadModal} title='Agregar Insumo'>
         <InsumoForm setSpreadModal={setSpreadModal}/>
       </AsideModal>
     </section>

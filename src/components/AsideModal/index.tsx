@@ -5,7 +5,7 @@ import './AsideModal.scss'
 import closeIcon from '../../assets/icons/bx-x.svg'
 
 
-export default function AsideModal({children, spreadModal, setSpreadModal, title}:any) {
+export default function AsideModal({children, spreadModal, setSpreadModal, title, widthModal}:any) {
     const classModal = () => {
         if(spreadModal){
             return `asideModal spread`
@@ -15,7 +15,7 @@ export default function AsideModal({children, spreadModal, setSpreadModal, title
     }
 
   return (
-    <aside className={classModal()}>
+    <aside className={classModal()} style={{width:widthModal}}>
         <div className="header">
             <h3>{title}</h3>
             <button className='closeIconBtn' onClick={()=>setSpreadModal(false)}>
