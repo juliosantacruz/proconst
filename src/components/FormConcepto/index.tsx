@@ -1,10 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Concepto, PrecioUnitario } from "../../types/Concepto";
 import { v4 } from "uuid";
 import "./FormConcepto.scss";
 import { useInsumoStore, useConceptoStore } from "../../store/projectStore";
 import type { TableProps } from "antd";
-import { Button, Space, Table } from "antd";
+import { Table } from "antd";
 import type {
   ColumnsType,
   FilterValue,
@@ -24,6 +24,16 @@ export default function FormConcepto({ setSpreadModal }: any) {
   const { addConcepto } = useConceptoStore();
   const { insumos } = useInsumoStore();
   const [formData, setFormData] = useState<Concepto>(conceptoDefaultValue);
+   
+  useEffect(() => {
+    setFormData({
+      id: v4(),
+      clave: "",
+      descripcion: "",
+      unidad: "",
+      precioUnitario: [],
+    });
+  }, []);
 
   //TEST
   const data: Insumo[] = insumos;
@@ -120,6 +130,7 @@ export default function FormConcepto({ setSpreadModal }: any) {
     event.preventDefault();
     addConcepto(formData);
     onClear();
+    setSpreadModal(false);
   };
 
   const onChange = (event: any) => {
@@ -156,7 +167,7 @@ export default function FormConcepto({ setSpreadModal }: any) {
     const cantidad = Number(event.target.value);
     const newArr = (formData.precioUnitario as []).map((insumo, i) => {
       if (index === i) {
-        console.log(typeof(insumo))
+        console.log(typeof insumo);
         return { ...(insumo as PrecioUnitario), [event.target.name]: cantidad };
       } else {
         return insumo;
@@ -171,7 +182,7 @@ export default function FormConcepto({ setSpreadModal }: any) {
 
   (formData.precioUnitario as [])?.map((element) => {
     console.log(element);
-    const total = Number(element['cantidad']) * Number(element['precioInsumo']);
+    const total = Number(element["cantidad"]) * Number(element["precioInsumo"]);
     arrPrecioTotal.push(total);
   });
   const precioTotal = arrPrecioTotal.reduce((a, b) => a + b, 0);

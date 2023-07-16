@@ -11,9 +11,8 @@ import AsideModal from "../../components/AsideModal";
 import "./ListadoInsumos.scss";
 
 export default function ListadoInsumos() {
-  const [spreadModal, setSpreadModal]= useState(false)
+  const [spreadModal, setSpreadModal] = useState(false);
   const { insumos } = useInsumoStore();
-
 
   const insumoFilter = (arr: Insumo[], categoria: string) => {
     return arr.filter((element) => element.categoria === categoria);
@@ -28,7 +27,7 @@ export default function ListadoInsumos() {
 
   const handleAddInsumo = () => {
     console.log("Inicio");
-    setSpreadModal(true)
+    setSpreadModal(true);
     console.log("fin");
   };
 
@@ -89,9 +88,16 @@ export default function ListadoInsumos() {
 
         <Tabs onChange={onChange} type="card" items={InsumosTabs} />
       </div>
-      <AsideModal widthModal={'40vw'} spreadModal={spreadModal} setSpreadModal={setSpreadModal} title='Agregar Insumo'>
-        <InsumoForm setSpreadModal={setSpreadModal}/>
-      </AsideModal>
+      {spreadModal && (
+        <AsideModal
+          widthModal={"40vw"}
+          spreadModal={spreadModal}
+          setSpreadModal={setSpreadModal}
+          title="Agregar Insumo"
+        >
+          <InsumoForm setSpreadModal={setSpreadModal} />
+        </AsideModal>
+      )}
     </section>
   );
 }

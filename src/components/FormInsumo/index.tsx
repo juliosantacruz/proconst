@@ -1,26 +1,38 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Insumo } from "../../types/Insumo";
 import { v4 } from "uuid";
 import "./FormInsumo.scss";
 import { useInsumoStore } from "../../store/projectStore";
 
 const insumoDefaultValue = {
-  id: v4(),
+  id: "",
   clave: "",
   descripcion: "",
   unidad: "",
-  precio: 0.00,
+  precio: 0.0,
   categoria: "",
 };
 
-export default function InsumoForm({setSpreadModal}:any) {
+export default function InsumoForm({ setSpreadModal }: any) {
   const { addInsumo } = useInsumoStore();
   const [formData, setFormData] = useState<Insumo>(insumoDefaultValue);
+  
+
+  useEffect(() => {
+    setFormData({
+      id: v4(),
+      clave: "",
+      descripcion: "",
+      unidad: "",
+      precio: 0.0,
+      categoria: "",
+    });
+  }, []);
 
   const onSubmit = (event: any) => {
     event.preventDefault();
-    addInsumo(formData); 
-    onClear()
+    addInsumo(formData);
+    onClear();
   };
 
   const onChange = (event: any) => {
@@ -33,12 +45,13 @@ export default function InsumoForm({setSpreadModal}:any) {
 
   const onClear = () => {
     setFormData(insumoDefaultValue);
+    setSpreadModal(false);
   };
 
   const onCancel = () => {
-    onClear()
-    setSpreadModal(false)
-  }
+    onClear();
+    setSpreadModal(false);
+  };
 
   return (
     <form onSubmit={(event) => onSubmit(event)}>
