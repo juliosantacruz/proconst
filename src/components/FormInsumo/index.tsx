@@ -3,6 +3,8 @@ import { Insumo } from "../../types/Insumo";
 import { v4 } from "uuid";
 import "./FormInsumo.scss";
 import { useInsumoStore } from "../../store/projectStore";
+import { Unidades, CategoriasInsumos } from "../../utils/SelectInputOptions";
+import { setFormat } from "../../utils/CurrencyFormat";
 
 const insumoDefaultValue = {
   id: "",
@@ -12,12 +14,18 @@ const insumoDefaultValue = {
   precio: 0.0,
   categoria: "",
 };
-
-export default function InsumoForm({ setSpreadModal }: any) {
-  const { addInsumo } = useInsumoStore();
-  const [formData, setFormData] = useState<Insumo>(insumoDefaultValue);
+const ErrorMsg = () => {
   
 
+  return <p>Error!.. verificar datos, no dejar espacios vacios o numeros negativos</p>;
+};
+
+export default function InsumoForm({ setSpreadModal }: any) {
+  const [formError, setFormError] = useState(false);
+  const { addInsumo } = useInsumoStore();
+  const [formData, setFormData] = useState<Insumo>(insumoDefaultValue);
+
+   
   useEffect(() => {
     setFormData({
       id: v4(),
@@ -31,12 +39,43 @@ export default function InsumoForm({ setSpreadModal }: any) {
 
   const onSubmit = (event: any) => {
     event.preventDefault();
+
+    // Form Validations (No empty arrays)
+    if (formData.clave === "" ||formData.descripcion === "" || formData.unidad === "" || formData.categoria === "") {
+      console.log(formData);
+      setFormError(true)
+      return console.log("error de datos");
+
+    } 
+    // Form Validations (No negative numbers)
+
+    if (formData.precio<0){
+      console.log(formData.precio);
+      setFormError(true)
+      return console.log("No puedes tener numero negativo");
+    }
+
+      
     addInsumo(formData);
+    setFormError(false)
     onClear();
+    
+
+    
   };
 
   const onChange = (event: any) => {
     const dato = event?.target.value;
+     
+
+    
+    // Precio Validations
+    if (event.target.name === "precio") {
+      setFormData({
+        ...formData,
+        [event.target.name]: Number(dato),
+      });
+    }
     setFormData({
       ...formData,
       [event.target.name]: dato,
@@ -77,7 +116,7 @@ export default function InsumoForm({ setSpreadModal }: any) {
           value={formData.descripcion}
         />
       </div>
-      <div className="input">
+      {/* <div className="input">
         <label htmlFor="unidad">Unidad</label>
         <input
           type="text"
@@ -87,11 +126,29 @@ export default function InsumoForm({ setSpreadModal }: any) {
           onChange={(event) => onChange(event)}
           value={formData.unidad}
         />
+      </div> */}
+      <div className="input">
+        <label htmlFor="unidad">Unidad</label>
+        <select
+          name="unidad"
+          id="unidad"
+          onChange={(event) => onChange(event)}
+          value={formData.unidad}
+        >
+          <option value="m2"></option>
+          {Unidades.map((unidad) => {
+            return (
+              <option value={unidad.simbol} key={unidad.name}>
+                {unidad.simbol}
+              </option>
+            );
+          })}
+        </select>
       </div>
       <div className="input">
         <label htmlFor="precio">Precio</label>
         <input
-          type="text"
+          type="number"
           name="precio"
           id="precio"
           placeholder="$0.00"
@@ -99,7 +156,7 @@ export default function InsumoForm({ setSpreadModal }: any) {
           value={formData.precio}
         />
       </div>
-      <div className="input">
+      {/* <div className="input">
         <label htmlFor="categoria">Categoria</label>
         <input
           type="text"
@@ -109,7 +166,29 @@ export default function InsumoForm({ setSpreadModal }: any) {
           onChange={(event) => onChange(event)}
           value={formData.categoria}
         />
+      </div> */}
+      <div className="input">
+        <label htmlFor="categoria">Categoria</label>
+        <select
+          name="categoria"
+          id="categoria"
+          onChange={(event) => onChange(event)}
+          value={formData.categoria}
+        >
+          <option value="m2"></option>
+          {CategoriasInsumos.map((Categoria) => {
+            return (
+              <option value={Categoria.name} key={Categoria.simbol}>
+                {Categoria.name}
+              </option>
+            );
+          })}
+        </select>
       </div>
+      {formError&&
+      
+      <ErrorMsg />
+      }
       <div className="btn-group">
         <button type="button" onClick={onCancel}>
           Cancelar
