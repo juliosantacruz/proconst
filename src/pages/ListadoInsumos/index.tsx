@@ -4,14 +4,15 @@ import { Tabs } from "antd";
 import PageTitle from "../../components/PageTitle";
 import AddButton from "../../components/AddButton";
 import { useInsumoStore } from "../../store/projectStore";
-import InsumoForm from "../../components/FormInsumo";
+import { useUxStore } from "../../store/uxStore";
+import FormInsumo from "../../components/FormInsumo";
 import TableInsumo from "../../components/TableInsumo1";
 import { Insumo } from "../../types/Insumo";
 import AsideModal from "../../components/AsideModal";
 import "./ListadoInsumos.scss";
 
 export default function ListadoInsumos() {
-  const [spreadModal, setSpreadModal] = useState(false);
+  const {openModal, setOpenModal} = useUxStore()
   const { insumos } = useInsumoStore();
 
   const insumoFilter = (arr: Insumo[], categoria: string) => {
@@ -19,7 +20,7 @@ export default function ListadoInsumos() {
   };
   const TodosInsumos = insumos;
 
-  const MaterialInsumos = insumoFilter(insumos, "material");
+  const MaterialInsumos = insumoFilter(insumos, "Materiales");
   const ManoObraInsumos = insumoFilter(insumos, "Mano de Obra");
   const HerramientaInsumos = insumoFilter(insumos, "Herramienta");
   const EquipoInsumos = insumoFilter(insumos, "Equipo");
@@ -27,7 +28,7 @@ export default function ListadoInsumos() {
 
   const handleAddInsumo = () => {
     console.log("Inicio");
-    setSpreadModal(true);
+    setOpenModal(true);
     console.log("fin");
   };
 
@@ -39,7 +40,7 @@ export default function ListadoInsumos() {
     {
       label: `Todos`,
       key: "1",
-      children: <TableInsumo insumosData={TodosInsumos} />,
+      children: <TableInsumo insumosData={TodosInsumos}  />,
     },
     {
       label: `Materiales`,
@@ -54,7 +55,7 @@ export default function ListadoInsumos() {
     {
       label: `Herramienta`,
       key: "4",
-      children: <TableInsumo insumosData={HerramientaInsumos} />,
+      children: <TableInsumo insumosData={HerramientaInsumos}  />,
     },
     {
       label: `Equipos`,
@@ -88,14 +89,12 @@ export default function ListadoInsumos() {
 
         <Tabs onChange={onChange} type="card" items={InsumosTabs} />
       </div>
-      {spreadModal && (
+      {openModal && (
         <AsideModal
           widthModal={"40vw"}
-          spreadModal={spreadModal}
-          setSpreadModal={setSpreadModal}
           title="Agregar Insumo"
         >
-          <InsumoForm setSpreadModal={setSpreadModal} />
+          <FormInsumo />
         </AsideModal>
       )}
     </section>

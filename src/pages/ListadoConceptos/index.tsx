@@ -12,11 +12,12 @@ import FormConcepto from "../../components/FormConcepto";
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import AnyIcon from "../../components/AnyIcon";
+import { setFormat } from "../../utils/CurrencyFormat";
 
 export default function ListadoConceptos() {
   const [spreadModal, setSpreadModal] = useState(false);
 
-  const { conceptos, addConcepto, deleteConcepto } = useConceptoStore();
+  const { conceptos, deleteConcepto } = useConceptoStore();
 
   const columns: ColumnsType<Concepto> = [
     { title: "Clave", dataIndex: "clave", key: "clave" },
@@ -31,7 +32,7 @@ export default function ListadoConceptos() {
           arrPrecio.push(precio);
         });
         const precioTotal = arrPrecio.reduce((a, b) => a + b, 0);
-        return <p>{precioTotal}</p>;
+        return <p>{setFormat(precioTotal)}</p>;
       },
     },
     {

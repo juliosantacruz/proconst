@@ -14,11 +14,13 @@ import searchIcon from "../../assets/icons/bx-search.svg";
 import editIcon from "../../assets/icons/bx-edit.svg";
 import deleteIcon from "../../assets/icons/bx-trash.svg";
 import AnyIcon from "../AnyIcon";
+import { useUxStore } from "../../store/uxStore";
 
  
 
-export default function TableInsumo({insumosData}:any) {
-  const { insumos, deleteInsumo } = useInsumoStore();
+export default function TableInsumo({insumosData }:any) {
+  const { setInsumoToUpdate, deleteInsumo } = useInsumoStore();
+  const {openModal, setOpenModal} = useUxStore()
 
    const data:Insumo[] = insumosData;
 
@@ -136,8 +138,11 @@ export default function TableInsumo({insumosData}:any) {
     deleteInsumo(id);
     console.log(`se eliminar ${id}`);
   };
-  const handleEdit = (id: string) => {
-    console.log(`se editar ${id}`);
+  const handleEdit = (element: Insumo) => {
+    console.log(`se editar ${element.id}`);
+    setInsumoToUpdate(element)
+    setOpenModal(true)
+    
   };
 
   
@@ -187,7 +192,7 @@ export default function TableInsumo({insumosData}:any) {
       render: (_, record) => {
         return (
           <>
-            <a onClick={() => handleEdit(record.id)}>
+            <a onClick={() => handleEdit(record)}>
               <AnyIcon
                 className={"icon"}
                 iconSrc={editIcon}

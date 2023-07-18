@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Concepto, PrecioUnitario } from "../../types/Concepto";
 import { v4 } from "uuid";
 import "./FormConcepto.scss";
@@ -11,6 +11,9 @@ import type {
   SorterResult,
 } from "antd/es/table/interface";
 import { Insumo } from "../../types/Insumo";
+import { setFormat } from "../../utils/CurrencyFormat";
+import { Unidades } from "../../utils/SelectInputOptions";
+
 
 const conceptoDefaultValue = {
   id: v4(),
@@ -20,11 +23,20 @@ const conceptoDefaultValue = {
   precioUnitario: [],
 };
 
+const ErrorMsg = () => {
+  return (
+    <p>
+      Error!.. verificar datos, no dejar espacios vacios o numeros negativos
+    </p>
+  );
+};
+
 export default function FormConcepto({ setSpreadModal }: any) {
+  const [formError, setFormError] = useState(false);
   const { addConcepto } = useConceptoStore();
   const { insumos } = useInsumoStore();
   const [formData, setFormData] = useState<Concepto>(conceptoDefaultValue);
-   
+
   useEffect(() => {
     setFormData({
       id: v4(),
@@ -106,6 +118,7 @@ export default function FormConcepto({ setSpreadModal }: any) {
       title: "Precio",
       dataIndex: "precio",
       key: "precio",
+      render: (_, record) => <p>{setFormat(record.precio)}</p>,
     },
     {
       title: "",
@@ -128,8 +141,21 @@ export default function FormConcepto({ setSpreadModal }: any) {
 
   const onSubmit = (event: any) => {
     event.preventDefault();
+
+    if (
+      formData.clave === "" ||
+      formData.descripcion === "" ||
+      formData.unidad === "" ||
+      formData.precioUnitario?.length === 0
+    ) {
+      console.log(formData);
+      setFormError(true);
+      return console.log("error de datos");
+    }
+
     addConcepto(formData);
     onClear();
+    setFormError(false);
     setSpreadModal(false);
   };
 
@@ -203,8 +229,8 @@ export default function FormConcepto({ setSpreadModal }: any) {
         </div>
         <div className="input">
           <label htmlFor="descripcion">Descripcion</label>
-          <input
-            type="text"
+          <textarea
+            // type="text"
             name="descripcion"
             id="descripcion"
             placeholder="Suministro y colocacion de ...."
@@ -212,7 +238,7 @@ export default function FormConcepto({ setSpreadModal }: any) {
             value={formData.descripcion}
           />
         </div>
-        <div className="input">
+        {/* <div className="input">
           <label htmlFor="unidad">Unidad</label>
           <input
             type="text"
@@ -222,10 +248,28 @@ export default function FormConcepto({ setSpreadModal }: any) {
             onChange={(event) => onChange(event)}
             value={formData.unidad}
           />
-        </div>
+        </div> */}
+        <div className="input">
+        <label htmlFor="unidad">Unidad</label>
+        <select
+          name="unidad"
+          id="unidad"
+          onChange={(event) => onChange(event)}
+          value={formData.unidad}
+        >
+          <option value="m2"></option>
+          {Unidades.map((unidad) => {
+            return (
+              <option value={unidad.simbol} key={unidad.name}>
+                {unidad.simbol}
+              </option>
+            );
+          })}
+        </select>
+      </div>
         <div className="input">
           <label htmlFor="unidad">Precio</label>
-          <p>{precioTotal}</p>
+          <p>{setFormat(precioTotal)}</p>
         </div>
       </div>
       <div className="inputInsumos">
@@ -242,17 +286,19 @@ export default function FormConcepto({ setSpreadModal }: any) {
               <p>{insumoData[0].clave}</p>
               <p>{insumoData[0].descripcion}</p>
               <p>{insumoData[0].unidad}</p>
-              <p>{insumo.precioInsumo}</p>
-              <p>Cantidad: {insumo.cantidad}</p>
+              <p>{setFormat(insumo.precioInsumo)}</p>
+              <p>
+                Cantidad:
+                <input
+                  type="number"
+                  name="cantidad"
+                  id="cantidad"
+                  onChange={(event) => onCantidad(event, index)}
+                  value={insumo.cantidad}
+                />
+              </p>
 
-              <input
-                type="text"
-                name="cantidad"
-                id="cantidad"
-                onChange={(event) => onCantidad(event, index)}
-                value={insumo.cantidad}
-              />
-              <p>Total: {insumoData[0].precio * insumo.cantidad}</p>
+              <p>Total: {setFormat(insumoData[0].precio * insumo.cantidad)}</p>
             </div>
           );
         })}
@@ -267,7 +313,7 @@ export default function FormConcepto({ setSpreadModal }: any) {
           pagination={false}
         />
       </div>
-
+      {formError && <ErrorMsg />}
       <div className="btn-group">
         <button type="button" onClick={onCancel}>
           Cancelar

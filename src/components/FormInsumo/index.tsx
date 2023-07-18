@@ -4,7 +4,8 @@ import { v4 } from "uuid";
 import "./FormInsumo.scss";
 import { useInsumoStore } from "../../store/projectStore";
 import { Unidades, CategoriasInsumos } from "../../utils/SelectInputOptions";
-import { setFormat } from "../../utils/CurrencyFormat";
+import { useUxStore } from "../../store/uxStore";
+
 
 const insumoDefaultValue = {
   id: "",
@@ -14,20 +15,27 @@ const insumoDefaultValue = {
   precio: 0.0,
   categoria: "",
 };
-const ErrorMsg = () => {
-  
 
+const ErrorMsg = () => {
   return <p>Error!.. verificar datos, no dejar espacios vacios o numeros negativos</p>;
 };
 
-export default function InsumoForm({ setSpreadModal }: any) {
+export default function FormInsumo() {
+  const [editInsumo, setEditInsumo] = useState(false)
   const [formError, setFormError] = useState(false);
-  const { addInsumo } = useInsumoStore();
+  const { setOpenModal} = useUxStore()
+
+  const { addInsumo, insumoToUpdate, setInsumoToUpdate, updateInsumo } = useInsumoStore();
   const [formData, setFormData] = useState<Insumo>(insumoDefaultValue);
 
-   
+  console.log('Insumo a Editar',insumoToUpdate)
+  
   useEffect(() => {
-    setFormData({
+    if (insumoToUpdate !== undefined){
+      setFormData(insumoToUpdate)
+      setEditInsumo(true)
+    }else{
+      setFormData({
       id: v4(),
       clave: "",
       descripcion: "",
@@ -35,6 +43,8 @@ export default function InsumoForm({ setSpreadModal }: any) {
       precio: 0.0,
       categoria: "",
     });
+    }
+    
   }, []);
 
   const onSubmit = (event: any) => {
@@ -55,13 +65,16 @@ export default function InsumoForm({ setSpreadModal }: any) {
       return console.log("No puedes tener numero negativo");
     }
 
-      
-    addInsumo(formData);
-    setFormError(false)
-    onClear();
-    
+    if(editInsumo){
+      updateInsumo(formData)
+    }else{
+      addInsumo(formData);
+    }
 
     
+    setFormError(false)
+    setEditInsumo(false)
+    onClear();    
   };
 
   const onChange = (event: any) => {
@@ -84,12 +97,16 @@ export default function InsumoForm({ setSpreadModal }: any) {
 
   const onClear = () => {
     setFormData(insumoDefaultValue);
-    setSpreadModal(false);
+    console.log(1, insumoToUpdate)
+
+    setInsumoToUpdate(undefined)
+    console.log(2, insumoToUpdate)
+    setOpenModal(false);
   };
 
   const onCancel = () => {
     onClear();
-    setSpreadModal(false);
+    setOpenModal(false);
   };
 
   return (
@@ -107,8 +124,8 @@ export default function InsumoForm({ setSpreadModal }: any) {
       </div>
       <div className="input">
         <label htmlFor="descripcion">Descripcion</label>
-        <input
-          type="text"
+        <textarea
+          // type="text"
           name="descripcion"
           id="descripcion"
           placeholder="Acero de refuerzo #6"

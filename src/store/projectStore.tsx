@@ -2,12 +2,15 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { Insumo } from "../types/Insumo";
 import { Concepto } from "../types/Concepto";
+import { Presupuesto } from "../types/Presupuesto";
 
 interface InsumoState {
   insumos: Insumo[];
   addInsumo: (insumo: Insumo) => void;
   deleteInsumo: (id: string) => void;
-  //   updateInsumo: (insumo: Insumo) => void;
+  insumoToUpdate: Insumo | undefined;
+  setInsumoToUpdate: (insumo: Insumo | undefined) => void;
+  updateInsumo: (insumo: Insumo) => void;
 }
 
 interface ConceptoState {
@@ -15,6 +18,9 @@ interface ConceptoState {
   addConcepto: (concepto: Concepto) => void;
   deleteConcepto: (id: string) => void;
   //   updateInsumo: (insumo: Insumo) => void;
+}
+interface PresupuestoState {
+  presupuestos: Presupuesto[];
 }
 
 export const useInsumoStore = create<InsumoState>()(
@@ -30,6 +36,16 @@ export const useInsumoStore = create<InsumoState>()(
           insumos: state.insumos.filter((insumo) => insumo.id !== id),
         }));
       },
+      insumoToUpdate: undefined,
+      setInsumoToUpdate: (insumo: Insumo | undefined) =>
+        set(() => ({
+          insumoToUpdate: insumo,
+        })),
+      updateInsumo:(updateInsumo:Insumo)=>
+      set((state)=>({
+        insumos: state.insumos.map((insumo) => insumo.id === updateInsumo.id?  updateInsumo: insumo),
+       
+      }))
     }),
     {
       name: "insumos-storage",
@@ -59,3 +75,4 @@ export const useConceptoStore = create<ConceptoState>()(
   )
 );
 
+// export const usePresupuestoStore =
