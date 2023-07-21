@@ -11,9 +11,12 @@ import type {
   SorterResult,
 } from "antd/es/table/interface";
 import { Insumo } from "../../types/Insumo";
+
 import { setFormat } from "../../utils/CurrencyFormat";
 import { Unidades } from "../../utils/SelectInputOptions";
-
+import TableTabsAddConcepto from "../TableTabsAddConcepto";
+import TableInsumoConcepto from "../TableInsumoAddConcepto";
+import { useUxStore } from "../../store/uxStore";
 
 const conceptoDefaultValue = {
   id: v4(),
@@ -31,8 +34,11 @@ const ErrorMsg = () => {
   );
 };
 
-export default function FormConcepto({ setSpreadModal }: any) {
+export default function FormConcepto() {
   const [formError, setFormError] = useState(false);
+  const [showConceptoTable, setShowConceptoTable] =useState(false)
+  const { setOpenModal } = useUxStore();
+
   const { addConcepto } = useConceptoStore();
   const { insumos } = useInsumoStore();
   const [formData, setFormData] = useState<Concepto>(conceptoDefaultValue);
@@ -156,7 +162,7 @@ export default function FormConcepto({ setSpreadModal }: any) {
     addConcepto(formData);
     onClear();
     setFormError(false);
-    setSpreadModal(false);
+    setOpenModal(false);
   };
 
   const onChange = (event: any) => {
@@ -173,7 +179,7 @@ export default function FormConcepto({ setSpreadModal }: any) {
 
   const onCancel = () => {
     onClear();
-    setSpreadModal(false);
+    setOpenModal(false);
   };
 
   const addInputInsumo = (id: string, precioInsumo: number) => {
@@ -183,10 +189,16 @@ export default function FormConcepto({ setSpreadModal }: any) {
       cantidad: 0,
       precioInsumo: precioInsumo,
     };
-    setFormData({
+    if(formData.precioUnitario?.find(pu=> pu.insumoId === newInsumo.insumoId)){
+      console.log('insumo ya existe')
+      return
+    }else{
+      setFormData({
       ...formData,
       precioUnitario: [...(oldInsumo as []), newInsumo],
     });
+    }
+    
   };
 
   const onCantidad = (event: any, index: number) => {
@@ -214,7 +226,7 @@ export default function FormConcepto({ setSpreadModal }: any) {
   const precioTotal = arrPrecioTotal.reduce((a, b) => a + b, 0);
 
   return (
-    <form onSubmit={(event) => onSubmit(event)}>
+    <form className="AddConceptoForm" onSubmit={(event) => onSubmit(event)}>
       <div className="inputRow">
         <div className="input">
           <label htmlFor="clave">Clave</label>
@@ -250,75 +262,91 @@ export default function FormConcepto({ setSpreadModal }: any) {
           />
         </div> */}
         <div className="input">
-        <label htmlFor="unidad">Unidad</label>
-        <select
-          name="unidad"
-          id="unidad"
-          onChange={(event) => onChange(event)}
-          value={formData.unidad}
-        >
-          <option value="m2"></option>
-          {Unidades.map((unidad) => {
-            return (
-              <option value={unidad.simbol} key={unidad.name}>
-                {unidad.simbol}
-              </option>
-            );
-          })}
-        </select>
-      </div>
+          <label htmlFor="unidad">Unidad</label>
+          <select
+            name="unidad"
+            id="unidad"
+            onChange={(event) => onChange(event)}
+            value={formData.unidad}
+          >
+            <option value="m2"></option>
+            {Unidades.map((unidad) => {
+              return (
+                <option value={unidad.simbol} key={unidad.name}>
+                  {unidad.simbol}
+                </option>
+              );
+            })}
+          </select>
+        </div>
         <div className="input">
           <label htmlFor="unidad">Precio</label>
           <p>{setFormat(precioTotal)}</p>
         </div>
       </div>
       <div className="inputInsumos">
-        {formData.precioUnitario?.map((insumo, index) => {
-          const insumoData = insumos.filter(
-            (element) => element.id === insumo.insumoId
-          );
+        {(formData.precioUnitario as PrecioUnitario[]).length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Clave</th>
+              <th>Descripcion</th>
+              <th>Unidad</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Total</th>
+              </tr>
+              
+            </thead>
 
-          return (
-            <div
-              style={{ display: "flex", flexDirection: "row" }}
-              key={insumo.insumoId}
-            >
-              <p>{insumoData[0].clave}</p>
-              <p>{insumoData[0].descripcion}</p>
-              <p>{insumoData[0].unidad}</p>
-              <p>{setFormat(insumo.precioInsumo)}</p>
-              <p>
-                Cantidad:
-                <input
-                  type="number"
-                  name="cantidad"
-                  id="cantidad"
-                  onChange={(event) => onCantidad(event, index)}
-                  value={insumo.cantidad}
-                />
-              </p>
+            <tbody>
+              {formData.precioUnitario?.map((insumo, index) => {
+                const insumoData = insumos.filter(
+                  (element) => element.id === insumo.insumoId
+                );
 
-              <p>Total: {setFormat(insumoData[0].precio * insumo.cantidad)}</p>
-            </div>
-          );
-        })}
+                return (
+                  <tr key={insumo.insumoId}>
+                    <td className="clave">{insumoData[0].clave}</td>
+                    <td className="descripcion">{insumoData[0].descripcion}</td>
+                    <td className="unidad">{insumoData[0].unidad}</td>
+                    <td className="cantidad">
+                      <input
+                        type="number"
+                        name="cantidad"
+                        id="cantidad"
+                        onChange={(event) => onCantidad(event, index)}
+                        value={insumo.cantidad}
+                      />
+                    </td>
+                    <td className="precio">{setFormat(insumo.precioInsumo)}</td>
+
+                    <td className="total">{setFormat(insumoData[0].precio * insumo.cantidad)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : undefined}
       </div>
 
-      <div className="tableInsumo">
-        <Table
-          columns={columns}
-          dataSource={data}
-          onChange={handleChange}
-          rowKey={(record) => record.id}
-          pagination={false}
-        />
-      </div>
       {formError && <ErrorMsg />}
       <div className="btn-group">
         <button type="button" onClick={onCancel}>
           Cancelar
         </button>
         <button type="submit">Guardar</button>
+      </div>
+      <div className="tableInsumo">
+        <hr />
+        <div className="tableInsumoHeader">
+          <h3>Listado de Insumos</h3>
+        <button type="button" onClick={()=>setShowConceptoTable(!showConceptoTable)}>Agregar Insumo</button>
+        </div>
+        {
+          showConceptoTable?
+        (<TableTabsAddConcepto data={data} addInputInsumo={addInputInsumo} />) : null
+        }
       </div>
     </form>
   );

@@ -1,14 +1,21 @@
-form {
+.AddConceptoForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 90%;
+    height: 90%;
     border: 1px solid black;
     border-radius: 10px;
     padding: 10px;
     // margin: 20px;
+    // overflow: auto;
     .inputRow {
+        height: 20%;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+
         .input {
             display: flex;
             flex-direction: column;
@@ -16,8 +23,69 @@ form {
             label {
                 margin: 5px 0 10px 0;
             }
-            p{
+            p {
                 margin: 0 10px;
+            }
+        }
+    }
+
+    .inputInsumos {
+        height: 30%;
+        overflow-y: scroll;
+        
+        table {
+            width: 100%;
+            thead {
+                position: sticky;
+                top: 0;
+                background: #ffffff;
+                height: 30px;
+            }
+            tbody {
+                tr{
+                    .clave{width: 10%; text-align: center;}
+                    .descripcion{width: 40%;}
+                    .unidad{width: 10%;text-align: center;}
+                    .cantidad{width: 10%; 
+                        input{width: 80%;}
+                    }
+                    .precio{width: 15%; text-align: center;}
+                    .total{width: 15%; text-align: center;}
+
+
+                }    
+
+                td {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+    
+
+    .btn-group {
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            margin: 10px 20px;
+            // height: 30px;
+            padding: 5px 20px;
+        }
+    }
+
+    .tableInsumo {
+        padding: 0;
+        height: 50%;
+        .tableInsumoHeader{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            button {
+                margin: 10px 20px;
+                // height: 30px;
+                padding: 5px 20px;
             }
         }
     }

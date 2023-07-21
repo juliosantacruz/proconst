@@ -13,9 +13,10 @@ import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import AnyIcon from "../../components/AnyIcon";
 import { setFormat } from "../../utils/CurrencyFormat";
+import { useUxStore } from "../../store/uxStore";
 
-export default function ListadoConceptos() {
-  const [spreadModal, setSpreadModal] = useState(false);
+export default function ListadoConceptos() { 
+  const {openModal, setOpenModal} = useUxStore()
 
   const { conceptos, deleteConcepto } = useConceptoStore();
 
@@ -60,7 +61,7 @@ export default function ListadoConceptos() {
 
   const handleAddConcepto = () => {
     console.log("Inicio");
-    setSpreadModal(true);
+    setOpenModal(true);
     console.log("fin");
   };
   const handleEdit = (id: string) => {
@@ -89,14 +90,14 @@ export default function ListadoConceptos() {
         rowKey={(record) => record.id}
         pagination={false}
       />
-      {spreadModal && (
+      {openModal && (
         <AsideModal
           widthModal={"70vw"}
-          spreadModal={spreadModal}
-          setSpreadModal={setSpreadModal}
+          spreadModal={openModal}
+          setSpreadModal={setOpenModal}
           title="Agregar Concepto"
         >
-          <FormConcepto setSpreadModal={setSpreadModal} />
+          <FormConcepto   />
         </AsideModal>
       )}
     </section>

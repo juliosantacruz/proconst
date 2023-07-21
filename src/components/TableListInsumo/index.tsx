@@ -16,13 +16,11 @@ import deleteIcon from "../../assets/icons/bx-trash.svg";
 import AnyIcon from "../AnyIcon";
 import { useUxStore } from "../../store/uxStore";
 
- 
-
-export default function TableInsumo({insumosData }:any) {
+export default function TableListInsumo({ insumosData }: any) {
   const { setInsumoToUpdate, deleteInsumo } = useInsumoStore();
-  const {openModal, setOpenModal} = useUxStore()
+  const { openModal, setOpenModal } = useUxStore();
 
-   const data:Insumo[] = insumosData;
+  const data: Insumo[] = insumosData;
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -136,16 +134,12 @@ export default function TableInsumo({insumosData }:any) {
 
   const handleDelete = (id: string) => {
     deleteInsumo(id);
-    console.log(`se eliminar ${id}`);
   };
   const handleEdit = (element: Insumo) => {
     console.log(`se editar ${element.id}`);
-    setInsumoToUpdate(element)
-    setOpenModal(true)
-    
+    setInsumoToUpdate(element);
+    setOpenModal(true);
   };
-
-  
 
   const columns: ColumnsType<Insumo> = [
     {
@@ -176,9 +170,9 @@ export default function TableInsumo({insumosData }:any) {
       dataIndex: "precio",
       key: "precio",
       width: "15%",
-      render:(_, record)=>{
-        return(<p>{setFormat(record.precio)}</p>)
-      }
+      render: (_, record) => {
+        return <p>{setFormat(record.precio)}</p>;
+      },
     },
     {
       title: "Categoria",
@@ -212,6 +206,7 @@ export default function TableInsumo({insumosData }:any) {
 
   return (
     <Table
+    size='small'
       columns={columns}
       dataSource={data}
       rowKey={(record) => record.id}
