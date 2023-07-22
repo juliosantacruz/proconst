@@ -1,12 +1,8 @@
-import React, { useState } from "react";
-import AnyIcon from "../AnyIcon";
-
 import "./AsideModal.scss";
-import closeIcon from "../../assets/icons/bx-x.svg";
 import { useUxStore } from "../../store/uxStore";
 
 export default function AsideModal({ children, title, widthModal }: any) {
-  const { openModal, setOpenModal } = useUxStore();
+  const { openModal } = useUxStore();
 
   const classModal = () => {
     if (openModal) {

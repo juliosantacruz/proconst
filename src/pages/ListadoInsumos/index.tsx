@@ -5,7 +5,6 @@ import FormInsumo from "../../components/FormInsumo";
 import AsideModal from "../../components/AsideModal";
 import TableTabsListInsumo from "../../components/TableTabsListInsumo";
 import "./ListadoInsumos.scss";
-import TableListInsumo from "../../components/TableListInsumo";
 
 export default function ListadoInsumos() {
   const { openModal, setOpenModal } = useUxStore();

@@ -1,4 +1,3 @@
-import { BrowserRouter } from "react-router-dom";
 import AppRoutes from './routes/router'
 
 import "./App.css";

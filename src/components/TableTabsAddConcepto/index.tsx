@@ -1,8 +1,6 @@
-import React from "react";
 import { Tabs } from "antd";
 import { useInsumoStore } from "../../store/projectStore";
 import { Insumo } from "../../types/Insumo";
-import { useUxStore } from "../../store/uxStore";
 import TableInsumoAddConcepto from "../TableInsumoAddConcepto";
 
 export default function TableTabsAddConcepto( {data, addInputInsumo}:any) {

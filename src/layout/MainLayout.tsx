@@ -1,4 +1,3 @@
-import React from 'react'
 import AsideMenu from './AsideMenu/AsideMenu'
 import Navbar from './TopMenu/Navbar'
 import Footer from './Footer/Footer'

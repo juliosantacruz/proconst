@@ -1,4 +1,3 @@
-import { Concepto } from "./Concepto";
 
 
 export interface ConceptoP{
