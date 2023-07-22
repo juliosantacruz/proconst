@@ -229,7 +229,7 @@ export default function FormConcepto() {
   return (
     <form className="AddConceptoForm" onSubmit={(event) => onSubmit(event)}>
       <div className="inputRow">
-        <div className="input">
+        <div className="input clave">
           <label htmlFor="clave">Clave</label>
           <input
             type="text"
@@ -240,7 +240,7 @@ export default function FormConcepto() {
             value={formData.clave}
           />
         </div>
-        <div className="input">
+        <div className="input descripcion">
           <label htmlFor="descripcion">Descripcion</label>
           <textarea
             // type="text"
@@ -251,18 +251,7 @@ export default function FormConcepto() {
             value={formData.descripcion}
           />
         </div>
-        {/* <div className="input">
-          <label htmlFor="unidad">Unidad</label>
-          <input
-            type="text"
-            name="unidad"
-            id="unidad"
-            placeholder="mL"
-            onChange={(event) => onChange(event)}
-            value={formData.unidad}
-          />
-        </div> */}
-        <div className="input">
+        <div className="input unidad">
           <label htmlFor="unidad">Unidad</label>
           <select
             name="unidad"
@@ -280,7 +269,7 @@ export default function FormConcepto() {
             })}
           </select>
         </div>
-        <div className="input">
+        <div className="input precio">
           <label htmlFor="unidad">Precio</label>
           <p>{setFormat(precioTotal)}</p>
         </div>
