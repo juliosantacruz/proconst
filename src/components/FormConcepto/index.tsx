@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { Concepto, PrecioUnitario } from "../../types/Concepto";
+// React
+import { useState, useEffect } from "react";
+
+// Librerias
 import { v4 } from "uuid";
-import "./FormConcepto.scss";
+
+// Local Reference
 import { useInsumoStore, useConceptoStore } from "../../store/projectStore";
+import { useUxStore } from "../../store/uxStore";
+import { setFormat } from "../../utils/CurrencyFormat";
+import { Unidades } from "../../utils/SelectInputOptions";
+import TableTabsAddConcepto from "../TableTabsAddConcepto";
+
+// Types
 import type { TableProps } from "antd";
-import { Table } from "antd";
 import type {
   ColumnsType,
   FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
+import { Concepto, PrecioUnitario } from "../../types/Concepto";
 import { Insumo } from "../../types/Insumo";
 
-import { setFormat } from "../../utils/CurrencyFormat";
-import { Unidades } from "../../utils/SelectInputOptions";
-import TableTabsAddConcepto from "../TableTabsAddConcepto";
-import TableInsumoConcepto from "../TableInsumoAddConcepto";
-import { useUxStore } from "../../store/uxStore";
+// Styles
+import "./FormConcepto.scss";
 
 const conceptoDefaultValue = {
   id: v4(),

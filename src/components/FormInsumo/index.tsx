@@ -1,10 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Insumo } from "../../types/Insumo";
+// React
+import  { useState, useEffect } from "react";
+
+// Librerias
 import { v4 } from "uuid";
-import "./FormInsumo.scss";
+
+// Local Reference
 import { useInsumoStore } from "../../store/projectStore";
-import { Unidades, CategoriasInsumos } from "../../utils/SelectInputOptions";
 import { useUxStore } from "../../store/uxStore";
+import { Unidades, CategoriasInsumos } from "../../utils/SelectInputOptions";
+
+// Types
+import { Insumo } from "../../types/Insumo";
+
+// Styles
+import "./FormInsumo.scss";
 
 
 const insumoDefaultValue = {
