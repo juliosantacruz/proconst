@@ -36,7 +36,7 @@ const ErrorMsg = () => {
 
 export default function FormConcepto() {
   const [formError, setFormError] = useState(false);
-  const [showConceptoTable, setShowConceptoTable] =useState(false)
+  const [showConceptoTable, setShowConceptoTable] = useState(false);
   const { setOpenModal } = useUxStore();
 
   const { addConcepto } = useConceptoStore();
@@ -189,16 +189,17 @@ export default function FormConcepto() {
       cantidad: 0,
       precioInsumo: precioInsumo,
     };
-    if(formData.precioUnitario?.find(pu=> pu.insumoId === newInsumo.insumoId)){
-      console.log('insumo ya existe')
-      return
-    }else{
+    if (
+      formData.precioUnitario?.find((pu) => pu.insumoId === newInsumo.insumoId)
+    ) {
+      console.log("insumo ya existe");
+      return;
+    } else {
       setFormData({
-      ...formData,
-      precioUnitario: [...(oldInsumo as []), newInsumo],
-    });
+        ...formData,
+        precioUnitario: [...(oldInsumo as []), newInsumo],
+      });
     }
-    
   };
 
   const onCantidad = (event: any, index: number) => {
@@ -290,13 +291,12 @@ export default function FormConcepto() {
             <thead>
               <tr>
                 <th>Clave</th>
-              <th>Descripcion</th>
-              <th>Unidad</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-              <th>Total</th>
+                <th>Descripcion</th>
+                <th>Unidad</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Total</th>
               </tr>
-              
             </thead>
 
             <tbody>
@@ -321,7 +321,9 @@ export default function FormConcepto() {
                     </td>
                     <td className="precio">{setFormat(insumo.precioInsumo)}</td>
 
-                    <td className="total">{setFormat(insumoData[0].precio * insumo.cantidad)}</td>
+                    <td className="total">
+                      {setFormat(insumoData[0].precio * insumo.cantidad)}
+                    </td>
                   </tr>
                 );
               })}
@@ -341,12 +343,16 @@ export default function FormConcepto() {
         <hr />
         <div className="tableInsumoHeader">
           <h3>Listado de Insumos</h3>
-        <button type="button" onClick={()=>setShowConceptoTable(!showConceptoTable)}>Agregar Insumo</button>
+          <button
+            type="button"
+            onClick={() => setShowConceptoTable(!showConceptoTable)}
+          >
+            Agregar Insumo
+          </button>
         </div>
-        {
-          showConceptoTable?
-        (<TableTabsAddConcepto data={data} addInputInsumo={addInputInsumo} />) : null
-        }
+        {showConceptoTable ? (
+          <TableTabsAddConcepto data={data} addInputInsumo={addInputInsumo} />
+        ) : null}
       </div>
     </form>
   );
