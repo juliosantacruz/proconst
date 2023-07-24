@@ -109,11 +109,11 @@ export default function TableListInsumo({ insumosData }: any) {
     filterIcon: (filtered: boolean) => (
       <AnyIcon iconSrc={searchIcon} iconWidth={10} iconHeight={10} />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
+    // onFilter: (value, record) =>
+    //   record[dataIndex]
+    //     .toString()
+    //     .toLowerCase()
+    //     .includes((value as string).toLowerCase()),
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100);
