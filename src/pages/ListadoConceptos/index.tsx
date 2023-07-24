@@ -40,7 +40,7 @@ export default function ListadoConceptos() {
         });
         const precioTotal = arrPrecio.reduce((a, b) => a + b, 0);
         return <p>{setFormat(precioTotal)}</p>;
-        return <p>$ cantidad x pi</p>
+        
       },
     },
     {
