@@ -32,7 +32,7 @@ export default function ListadoInsumos() {
         <TableTabsListInsumo />
       </div>
       {openModal && (
-        <AsideModal widthModal={"40vw"} title="Agregar Insumo">
+        <AsideModal widthModal={"40vw"} title="Agregar Insumo" clossable={false}>
           <FormInsumo/>
         </AsideModal>
       )}

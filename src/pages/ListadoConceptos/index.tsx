@@ -14,16 +14,14 @@ import { setFormat } from "../../utils/CurrencyFormat";
 import { useUxStore } from "../../store/uxStore";
 import { Insumo } from "../../types/Insumo";
 
-export default function ListadoConceptos() { 
-  const {openModal, setOpenModal} = useUxStore()
-  const {insumos} = useInsumoStore()
+export default function ListadoConceptos() {
+  const { openModal, setOpenModal } = useUxStore();
+  const { insumos } = useInsumoStore();
   const { conceptos, setConceptoToUpdate, deleteConcepto } = useConceptoStore();
 
- // Mandar a utils
- const insumoData =( arrIsumos:Insumo[], findInsumo:PrecioUnitario) =>arrIsumos.find(
-  (element) => element.id === findInsumo.insumoId
-);
-
+  // Mandar a utils
+  const insumoData = (arrIsumos: Insumo[], findInsumo: PrecioUnitario) =>
+    arrIsumos.find((element) => element.id === findInsumo.insumoId);
 
   const columns: ColumnsType<Concepto> = [
     { title: "Clave", dataIndex: "clave", key: "clave" },
@@ -34,13 +32,12 @@ export default function ListadoConceptos() {
       render: (_, record) => {
         const arrPrecio: number[] = [];
         record.precioUnitario?.map((element) => {
-          const insumo = insumoData(insumos, element)
+          const insumo = insumoData(insumos, element);
           const precio = element.cantidad * (insumo as Insumo).precio;
           arrPrecio.push(precio);
         });
         const precioTotal = arrPrecio.reduce((a, b) => a + b, 0);
         return <p>{setFormat(precioTotal)}</p>;
-        
       },
     },
     {
@@ -72,7 +69,7 @@ export default function ListadoConceptos() {
     console.log("fin");
   };
   const handleEdit = (element: Concepto) => {
-    setConceptoToUpdate(element)
+    setConceptoToUpdate(element);
     setOpenModal(true);
     console.log(`se editar ${element.id}`);
   };
@@ -102,11 +99,10 @@ export default function ListadoConceptos() {
       {openModal && (
         <AsideModal
           widthModal={"70vw"}
-          spreadModal={openModal}
-          setSpreadModal={setOpenModal}
+          clossable={false}
           title="Agregar Concepto"
         >
-          <FormConcepto   />
+          <FormConcepto />
         </AsideModal>
       )}
     </section>
