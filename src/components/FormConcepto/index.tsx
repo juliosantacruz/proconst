@@ -13,11 +13,7 @@ import TableTabsAddConcepto from "../TableTabsAddConcepto";
 
 // Types
 import type { TableProps } from "antd";
-import type {
-  ColumnsType,
-  FilterValue,
-  SorterResult,
-} from "antd/es/table/interface";
+import type { ColumnsType, FilterValue, SorterResult } from "antd/es/table/interface";
 import { Concepto, PrecioUnitario } from "../../types/Concepto";
 import { Insumo } from "../../types/Insumo";
 
@@ -34,29 +30,37 @@ const conceptoDefaultValue = {
 
 const ErrorMsg = () => {
   return (
-    <p>
-      Error!.. verificar datos, no dejar espacios vacios o numeros negativos
-    </p>
+    <p> Error!.. verificar datos, no dejar espacios vacios o numeros negativos  </p>
   );
 };
 
 export default function FormConcepto() {
+  const [editConcepto, setEditConcepto] = useState(false)
   const [formError, setFormError] = useState(false);
   const [showConceptoTable, setShowConceptoTable] = useState(false);
   const { setOpenModal } = useUxStore();
 
-  const { addConcepto } = useConceptoStore();
+  const { addConcepto, conceptoToUpdate, setConceptoToUpdate } = useConceptoStore();
   const { insumos } = useInsumoStore();
   const [formData, setFormData] = useState<Concepto>(conceptoDefaultValue);
 
+  console.log("to update:",conceptoToUpdate)
   useEffect(() => {
-    setFormData({
+
+    if(conceptoToUpdate !== undefined){
+      setFormData(conceptoToUpdate)
+      setEditConcepto(true)
+    }else{
+      setFormData({
       id: v4(),
       clave: "",
       descripcion: "",
       unidad: "",
       precioUnitario: [],
     });
+    }
+
+    
   }, []);
 
   //TEST
@@ -140,7 +144,7 @@ export default function FormConcepto() {
         return (
           <button
             type="button"
-            onClick={() => addInputInsumo(record.id, record.precio)}
+            onClick={() => addInputInsumo(record.id )}
           >
             agregar
           </button>
@@ -154,6 +158,7 @@ export default function FormConcepto() {
   const onSubmit = (event: any) => {
     event.preventDefault();
 
+    // Form Validations (No empty arrays)
     if (
       formData.clave === "" ||
       formData.descripcion === "" ||
@@ -165,9 +170,17 @@ export default function FormConcepto() {
       return console.log("error de datos");
     }
 
-    addConcepto(formData);
+
+    if(editConcepto){
+      console.log('editar')
+    }else{
+      addConcepto(formData);
+
+    }
+
     onClear();
     setFormError(false);
+    setEditConcepto(false)
     setOpenModal(false);
   };
 
@@ -181,6 +194,7 @@ export default function FormConcepto() {
 
   const onClear = () => {
     setFormData(conceptoDefaultValue);
+    setConceptoToUpdate(undefined)
   };
 
   const onCancel = () => {
@@ -188,12 +202,11 @@ export default function FormConcepto() {
     setOpenModal(false);
   };
 
-  const addInputInsumo = (id: string, precioInsumo: number) => {
+  const addInputInsumo = (id: string) => {
     const oldInsumo: PrecioUnitario[] | undefined = formData.precioUnitario;
     const newInsumo = {
       insumoId: id,
-      cantidad: 0,
-      precioInsumo: precioInsumo,
+      cantidad: 0, 
     };
     if (
       formData.precioUnitario?.find((pu) => pu.insumoId === newInsumo.insumoId)
@@ -223,11 +236,17 @@ export default function FormConcepto() {
       precioUnitario: newArr,
     });
   };
+
+  const insumoData =( arrIsumos:Insumo[], findInsumo:PrecioUnitario) =>arrIsumos.find(
+    (element) => element.id === findInsumo.insumoId
+  );
+
   const arrPrecioTotal: number[] = [];
 
   (formData.precioUnitario as [])?.map((element) => {
-    console.log(element);
-    const total = Number(element["cantidad"]) * Number(element["precioInsumo"]);
+    
+    const insumoPu = insumoData(insumos, element)
+    const total = Number(element["cantidad"]) * Number((insumoPu as Insumo)["precio"]);
     arrPrecioTotal.push(total);
   });
   const precioTotal = arrPrecioTotal.reduce((a, b) => a + b, 0);
@@ -296,15 +315,16 @@ export default function FormConcepto() {
 
             <tbody>
               {formData.precioUnitario?.map((insumo, index) => {
-                const insumoData = insumos.filter(
-                  (element) => element.id === insumo.insumoId
-                );
+                const insumoPU:any = insumoData(insumos, insumo)
+
+
+                console.log('insumoPU',insumoPU)
 
                 return (
                   <tr key={insumo.insumoId}>
-                    <td className="clave">{insumoData[0].clave}</td>
-                    <td className="descripcion">{insumoData[0].descripcion}</td>
-                    <td className="unidad">{insumoData[0].unidad}</td>
+                    <td className="clave">{insumoPU.clave}</td>
+                    <td className="descripcion">{insumoPU.descripcion}</td>
+                    <td className="unidad">{insumoPU.unidad}</td>
                     <td className="cantidad">
                       <input
                         type="number"
@@ -314,10 +334,10 @@ export default function FormConcepto() {
                         value={insumo.cantidad}
                       />
                     </td>
-                    <td className="precio">{setFormat(insumo.precioInsumo)}</td>
+                    <td className="precio">{setFormat(insumoPU.precio)}</td>
 
                     <td className="total">
-                      {setFormat(insumoData[0].precio * insumo.cantidad)}
+                      {setFormat(insumoPU.precio * insumo.cantidad)}
                     </td>
                   </tr>
                 );

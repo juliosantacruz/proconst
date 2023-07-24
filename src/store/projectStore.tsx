@@ -17,7 +17,9 @@ interface ConceptoState {
   conceptos: Concepto[];
   addConcepto: (concepto: Concepto) => void;
   deleteConcepto: (id: string) => void;
-  //   updateInsumo: (insumo: Insumo) => void;
+  conceptoToUpdate: Concepto | undefined;
+  setConceptoToUpdate: (concepto:Concepto | undefined) => void;
+  // updateInsumo: (insumo: Insumo) => void;
 }
 interface PresupuestoState {
   presupuestos: Presupuesto[];
@@ -37,7 +39,7 @@ export const useInsumoStore = create<InsumoState>()(
         }));
       },
       insumoToUpdate: undefined,
-      setInsumoToUpdate: (insumo: Insumo | undefined) =>
+      setInsumoToUpdate: (insumo) =>
         set(() => ({
           insumoToUpdate: insumo,
         })),
@@ -67,6 +69,12 @@ export const useConceptoStore = create<ConceptoState>()(
           conceptos: state.conceptos.filter((concepto) => concepto.id !== id),
         }));
       },
+      conceptoToUpdate: undefined,
+      setConceptoToUpdate: ((concepto)=>{
+        set(()=>({
+          conceptoToUpdate: concepto,
+        }))
+      }),
     }),
     {
       name: "conceptos-storage",
