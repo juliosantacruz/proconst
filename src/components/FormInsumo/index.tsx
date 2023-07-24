@@ -3,6 +3,7 @@ import  { useState, useEffect } from "react";
 
 // Librerias
 import { v4 } from "uuid";
+import * as dayjs from 'dayjs'
 
 // Local Reference
 import { useInsumoStore } from "../../store/projectStore";
@@ -23,11 +24,13 @@ const insumoDefaultValue = {
   unidad: "",
   precio: 0.0,
   categoria: "",
+  fechaCreacion:''
 };
 
 const ErrorMsg = () => {
   return <p>Error!.. verificar datos, no dejar espacios vacios o numeros negativos</p>;
 };
+ 
 
 export default function FormInsumo() {
   const [editInsumo, setEditInsumo] = useState(false)
@@ -36,8 +39,6 @@ export default function FormInsumo() {
 
   const { addInsumo, insumoToUpdate, setInsumoToUpdate, updateInsumo } = useInsumoStore();
   const [formData, setFormData] = useState<Insumo>(insumoDefaultValue);
-
-  console.log('Insumo a Editar',insumoToUpdate)
   
   useEffect(() => {
     if (insumoToUpdate !== undefined){
@@ -51,6 +52,7 @@ export default function FormInsumo() {
       unidad: "",
       precio: 0.0,
       categoria: "",
+      fechaCreacion: dayjs().format('YYYY-MM-DD, h:mm:ss A')
     });
     }
     
@@ -106,10 +108,8 @@ export default function FormInsumo() {
 
   const onClear = () => {
     setFormData(insumoDefaultValue);
-    console.log(1, insumoToUpdate)
 
     setInsumoToUpdate(undefined)
-    console.log(2, insumoToUpdate)
     setOpenModal(false);
   };
 

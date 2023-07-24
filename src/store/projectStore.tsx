@@ -18,11 +18,13 @@ interface ConceptoState {
   addConcepto: (concepto: Concepto) => void;
   deleteConcepto: (id: string) => void;
   conceptoToUpdate: Concepto | undefined;
-  setConceptoToUpdate: (concepto:Concepto | undefined) => void;
+  setConceptoToUpdate: (concepto: Concepto | undefined) => void;
   // updateInsumo: (insumo: Insumo) => void;
 }
 interface PresupuestoState {
   presupuestos: Presupuesto[];
+  addPresupuesto: (presupuesto: Presupuesto) => void;
+  deletePresupuesto: (id: string)=>void;
 }
 
 export const useInsumoStore = create<InsumoState>()(
@@ -43,11 +45,12 @@ export const useInsumoStore = create<InsumoState>()(
         set(() => ({
           insumoToUpdate: insumo,
         })),
-      updateInsumo:(updateInsumo:Insumo)=>
-      set((state)=>({
-        insumos: state.insumos.map((insumo) => insumo.id === updateInsumo.id?  updateInsumo: insumo),
-       
-      }))
+      updateInsumo: (updateInsumo: Insumo) =>
+        set((state) => ({
+          insumos: state.insumos.map((insumo) =>
+            insumo.id === updateInsumo.id ? updateInsumo : insumo
+          ),
+        })),
     }),
     {
       name: "insumos-storage",
@@ -70,11 +73,11 @@ export const useConceptoStore = create<ConceptoState>()(
         }));
       },
       conceptoToUpdate: undefined,
-      setConceptoToUpdate: ((concepto)=>{
-        set(()=>({
+      setConceptoToUpdate: (concepto) => {
+        set(() => ({
           conceptoToUpdate: concepto,
-        }))
-      }),
+        }));
+      },
     }),
     {
       name: "conceptos-storage",
@@ -83,4 +86,23 @@ export const useConceptoStore = create<ConceptoState>()(
   )
 );
 
-// export const usePresupuestoStore =
+export const usePresupuestoStore = create<PresupuestoState>()(
+  persist(
+    (set) => ({
+      presupuestos: [],
+      addPresupuesto: (presupuesto) =>
+        set((state) => ({
+          presupuestos: [...state.presupuestos, presupuesto],
+        })),
+      deletePresupuesto: (id)=>{
+        set((state)=>({
+          presupuestos: state.presupuestos.filter((presupuesto)=> presupuesto.id !== id)
+        }))
+      }
+    }),
+    {
+      name: "presupuesto-storage",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);

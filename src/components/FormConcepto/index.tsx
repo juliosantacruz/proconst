@@ -19,6 +19,7 @@ import { Insumo } from "../../types/Insumo";
 
 // Styles
 import "./FormConcepto.scss";
+import dayjs from "dayjs";
 
 const conceptoDefaultValue = {
   id: v4(),
@@ -26,6 +27,8 @@ const conceptoDefaultValue = {
   descripcion: "",
   unidad: "",
   precioUnitario: [],
+  fechaCreacion:'',
+  proyectoId:''
 };
 
 const ErrorMsg = () => {
@@ -57,6 +60,7 @@ export default function FormConcepto() {
       descripcion: "",
       unidad: "",
       precioUnitario: [],
+      fechaCreacion: dayjs().format('YYYY-MM-DD, h:mm:ss A')
     });
     }
 
@@ -237,6 +241,7 @@ export default function FormConcepto() {
     });
   };
 
+  // Mandar a utils
   const insumoData =( arrIsumos:Insumo[], findInsumo:PrecioUnitario) =>arrIsumos.find(
     (element) => element.id === findInsumo.insumoId
   );
