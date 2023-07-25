@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { Insumo } from "../types/Insumo";
 import { Concepto } from "../types/Concepto";
-import { Presupuesto } from "../types/Presupuesto";
+import { Partida, Presupuesto } from "../types/Presupuesto";
 
 interface InsumoState {
   insumos: Insumo[];
@@ -24,7 +24,8 @@ interface ConceptoState {
 interface PresupuestoState {
   presupuestos: Presupuesto[];
   addPresupuesto: (presupuesto: Presupuesto) => void;
-  deletePresupuesto: (id: string)=>void;
+  deletePresupuesto: (id: string) => void;
+  // addPartida: (id:string, partida:Partida) => void;
 }
 
 export const useInsumoStore = create<InsumoState>()(
@@ -94,11 +95,19 @@ export const usePresupuestoStore = create<PresupuestoState>()(
         set((state) => ({
           presupuestos: [...state.presupuestos, presupuesto],
         })),
-      deletePresupuesto: (id)=>{
-        set((state)=>({
-          presupuestos: state.presupuestos.filter((presupuesto)=> presupuesto.id !== id)
+      deletePresupuesto: (id) => {
+        set((state) => ({
+          presupuestos: state.presupuestos.filter(
+            (presupuesto) => presupuesto.id !== id
+          ),
         }))
-      }
+      },
+      // addPartida: (id, partida) =>{
+      //   set((state)=>({
+      //     toUpdate: [state.presupuestos.find(arr => arr.id === id)?.partida, partida],
+      //     // presupuestos: [...state.presupuestos, toUpdate]
+      //   }))
+      // }
     }),
     {
       name: "presupuesto-storage",

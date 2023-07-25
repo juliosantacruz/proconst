@@ -1,12 +1,12 @@
 import { Concepto } from "./Concepto"
 
 
-export interface PartidaP{
+export interface Partida{
     id:string,
     clave:string,
     nombre:string,
-    montoPartida:number,
-    listadoConceptos: Concepto[]
+    montoPartida?:number,
+    listadoConceptos?: Concepto[]
 }
 export interface Presupuesto{
     id: string,
@@ -15,6 +15,6 @@ export interface Presupuesto{
     descripcionProyecto:string,
     domicilioProyecto:string,
     clienteProyecto:string,
-    partida: PartidaP[]
+    partida: Partida[]
     montoTotal:number 
 }

@@ -5,8 +5,8 @@ import './AddButton.scss'
 
 type AddButtonProps = {
     children:string,
-    bgColor:string,
-    fontColor:string,
+    bgColor?:string,
+    fontColor?:string,
     onClick:()=>void,
 
 }
