@@ -7,6 +7,7 @@ import AddButton from "../../components/AddButton";
 import { useUxStore } from "../../store/uxStore";
 import { usePresupuestoStore } from '../../store/projectStore'
 import AsideModal from "../../components/AsideModal";
+import FormPresupuesto from "../../components/FormPresupuesto";
 
 export default function Index() {
   const { openModal, setOpenModal } = useUxStore();
@@ -31,17 +32,18 @@ export default function Index() {
         </AddButton>
       </div>
       <div className="Presupuestos">
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
+        {
+          presupuestos.map((presupuesto)=>{
+            return(<ProjectCard key={presupuesto.id} projectId={presupuesto.id}/>)
+          })
+        }
+        
+         
       </div>
 
       {openModal && (
         <AsideModal widthModal={"40vw"} title="Agregar Proyecto" clossable={true}>
-          <p>holis :D</p>
+          <FormPresupuesto/>
         </AsideModal>
       )}
     </section>

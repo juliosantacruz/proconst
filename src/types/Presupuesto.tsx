@@ -12,8 +12,9 @@ export interface Presupuesto{
     id: string,
     fechaCreacion:string,
     nombreProyecto:string,
+    descripcionProyecto:string,
     domicilioProyecto:string,
     clienteProyecto:string,
     partida: PartidaP[]
-    montoTotal:number
+    montoTotal:number 
 }

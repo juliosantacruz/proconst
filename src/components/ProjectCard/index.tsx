@@ -1,22 +1,37 @@
 import React from "react";
+import { usePresupuestoStore } from '../../store/projectStore'
+
 import "./ProjectCard.scss";
-export default function ProjectCard() {
+import { setFormat } from "../../utils/CurrencyFormat";
+import { NavLink } from "react-router-dom";
+
+
+export default function ProjectCard({projectId}:any) {
+  const { presupuestos, addPresupuesto, deletePresupuesto} = usePresupuestoStore()
+
+  const projectData = presupuestos.find((project)=> project.id === projectId)
+  // console.log('card',projectData)
+
+  const handleDelete =(id:any)=>{
+    deletePresupuesto(id)
+  }
+
   return (
     <article>
       <div className="header">
-        <h4 className="titleCard">Casa Revolucion mat.</h4>
+        <h4 className="titleCard">{projectData?.nombreProyecto}</h4>
       </div>
       <div className="content">
         <p className="descriptionCard">
-          Casa habitacion, 3 rec, 2 ba, 3 est, sala, cocina, comedor,
-          lavanderia, estudio
+          {projectData?.descripcionProyecto}
         </p>
-        <p className="dateCard">23/03/2022</p>
+        <p className="dateCard">{projectData?.fechaCreacion.slice(0,10)}</p>
       </div>
 
       <div className="footer">
-        <p className="amountCard"><b>$3,430,200.00</b></p>
-        <button>Abrir</button>
+        <p className="amountCard"><b>{setFormat((projectData?.montoTotal as number))}</b></p>
+        <button type="button" onClick={()=>handleDelete(projectData?.id)}>Eliminar</button>
+        <NavLink to={`/presupuesto/${(projectData?.id)}`} >Abrir</NavLink>
       </div>
     </article>
   );
