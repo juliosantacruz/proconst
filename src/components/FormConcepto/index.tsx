@@ -13,7 +13,11 @@ import TableTabsAddConcepto from "../TableTabsAddConcepto";
 
 // Types
 import type { TableProps } from "antd";
-import type { ColumnsType, FilterValue, SorterResult } from "antd/es/table/interface";
+import type {
+  ColumnsType,
+  FilterValue,
+  SorterResult,
+} from "antd/es/table/interface";
 import { Concepto, PrecioUnitario } from "../../types/Concepto";
 import { Insumo } from "../../types/Insumo";
 
@@ -27,44 +31,45 @@ const conceptoDefaultValue = {
   descripcion: "",
   unidad: "",
   precioUnitario: [],
-  fechaCreacion:'',
-  proyectoId:''
+  fechaCreacion: "",
+  proyectoId: "",
 };
 
 const ErrorMsg = () => {
   return (
-    <p> Error!.. verificar datos, no dejar espacios vacios o numeros negativos  </p>
+    <p>
+      {" "}
+      Error!.. verificar datos, no dejar espacios vacios o numeros negativos{" "}
+    </p>
   );
 };
 
 export default function FormConcepto() {
-  const [editConcepto, setEditConcepto] = useState(false)
+  const [editConcepto, setEditConcepto] = useState(false);
   const [formError, setFormError] = useState(false);
   const [showConceptoTable, setShowConceptoTable] = useState(false);
   const { setOpenModal } = useUxStore();
 
-  const { addConcepto, conceptoToUpdate, setConceptoToUpdate } = useConceptoStore();
+  const { addConcepto, conceptoToUpdate, setConceptoToUpdate, updateConcepto } =
+    useConceptoStore();
   const { insumos } = useInsumoStore();
   const [formData, setFormData] = useState<Concepto>(conceptoDefaultValue);
 
-  console.log("to update:",conceptoToUpdate)
+  console.log("to update:", conceptoToUpdate);
   useEffect(() => {
-
-    if(conceptoToUpdate !== undefined){
-      setFormData(conceptoToUpdate)
-      setEditConcepto(true)
-    }else{
+    if (conceptoToUpdate !== undefined) {
+      setFormData(conceptoToUpdate);
+      setEditConcepto(true);
+    } else {
       setFormData({
-      id: v4(),
-      clave: "",
-      descripcion: "",
-      unidad: "",
-      precioUnitario: [],
-      fechaCreacion: dayjs().format('YYYY-MM-DD, h:mm:ss A')
-    });
+        id: v4(),
+        clave: "",
+        descripcion: "",
+        unidad: "",
+        precioUnitario: [],
+        fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
+      });
     }
-
-    
   }, []);
 
   //TEST
@@ -146,10 +151,7 @@ export default function FormConcepto() {
       width: "15%",
       render: (_, record) => {
         return (
-          <button
-            type="button"
-            onClick={() => addInputInsumo(record.id )}
-          >
+          <button type="button" onClick={() => addInputInsumo(record.id)}>
             agregar
           </button>
         );
@@ -174,17 +176,15 @@ export default function FormConcepto() {
       return console.log("error de datos");
     }
 
-
-    if(editConcepto){
-      console.log('editar')
-    }else{
+    if (editConcepto) {
+      updateConcepto(formData)
+    } else {
       addConcepto(formData);
-
     }
 
     onClear();
     setFormError(false);
-    setEditConcepto(false)
+    setEditConcepto(false);
     setOpenModal(false);
   };
 
@@ -198,7 +198,7 @@ export default function FormConcepto() {
 
   const onClear = () => {
     setFormData(conceptoDefaultValue);
-    setConceptoToUpdate(undefined)
+    setConceptoToUpdate(undefined);
   };
 
   const onCancel = () => {
@@ -210,7 +210,7 @@ export default function FormConcepto() {
     const oldInsumo: PrecioUnitario[] | undefined = formData.precioUnitario;
     const newInsumo = {
       insumoId: id,
-      cantidad: 0, 
+      cantidad: 0,
     };
     if (
       formData.precioUnitario?.find((pu) => pu.insumoId === newInsumo.insumoId)
@@ -242,16 +242,15 @@ export default function FormConcepto() {
   };
 
   // Mandar a utils
-  const insumoData =( arrIsumos:Insumo[], findInsumo:PrecioUnitario) =>arrIsumos.find(
-    (element) => element.id === findInsumo.insumoId
-  );
+  const insumoData = (arrIsumos: Insumo[], findInsumo: PrecioUnitario) =>
+    arrIsumos.find((element) => element.id === findInsumo.insumoId);
 
   const arrPrecioTotal: number[] = [];
 
   (formData.precioUnitario as [])?.map((element) => {
-    
-    const insumoPu = insumoData(insumos, element)
-    const total = Number(element["cantidad"]) * Number((insumoPu as Insumo)["precio"]);
+    const insumoPu = insumoData(insumos, element);
+    const total =
+      Number(element["cantidad"]) * Number((insumoPu as Insumo)["precio"]);
     arrPrecioTotal.push(total);
   });
   const precioTotal = arrPrecioTotal.reduce((a, b) => a + b, 0);
@@ -320,10 +319,9 @@ export default function FormConcepto() {
 
             <tbody>
               {formData.precioUnitario?.map((insumo, index) => {
-                const insumoPU:any = insumoData(insumos, insumo)
+                const insumoPU: any = insumoData(insumos, insumo);
 
-
-                console.log('insumoPU',insumoPU)
+                console.log("insumoPU", insumoPU);
 
                 return (
                   <tr key={insumo.insumoId}>

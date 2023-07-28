@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Partida } from "../../types/Presupuesto";
 import { useUxStore } from "../../store/uxStore";
+
 import { v4 } from "uuid";
+import { usePresupuestoStore } from "../../store/projectStore";
 
 const partidaDefaultValue = {
   id: "",
@@ -13,10 +15,11 @@ const partidaDefaultValue = {
 
 export default function FormPartida({projectId}:any) {
   const { setOpenModal } = useUxStore();
+  const { addPartida,workingPresupuesto } = usePresupuestoStore()
   const [formData, setFormData] = useState<Partida>(partidaDefaultValue);
-
-  console.log('projectId',projectId)
-  console.log('formData',formData)
+  
+   
+ console.log('Form workingPresupuesto',workingPresupuesto)
 
     useEffect(()=>{
         setFormData({
@@ -40,7 +43,9 @@ export default function FormPartida({projectId}:any) {
 
   const onSubmit = (event: any) => {
     event.preventDefault();
-    console.log("newProject", formData);
+    // console.log("newProject", formData);
+    addPartida(projectId,formData)
+    onClear()
   };
 
   const onClear = () => {
@@ -51,6 +56,8 @@ export default function FormPartida({projectId}:any) {
     onClear();
     setOpenModal(false);
   };
+
+  
   return (
     <form onSubmit={(event) => onSubmit(event)}>
       <div className="input">

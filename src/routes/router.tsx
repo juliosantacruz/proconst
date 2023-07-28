@@ -10,11 +10,11 @@ import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
     const routes = useRoutes([
-      { path: "proconst/", element: <Inicio /> },
-      { path: "proconst/listado-de-conceptos", element: <ListadoConceptos /> },
-      { path: "proconst/listado-de-insumos", element: <ListadoInsumos /> },
-      { path: "proconst/presupuesto/:projectId", element: <Presupuesto />},
-      { path: "proconst/*", element: <NotFound /> },
+      { path: "/", element: <Inicio /> },
+      { path: "/listado-de-conceptos", element: <ListadoConceptos /> },
+      { path: "/listado-de-insumos", element: <ListadoInsumos /> },
+      { path: "/presupuesto/:projectId", element: <Presupuesto />},
+      { path: "/*", element: <NotFound /> },
   
     ]);
     return routes;

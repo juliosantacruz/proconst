@@ -4,10 +4,11 @@ import { usePresupuestoStore } from '../../store/projectStore'
 import "./ProjectCard.scss";
 import { setFormat } from "../../utils/CurrencyFormat";
 import { NavLink } from "react-router-dom";
+import { Presupuesto } from "../../types/Presupuesto";
 
 
 export default function ProjectCard({projectId}:any) {
-  const { presupuestos, addPresupuesto, deletePresupuesto} = usePresupuestoStore()
+  const { presupuestos, addPresupuesto, deletePresupuesto, setWorkingPresupuesto} = usePresupuestoStore()
 
   const projectData = presupuestos.find((project)=> project.id === projectId)
   // console.log('card',projectData)
