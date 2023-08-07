@@ -39,17 +39,17 @@ export default function Presupuesto() {
     console.log("fin");
   };
   
-  const {nombreProyecto, fechaCreacion,descripcionProyecto, partida }= workingPresupuesto
+  // const {nombreProyecto, fechaCreacion,descripcionProyecto, partida }= workingPresupuesto
   
 
   return (
     <section className="workspace">
       <PageTitle>Presupuesto de obra</PageTitle>
       <AddButton onClick={handleAddPartida}>Agregar Partida</AddButton>
-      <h4>
+      {/* <h4>
         { nombreProyecto} - { fechaCreacion}
       </h4>
-      <p>{ descripcionProyecto}</p>
+      <p>{ descripcionProyecto}</p> */}
       <div className="Presupuesto">
         <table>
           <thead>
@@ -58,7 +58,7 @@ export default function Presupuesto() {
             <th>Actions</th>
           </thead>
           <tbody>
-            {partida?.sort((a:Partida,b:Partida)=> a.clave.localeCompare(b.clave)).map((element:Partida) => {
+            {/* {partida?.sort((a:Partida,b:Partida)=> a.clave.localeCompare(b.clave)).map((element:Partida) => {
               return (
                 <tr key={element.id}>
                   <td>{element.clave}</td> 
@@ -68,7 +68,7 @@ export default function Presupuesto() {
                   </td>
                 </tr>
               );
-            })}
+            })} */}
             
           </tbody>
         </table>

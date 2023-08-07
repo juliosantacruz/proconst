@@ -27,8 +27,12 @@ interface PresupuestoState {
   deletePresupuesto: (id: string) => void;
   workingPresupuesto: any;
   setWorkingPresupuesto: (presupuesto: Presupuesto) => void;
-  addPartida: (id:string, partida: Partida) => void;
+  addPartida: (id: string, partida: Partida) => void;
   updatePresupuesto: (presupuesto: Presupuesto) => void;
+}
+
+interface WorkingPresupuesto extends Presupuesto {
+  setWorkingPresupuesto:(presupuesto:Presupuesto)=>void
 }
 
 export const useInsumoStore = create<InsumoState>()(
@@ -96,7 +100,6 @@ export const useConceptoStore = create<ConceptoState>()(
   )
 );
 
-
 export const usePresupuestoStore = create<PresupuestoState>()(
   persist(
     (set) => ({
@@ -119,7 +122,7 @@ export const usePresupuestoStore = create<PresupuestoState>()(
         }));
       },
 
-      addPartida: (id:string, partida:Partida) => {
+      addPartida: (id: string, partida: Partida) => {
         // set((state) => ({
         //   ...state.workingPresupuesto,
         //   workingPresupuesto: {
@@ -131,12 +134,13 @@ export const usePresupuestoStore = create<PresupuestoState>()(
         //   },
         // }));
 
-        set((state)=> ({
-          presupuestos: state.presupuestos.map((presupuesto:Presupuesto)=> 
-          presupuesto.id===id ?{...presupuesto, partida:[...presupuesto.partida, partida]} : presupuesto
-          )
-        }))
-
+        set((state) => ({
+          presupuestos: state.presupuestos.map((presupuesto: Presupuesto) =>
+            presupuesto.id === id
+              ? { ...presupuesto, partida: [...presupuesto.partida, partida] }
+              : presupuesto
+          ),
+        }));
       },
       updatePresupuesto: (newPresupuesto) =>
         set((state) => ({
@@ -147,6 +151,37 @@ export const usePresupuestoStore = create<PresupuestoState>()(
     }),
     {
       name: "presupuesto-storage",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
+
+export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
+  persist(
+    (set) => ({
+      setWorkingPresupuesto:(presupuesto)=>{
+        set((state)=>({
+          id:presupuesto.id,
+          fechaCreacion:presupuesto.fechaCreacion,
+          nombreProyecto:presupuesto.nombreProyecto,
+          descripcionProyecto: presupuesto.descripcionProyecto,
+          domicilioProyecto: presupuesto.domicilioProyecto,
+          clienteProyecto: presupuesto.clienteProyecto,
+          partida: presupuesto.partida,
+          montoTotal: presupuesto.montoTotal,
+        }))
+      },
+      id: "",
+      fechaCreacion: "",
+      nombreProyecto: "",
+      descripcionProyecto: "",
+      domicilioProyecto: "",
+      clienteProyecto: "",
+      partida: [],
+      montoTotal: 0,
+    }),
+    {
+      name: "working-presupuesto-storage",
       storage: createJSONStorage(() => localStorage),
     }
   )
