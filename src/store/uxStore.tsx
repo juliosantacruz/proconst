@@ -6,15 +6,23 @@ import { create } from "zustand";
 interface UxState{
     openModal: boolean,
     setOpenModal: (value:boolean)=>void,
-    // modalFormConcepto: boolean,
-    // openModalFormConcepto: (value:boolean)=>void,
+    modalFormInsumo: boolean,
+    openModalFormInsumo: (value:boolean)=>void,
+    modalFormConcepto: boolean,
+    openModalFormConcepto: (value:boolean)=>void,
+    modalFormProject: boolean,
+    openModalFormProject: (value:boolean)=>void,
 }
 
 export const useUxStore = create<UxState>((set)=>({
     openModal:false,
     setOpenModal:(value:boolean)=>set(()=>({openModal:value})),
-    // modalFormConcepto:false,
-    // openModalFormConcepto:(value:boolean)=>set(()=>({modalFormConcepto:value}))
+    modalFormInsumo: false,
+    openModalFormInsumo: (value:boolean)=>set(()=>({modalFormInsumo:value})),
+    modalFormConcepto: false,
+    openModalFormConcepto: (value:boolean)=>set(()=>({modalFormConcepto:value})),
+    modalFormProject: false,
+    openModalFormProject: (value:boolean)=>set(()=>({modalFormProject:value})),
 }))
 
 

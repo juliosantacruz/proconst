@@ -1,12 +1,11 @@
-import React from 'react'
+import {lazy} from 'react'
 import { useRoutes } from "react-router-dom";
-
-import Inicio from "../pages/Inicio";
-import ListadoConceptos from "../pages/ListadoConceptos";
-import ListadoInsumos from "../pages/ListadoInsumos";
-import Presupuesto from "../pages/Presupuesto";
+import Inicio from "../pages/Inicio"; 
 import NotFound from "../pages/NotFound";
 
+const ListadoConceptos = lazy( ()=> import("../pages/ListadoConceptos"))
+const ListadoInsumos = lazy( ()=> import("../pages/ListadoInsumos"))
+const Presupuesto = lazy( ()=> import("../pages/Presupuesto"))
 
 const AppRoutes = () => {
     const routes = useRoutes([

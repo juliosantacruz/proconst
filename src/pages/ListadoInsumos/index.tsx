@@ -1,10 +1,13 @@
+import {lazy, Suspense}from 'react'
 import { useUxStore } from "../../store/uxStore";
 import PageTitle from "../../components/PageTitle";
 import AddButton from "../../components/AddButton"; 
 import FormInsumo from "../../components/FormInsumo"; 
 import AsideModal from "../../components/AsideModal";
-import TableTabsListInsumo from "../../components/TableTabsListInsumo";
+// import TableTabsListInsumo from "../../components/TableTabsListInsumo";
 import "./ListadoInsumos.scss";
+
+const TableTabsListInsumo = lazy(()=>import ('../../components/TableTabsListInsumo'))
 
 export default function ListadoInsumos() {
   const { openModal, setOpenModal } = useUxStore();
@@ -29,7 +32,11 @@ export default function ListadoInsumos() {
       </div>
 
       <div className="insumosGroup">
+      <Suspense fallback={<div> loading </div>}>
         <TableTabsListInsumo />
+
+      </Suspense>
+      
       </div>
       {openModal && (
         <AsideModal widthModal={"40vw"} title="Agregar Insumo" clossable={false}>
