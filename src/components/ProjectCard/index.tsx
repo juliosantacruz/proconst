@@ -1,6 +1,6 @@
 import React from "react";
 import { usePresupuestoStore } from '../../store/projectStore'
-
+import {RoutesDirectory} from '../../routes/router'
 import "./ProjectCard.scss";
 import { setFormat } from "../../utils/CurrencyFormat";
 import { NavLink } from "react-router-dom";
@@ -32,7 +32,7 @@ export default function ProjectCard({projectId}:any) {
       <div className="footer">
         <p className="amountCard"><b>{setFormat((projectData?.montoTotal as number))}</b></p>
         <button type="button" onClick={()=>handleDelete(projectData?.id)}>Eliminar</button>
-        <NavLink to={`/presupuesto/${(projectData?.id)}`} >Abrir</NavLink>
+        <NavLink to={RoutesDirectory.GO_WORKING_PRESUPUESTO(projectData?.id as string)} >Abrir</NavLink>
       </div>
     </article>
   );

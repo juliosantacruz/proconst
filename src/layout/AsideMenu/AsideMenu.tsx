@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import {RoutesDirectory} from '../../routes/router'
 import "./AsideMenu.scss";
 
 export default function AsideMenu() {
@@ -11,7 +12,7 @@ export default function AsideMenu() {
           {/* Menu general */}
           <li>
             <NavLink
-              to="/"
+              to={RoutesDirectory.HOME}
               
             >
               Inicio
@@ -19,7 +20,7 @@ export default function AsideMenu() {
           </li>
           <li>
             <NavLink
-              to="/listado-de-conceptos"
+              to={RoutesDirectory.LISTADO_CONCEPTOS}
                
             >
               Listado de Conceptos
@@ -27,7 +28,7 @@ export default function AsideMenu() {
           </li>
           <li>
             <NavLink
-              to="/listado-de-insumos"
+              to={RoutesDirectory.LISTADO_INSUMOS}
                
             >
               Listado de Insumos
@@ -36,12 +37,12 @@ export default function AsideMenu() {
 
           {/* Menu de presupuesto */}
           <li>
-            <NavLink
-              to="/presupuesto"
+            {/* <NavLink
+              // to={RoutesDirectory.WORKING_PRESUPUESTO}
                
-            >
+            > */}
               Presupuesto de Obra
-            </NavLink>
+            {/* </NavLink> */}
           </li>
           <li>Catalogo de Conceptos</li>
           <li>Catalogo de Insumos</li>
