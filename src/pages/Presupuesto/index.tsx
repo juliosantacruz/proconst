@@ -65,6 +65,7 @@ export default function Presupuesto() {
             <tr>
               <th>Clave</th>
               <th>Nombre</th>
+              <th>Monto</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -76,6 +77,7 @@ export default function Presupuesto() {
                   <tr key={element.id}>
                     <td>{element.clave}</td>
                     <td>{element.nombre}</td>
+                    <td>{setFormat(element.montoPartida as number)}</td>
                     <td>
                       <button>+ Concepto </button>
                       <button onClick={() => deletePartida(element.id)}>

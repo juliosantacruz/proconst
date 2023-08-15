@@ -6,6 +6,7 @@ import { usePresupuestoStore } from '../../store/projectStore'
 import { v4 } from "uuid";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { RoutesDirectory } from "../../routes/router";
 
 const presupuestoDefaultValue = {
   id: "",
@@ -64,7 +65,7 @@ export default function FormPresupuesto() {
     event.preventDefault();
     console.log("newProject", formData);
     addPresupuesto(formData)
-    navigate(`/presupuesto/${formData.id}`)
+    navigate(RoutesDirectory.GO_WORKING_PRESUPUESTO(formData?.id as string))
     onClear()
   };
 

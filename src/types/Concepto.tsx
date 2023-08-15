@@ -1,6 +1,6 @@
 
 
-export interface PrecioUnitario{
+export interface ListadoInsumos{
   insumoId:string, 
   cantidad:number,
   }
@@ -13,5 +13,5 @@ export interface Concepto {
     descripcion: string;
     unidad: string;
     cantidad?:number
-    precioUnitario?: PrecioUnitario[]; 
+    listadoInsumos?: ListadoInsumos[]; 
   }

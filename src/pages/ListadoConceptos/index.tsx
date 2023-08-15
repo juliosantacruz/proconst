@@ -1,6 +1,6 @@
 import PageTitle from "../../components/PageTitle";
 import AddButton from "../../components/AddButton";
-import { Concepto, PrecioUnitario } from "../../types/Concepto";
+import { Concepto, ListadoInsumos } from "../../types/Concepto";
 import { useConceptoStore, useInsumoStore } from "../../store/projectStore";
 import editIcon from "../../assets/icons/bx-edit.svg";
 import deleteIcon from "../../assets/icons/bx-trash.svg";
@@ -20,7 +20,7 @@ export default function ListadoConceptos() {
   const { conceptos, setConceptoToUpdate, deleteConcepto } = useConceptoStore();
 
   // Mandar a utils
-  const insumoData = (arrIsumos: Insumo[], findInsumo: PrecioUnitario) =>
+  const insumoData = (arrIsumos: Insumo[], findInsumo: ListadoInsumos) =>
     arrIsumos.find((element) => element.id === findInsumo.insumoId);
 
   const columns: ColumnsType<Concepto> = [
@@ -31,7 +31,7 @@ export default function ListadoConceptos() {
       title: "Precio",
       render: (_, record) => {
         const arrPrecio: number[] = [];
-        record.precioUnitario?.map((element) => {
+        record.listadoInsumos?.map((element) => {
           const insumo = insumoData(insumos, element);
           const precio = element.cantidad * (insumo as Insumo).precio;
           arrPrecio.push(precio);
