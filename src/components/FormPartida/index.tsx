@@ -3,7 +3,7 @@ import { Partida } from "../../types/Presupuesto";
 import { useUxStore } from "../../store/uxStore";
 
 import { v4 } from "uuid";
-import { usePresupuestoStore } from "../../store/projectStore";
+import { usePresupuestoStore, useWorkingPresupuesto } from "../../store/projectStore";
 
 const partidaDefaultValue = {
   id: "",
@@ -15,11 +15,11 @@ const partidaDefaultValue = {
 
 export default function FormPartida({projectId}:any) {
   const { openModalFormPartida } = useUxStore();
-  const { addPartida,workingPresupuesto } = usePresupuestoStore()
+  const {addPartida}=useWorkingPresupuesto()
   const [formData, setFormData] = useState<Partida>(partidaDefaultValue);
   
    
- console.log('Form workingPresupuesto',workingPresupuesto)
+  
 
     useEffect(()=>{
         setFormData({
@@ -44,7 +44,7 @@ export default function FormPartida({projectId}:any) {
   const onSubmit = (event: any) => {
     event.preventDefault();
     // console.log("newProject", formData);
-    addPartida(projectId,formData)
+    addPartida(formData)
     onClear()
   };
 

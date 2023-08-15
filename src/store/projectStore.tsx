@@ -33,6 +33,8 @@ interface PresupuestoState {
 
 interface WorkingPresupuesto extends Presupuesto {
   setWorkingPresupuesto:(presupuesto:Presupuesto)=>void
+  addPartida:(partida:Partida)=>void
+  deletePartida:(id:string)=>void
 }
 
 export const useInsumoStore = create<InsumoState>()(
@@ -121,7 +123,6 @@ export const usePresupuestoStore = create<PresupuestoState>()(
           workingPresupuesto: presupuesto,
         }));
       },
-
       addPartida: (id: string, partida: Partida) => {
         // set((state) => ({
         //   ...state.workingPresupuesto,
@@ -178,6 +179,18 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
       domicilioProyecto: "",
       clienteProyecto: "",
       partida: [],
+      addPartida:(partida)=>{
+        set((state)=>({
+          partida:[...state.partida, partida]
+        }))
+      },
+      deletePartida:(id)=>{
+        set((state)=>({
+          partida: state.partida.filter(
+            (partida)=> partida.id !== id
+          )
+        }))
+      },
       montoTotal: 0,
     }),
     {

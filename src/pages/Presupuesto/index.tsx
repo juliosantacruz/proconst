@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { usePresupuestoStore } from "../../store/projectStore";
+import { usePresupuestoStore, useWorkingPresupuesto } from "../../store/projectStore";
 import { useParams } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
 import AddButton from "../../components/AddButton";
@@ -10,28 +10,27 @@ import { Partida, Presupuesto } from "../../types/Presupuesto";
 
 export default function Presupuesto() {
   const { modalFormPartida, openModalFormPartida } = useUxStore();
+  const workingProject = useWorkingPresupuesto()
+  const {setWorkingPresupuesto, deletePartida} = useWorkingPresupuesto()
+  console.log('leWork',workingProject)
 
-  const {
-    presupuestos,
-    addPresupuesto,
-    deletePresupuesto,
-    workingPresupuesto,
-    setWorkingPresupuesto,
-    updatePresupuesto
-  } = usePresupuestoStore();
+  const { presupuestos, updatePresupuesto } = usePresupuestoStore();
+
   const { projectId } = useParams();
 
   useEffect(() => {
     const projectData = presupuestos.find(
       (project) => project.id === projectId
     );
-    setWorkingPresupuesto(projectData as Presupuesto);
+     
+    setWorkingPresupuesto(projectData as Presupuesto)
     
-  }, [presupuestos]);
+  }, []);
 
-  // const projectData = presupuestos.find((project) => project.id === projectId);
+  useEffect(()=>{
+    updatePresupuesto(workingProject)
+  },[workingProject])
 
-  // console.log("workingPresupuesto", workingPresupuesto);
 
   const handleAddPartida = () => {
     console.log("Inicio");
@@ -39,36 +38,40 @@ export default function Presupuesto() {
     console.log("fin");
   };
   
-  // const {nombreProyecto, fechaCreacion,descripcionProyecto, partida }= workingPresupuesto
+  const {id, nombreProyecto, fechaCreacion,descripcionProyecto, partida }= workingProject
   
 
   return (
     <section className="workspace">
       <PageTitle>Presupuesto de obra</PageTitle>
       <AddButton onClick={handleAddPartida}>Agregar Partida</AddButton>
-      {/* <h4>
+      <h4>
         { nombreProyecto} - { fechaCreacion}
       </h4>
-      <p>{ descripcionProyecto}</p> */}
+      <p>{ descripcionProyecto}</p>
       <div className="Presupuesto">
         <table>
           <thead>
+            <tr>
             <th>Clave</th>
             <th>Nombre</th>
             <th>Actions</th>
+
+            </tr>
           </thead>
           <tbody>
-            {/* {partida?.sort((a:Partida,b:Partida)=> a.clave.localeCompare(b.clave)).map((element:Partida) => {
+            {partida?.sort((a:Partida,b:Partida)=> a.clave.localeCompare(b.clave)).map((element:Partida) => {
               return (
                 <tr key={element.id}>
                   <td>{element.clave}</td> 
                   <td>{element.nombre}</td>
                   <td>
                     <button>+ Concepto </button>
+                    <button onClick={()=>deletePartida(element.id)}>Eliminar</button>
                   </td>
                 </tr>
               );
-            })} */}
+            })}
             
           </tbody>
         </table>
@@ -82,7 +85,7 @@ export default function Presupuesto() {
           openModal={modalFormPartida}
           setOpenModal={openModalFormPartida}
         >
-          <FormPartida projectId={workingPresupuesto?.id} />
+          <FormPartida projectId={id} />
         </AsideModal>
       )}
     </section>
