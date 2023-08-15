@@ -35,7 +35,7 @@ const ErrorMsg = () => {
 export default function FormInsumo() {
   const [editInsumo, setEditInsumo] = useState(false)
   const [formError, setFormError] = useState(false);
-  const { setOpenModal} = useUxStore()
+  const { openModalFormInsumo} = useUxStore()
 
   const { addInsumo, insumoToUpdate, setInsumoToUpdate, updateInsumo } = useInsumoStore();
   const [formData, setFormData] = useState<Insumo>(insumoDefaultValue);
@@ -110,12 +110,12 @@ export default function FormInsumo() {
     setFormData(insumoDefaultValue);
 
     setInsumoToUpdate(undefined)
-    setOpenModal(false);
+    openModalFormInsumo(false);
   };
 
   const onCancel = () => {
     onClear();
-    setOpenModal(false);
+    openModalFormInsumo(false);
   };
 
   return (

@@ -7,9 +7,9 @@ export default function AsideModal({
   children,
   title,
   widthModal,
-  clossable,
+  clossable,openModal, setOpenModal
 }: any) {
-  const { openModal, setOpenModal } = useUxStore();
+  // const { openModal, setOpenModal } = useUxStore();
 
   const classModal = () => {
     if (openModal) {

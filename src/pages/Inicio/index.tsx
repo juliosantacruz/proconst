@@ -5,18 +5,19 @@ import "./Inicio.scss";
 import PageTitle from "../../components/PageTitle";
 import AddButton from "../../components/AddButton";
 import { useUxStore } from "../../store/uxStore";
-import { usePresupuestoStore } from '../../store/projectStore'
+import { usePresupuestoStore } from "../../store/projectStore";
 import AsideModal from "../../components/AsideModal";
 import FormPresupuesto from "../../components/FormPresupuesto";
 
 export default function Index() {
-  const { openModal, setOpenModal } = useUxStore();
-  const { presupuestos, addPresupuesto, deletePresupuesto} = usePresupuestoStore()
-  console.log('presupuestos',presupuestos)
+  const { modalFormProject, openModalFormProject } = useUxStore();
+  const { presupuestos, addPresupuesto, deletePresupuesto } =
+    usePresupuestoStore();
+  console.log("presupuestos", presupuestos);
 
   const handleAddInsumo = () => {
     console.log("Inicio");
-    setOpenModal(true);
+    openModalFormProject(true);
     console.log("fin");
   };
   return (
@@ -32,18 +33,22 @@ export default function Index() {
         </AddButton>
       </div>
       <div className="Presupuestos">
-        {
-          presupuestos.map((presupuesto)=>{
-            return(<ProjectCard key={presupuesto.id} projectId={presupuesto.id}/>)
-          })
-        }
-        
-         
+        {presupuestos.map((presupuesto) => {
+          return (
+            <ProjectCard key={presupuesto.id} projectId={presupuesto.id} />
+          );
+        })}
       </div>
 
-      {openModal && (
-        <AsideModal widthModal={"40vw"} title="Agregar Proyecto" clossable={true}>
-          <FormPresupuesto/>
+      {modalFormProject && (
+        <AsideModal
+          widthModal={"40vw"}
+          title="Agregar Proyecto"
+          clossable={true}
+          openModal={modalFormProject}
+          setOpenModal={openModalFormProject}
+        >
+          <FormPresupuesto />
         </AsideModal>
       )}
     </section>

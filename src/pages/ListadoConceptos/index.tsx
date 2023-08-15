@@ -15,7 +15,7 @@ import { useUxStore } from "../../store/uxStore";
 import { Insumo } from "../../types/Insumo";
 
 export default function ListadoConceptos() {
-  const { openModal, setOpenModal } = useUxStore();
+  const { modalFormConcepto, openModalFormConcepto } = useUxStore();
   const { insumos } = useInsumoStore();
   const { conceptos, setConceptoToUpdate, deleteConcepto } = useConceptoStore();
 
@@ -65,12 +65,12 @@ export default function ListadoConceptos() {
 
   const handleAddConcepto = () => {
     console.log("Inicio");
-    setOpenModal(true);
+    openModalFormConcepto(true);
     console.log("fin");
   };
   const handleEdit = (element: Concepto) => {
     setConceptoToUpdate(element);
-    setOpenModal(true);
+    openModalFormConcepto(true);
     console.log(`se editar ${element.id}`);
   };
   const handleDelete = (id: string) => {
@@ -96,11 +96,13 @@ export default function ListadoConceptos() {
         rowKey={(record) => record.id}
         pagination={false}
       />
-      {openModal && (
+      {modalFormConcepto && (
         <AsideModal
           widthModal={"70vw"}
           clossable={false}
           title="Agregar Concepto"
+          openModal={modalFormConcepto}
+          setOpenModal={openModalFormConcepto}
         >
           <FormConcepto />
         </AsideModal>

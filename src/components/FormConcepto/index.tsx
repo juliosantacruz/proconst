@@ -48,7 +48,7 @@ export default function FormConcepto() {
   const [editConcepto, setEditConcepto] = useState(false);
   const [formError, setFormError] = useState(false);
   const [showConceptoTable, setShowConceptoTable] = useState(false);
-  const { setOpenModal } = useUxStore();
+  const { openModalFormConcepto } = useUxStore();
 
   const { addConcepto, conceptoToUpdate, setConceptoToUpdate, updateConcepto } =
     useConceptoStore();
@@ -185,7 +185,7 @@ export default function FormConcepto() {
     onClear();
     setFormError(false);
     setEditConcepto(false);
-    setOpenModal(false);
+    openModalFormConcepto(false);
   };
 
   const onChange = (event: any) => {
@@ -203,7 +203,7 @@ export default function FormConcepto() {
 
   const onCancel = () => {
     onClear();
-    setOpenModal(false);
+    openModalFormConcepto(false);
   };
 
   const addInputInsumo = (id: string) => {

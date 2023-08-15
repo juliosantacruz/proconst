@@ -14,7 +14,7 @@ const partidaDefaultValue = {
 };
 
 export default function FormPartida({projectId}:any) {
-  const { setOpenModal } = useUxStore();
+  const { openModalFormPartida } = useUxStore();
   const { addPartida,workingPresupuesto } = usePresupuestoStore()
   const [formData, setFormData] = useState<Partida>(partidaDefaultValue);
   
@@ -49,12 +49,12 @@ export default function FormPartida({projectId}:any) {
   };
 
   const onClear = () => {
-    setOpenModal(false);
+    openModalFormPartida(false);
   };
 
   const onCancel = () => {
     onClear();
-    setOpenModal(false);
+    openModalFormPartida(false);
   };
 
   

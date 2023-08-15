@@ -9,7 +9,7 @@ import FormPartida from "../../components/FormPartida";
 import { Partida, Presupuesto } from "../../types/Presupuesto";
 
 export default function Presupuesto() {
-  const { openModal, setOpenModal } = useUxStore();
+  const { modalFormPartida, openModalFormPartida } = useUxStore();
 
   const {
     presupuestos,
@@ -35,7 +35,7 @@ export default function Presupuesto() {
 
   const handleAddPartida = () => {
     console.log("Inicio");
-    setOpenModal(true);
+    openModalFormPartida(true);
     console.log("fin");
   };
   
@@ -74,11 +74,13 @@ export default function Presupuesto() {
         </table>
       </div>
 
-      {openModal && (
+      {modalFormPartida && (
         <AsideModal
           widthModal={"40vw"}
           title="Agregar Insumo"
           clossable={false}
+          openModal={modalFormPartida}
+          setOpenModal={openModalFormPartida}
         >
           <FormPartida projectId={workingPresupuesto?.id} />
         </AsideModal>

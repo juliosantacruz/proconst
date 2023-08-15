@@ -28,7 +28,7 @@ const ErrorMsg = () => {
 };
 
 export default function FormPresupuesto() {
-  const { setOpenModal } = useUxStore();
+  const { openModalFormProject } = useUxStore();
   const {addPresupuesto} = usePresupuestoStore()
   const [formData, setFormData] = useState<Presupuesto>(
     presupuestoDefaultValue
@@ -70,12 +70,12 @@ export default function FormPresupuesto() {
 
   const onClear = () => {
     setFormData(presupuestoDefaultValue);
-    setOpenModal(false);
+    openModalFormProject(false);
   };
 
   const onCancel = () => {
     onClear();
-    setOpenModal(false);
+    openModalFormProject(false);
   };
 
   return (
