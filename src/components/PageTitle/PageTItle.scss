@@ -1,8 +1,11 @@
 .pageTitle{
-     
-    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 98%;
     // height: 50px;
     border-bottom: 1px solid black;
-        margin: 0 10px;
+    margin: 0 10px;
     background: #dfdfdf00;;
 }

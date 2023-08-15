@@ -22,8 +22,7 @@ export default function Index() {
   };
   return (
     <section className="workspace">
-      <PageTitle>Mis Presupuestos</PageTitle>
-      <div className="btn-header">
+      <PageTitle title="Mis Presupuestos">
         <AddButton
           onClick={handleAddInsumo}
           bgColor="rgb(31, 57, 204)"
@@ -31,7 +30,8 @@ export default function Index() {
         >
           Agregar Proyecto
         </AddButton>
-      </div>
+      </PageTitle>
+      <div className="btn-header"></div>
       <div className="Presupuestos">
         {presupuestos.map((presupuesto) => {
           return (

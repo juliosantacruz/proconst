@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import './PageTItle.scss'
 
 type PageTitleProps={
-    children:string
+  title:string, 
+  children: ReactNode
 }
 
-export default function PageTitle({children}:PageTitleProps) {
+export default function PageTitle({title, children}:PageTitleProps) {
   return (
     <div className='pageTitle'>
-        <h2>{children}</h2>
+        <h2>{title}</h2>
+        <div className='buttonTitle'>{children}</div>
     </div>
   )
 }

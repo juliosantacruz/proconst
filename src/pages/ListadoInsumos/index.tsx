@@ -22,8 +22,7 @@ export default function ListadoInsumos() {
 
   return (
     <section className="workspace">
-      <PageTitle>Mis Insumos</PageTitle>
-      <div className="btn-header">
+      <PageTitle title="Mis Insumos">
         <AddButton
           onClick={handleAddInsumo}
           bgColor="rgb(31, 57, 204)"
@@ -31,6 +30,9 @@ export default function ListadoInsumos() {
         >
           Agregar Insumo
         </AddButton>
+      </PageTitle>
+      <div className="btn-header">
+        
       </div>
 
       <div className="insumosGroup">

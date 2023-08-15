@@ -79,8 +79,7 @@ export default function ListadoConceptos() {
 
   return (
     <section className="workspace">
-      <PageTitle>Mis Conceptos</PageTitle>
-      <div className="btn-header">
+      <PageTitle title="Mis Conceptos">
         <AddButton
           onClick={handleAddConcepto}
           bgColor="rgb(31, 57, 204)"
@@ -88,6 +87,9 @@ export default function ListadoConceptos() {
         >
           Agregar Concepto
         </AddButton>
+      </PageTitle>
+      <div className="btn-header">
+        
       </div>
 
       <Table
