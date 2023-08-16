@@ -11,15 +11,23 @@ import AsideModal from "../../components/AsideModal";
 import FormPartida from "../../components/FormPartida";
 import { Partida, Presupuesto } from "../../types/Presupuesto";
 import { setFormat } from "../../utils/CurrencyFormat";
+import FormInsumo from "../../components/FormInsumo";
+import FormConcepto from "../../components/FormConcepto";
 
 export default function Presupuesto() {
-  const { modalFormPartida, openModalFormPartida } = useUxStore();
+  const {
+    modalFormPartida,
+    openModalFormPartida,
+    modalFormConcepto,
+    openModalFormConcepto,
+    modalFormInsumo,
+    openModalFormInsumo,
+  } = useUxStore();
   const workingProject = useWorkingPresupuesto();
-  const { setWorkingPresupuesto, deletePartida } = useWorkingPresupuesto();
+  const { setWorkingPresupuesto, deletePartida,setWorkingPartida } = useWorkingPresupuesto();
   console.log("leWork", workingProject);
 
   const { presupuestos, updatePresupuesto } = usePresupuestoStore();
-
   const { projectId } = useParams();
 
   useEffect(() => {
@@ -45,7 +53,7 @@ export default function Presupuesto() {
     nombreProyecto,
     fechaCreacion,
     descripcionProyecto,
-    partida,
+    partidas,
     montoTotal,
   } = workingProject;
 
@@ -70,21 +78,52 @@ export default function Presupuesto() {
             </tr>
           </thead>
           <tbody>
-            {partida
+            {partidas
               ?.sort((a: Partida, b: Partida) => a.clave.localeCompare(b.clave))
               .map((element: Partida) => {
+                const addConcepto=()=>{
+                  setWorkingPartida(element)
+                  openModalFormConcepto(true)
+                }
                 return (
+                  <>
                   <tr key={element.id}>
                     <td>{element.clave}</td>
                     <td>{element.nombre}</td>
                     <td>{setFormat(element.montoPartida as number)}</td>
                     <td>
-                      <button>+ Concepto </button>
+                      <button onClick={addConcepto}>
+                        + Concepto{" "}
+                      </button>
                       <button onClick={() => deletePartida(element.id)}>
                         Eliminar
                       </button>
                     </td>
                   </tr>
+                  
+                  {element.listadoConceptos ? 
+                  element.listadoConceptos.map((concepto)=>{
+
+                    return(
+                      <tr key={concepto.conceptoId}>
+                    <td>vamos bien</td>
+                    {/* <td>{element.nombre}</td>
+                    <td>{setFormat(element.montoPartida as number)}</td>
+                    <td>
+                      <button onClick={addConcepto}>
+                        + Concepto{" "}
+                      </button>
+                      <button onClick={() => deletePartida(element.id)}>
+                        Eliminar
+                      </button>
+                    </td> */}
+                  </tr>
+                    )
+                  })
+                  : null
+                }
+                  
+                  </>
                 );
               })}
           </tbody>
@@ -94,12 +133,34 @@ export default function Presupuesto() {
       {modalFormPartida && (
         <AsideModal
           widthModal={"40vw"}
-          title="Agregar Insumo"
+          title="Agregar Partida"
           clossable={false}
           openModal={modalFormPartida}
           setOpenModal={openModalFormPartida}
         >
           <FormPartida projectId={id} />
+        </AsideModal>
+      )}
+      {modalFormConcepto && (
+        <AsideModal
+          widthModal={"70vw"}
+          clossable={false}
+          title="Agregar Concepto"
+          openModal={modalFormConcepto}
+          setOpenModal={openModalFormConcepto}
+        >
+          <FormConcepto ProjectId={projectId}/>
+        </AsideModal>
+      )}
+      {modalFormInsumo && (
+        <AsideModal
+          widthModal={"40vw"}
+          title="Agregar Insumo"
+          clossable={false}
+          openModal={modalFormInsumo}
+          setOpenModal={openModalFormInsumo}
+        >
+          <FormInsumo />
         </AsideModal>
       )}
     </section>

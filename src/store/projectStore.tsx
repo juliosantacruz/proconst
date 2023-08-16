@@ -2,7 +2,8 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { Insumo } from "../types/Insumo";
 import { Concepto } from "../types/Concepto";
-import { Partida, Presupuesto } from "../types/Presupuesto";
+import { ListadoConcepto, Partida, Presupuesto } from "../types/Presupuesto";
+import ListadoConceptos from "../pages/ListadoConceptos";
 
 interface InsumoState {
   insumos: Insumo[];
@@ -21,6 +22,7 @@ interface ConceptoState {
   setConceptoToUpdate: (concepto: Concepto | undefined) => void;
   updateConcepto: (concepto: Concepto) => void;
 }
+
 interface PresupuestoState {
   presupuestos: Presupuesto[];
   addPresupuesto: (presupuesto: Presupuesto) => void;
@@ -35,7 +37,20 @@ interface WorkingPresupuesto extends Presupuesto {
   setWorkingPresupuesto:(presupuesto:Presupuesto)=>void
   addPartida:(partida:Partida)=>void
   deletePartida:(id:string)=>void
+  workingPartida:Partida
+  setWorkingPartida:(partida:Partida)=>void
+  addConceptoPartida:(conceptoPartida:ListadoConcepto)=>void
 }
+
+const emptyPartida:Partida={
+  id:'',
+  clave:'',
+  nombre:'',
+  montoPartida:0,
+  listadoConceptos: [] 
+
+}
+
 
 export const useInsumoStore = create<InsumoState>()(
   persist(
@@ -90,7 +105,7 @@ export const useConceptoStore = create<ConceptoState>()(
       },
       updateConcepto: (updateConcepto) =>
         set((state) => ({
-          conceptos: state.conceptos.map((concepto) =>
+          conceptos: state.conceptos.map((concepto:Concepto) =>
             concepto.id === updateConcepto.id ? updateConcepto : concepto
           ),
         })),
@@ -118,32 +133,21 @@ export const usePresupuestoStore = create<PresupuestoState>()(
         }));
       },
       workingPresupuesto: undefined,
-      setWorkingPresupuesto: (presupuesto) => {
+      setWorkingPresupuesto: (presupuesto:Presupuesto) => {
         set(() => ({
           workingPresupuesto: presupuesto,
         }));
       },
       addPartida: (id: string, partida: Partida) => {
-        // set((state) => ({
-        //   ...state.workingPresupuesto,
-        //   workingPresupuesto: {
-        //     ...state.workingPresupuesto,
-        //     partida: [
-        //       ...(state.workingPresupuesto.partida as Partida[]),
-        //       partida,
-        //     ],
-        //   },
-        // }));
-
         set((state) => ({
           presupuestos: state.presupuestos.map((presupuesto: Presupuesto) =>
             presupuesto.id === id
-              ? { ...presupuesto, partida: [...presupuesto.partida, partida] }
+              ? { ...presupuesto, partidas: [...presupuesto.partidas, partida] }
               : presupuesto
           ),
         }));
       },
-      updatePresupuesto: (newPresupuesto) =>
+      updatePresupuesto: (newPresupuesto:Presupuesto) =>
         set((state) => ({
           presupuestos: state.presupuestos.map((presupuesto) =>
             presupuesto.id === newPresupuesto.id ? newPresupuesto : presupuesto
@@ -161,14 +165,14 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
   persist(
     (set) => ({
       setWorkingPresupuesto:(presupuesto)=>{
-        set((state)=>({
+        set(()=>({
           id:presupuesto.id,
           fechaCreacion:presupuesto.fechaCreacion,
           nombreProyecto:presupuesto.nombreProyecto,
           descripcionProyecto: presupuesto.descripcionProyecto,
           domicilioProyecto: presupuesto.domicilioProyecto,
           clienteProyecto: presupuesto.clienteProyecto,
-          partida: presupuesto.partida,
+          partidas: presupuesto.partidas,
           montoTotal: presupuesto.montoTotal,
         }))
       },
@@ -178,20 +182,42 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
       descripcionProyecto: "",
       domicilioProyecto: "",
       clienteProyecto: "",
-      partida: [],
-      addPartida:(partida)=>{
+      partidas: [],
+      montoTotal: 0,
+      addPartida:(partida)=>
         set((state)=>({
-          partida:[...state.partida, partida]
-        }))
-      },
-      deletePartida:(id)=>{
-        set((state)=>({
-          partida: state.partida.filter(
+          partidas:[...(state.partidas as Partida[]), partida]
+        })),
+      deletePartida:(id)=>     
+      set((state)=>({
+          partidas: state.partidas.filter(
             (partida)=> partida.id !== id
           )
+        })),
+      workingPartida:emptyPartida,
+      setWorkingPartida:(partida:Partida)=>{
+        set(()=>({
+          workingPartida:partida
         }))
       },
-      montoTotal: 0,
+      addConceptoPartida:(conceptoPartida:ListadoConcepto)=>{
+        set((state)=>({
+           ...state.workingPartida,
+           workingPartida:{
+            ...state.workingPartida,
+            listadoConceptos:[...(state.workingPartida.listadoConceptos as any), 
+              conceptoPartida ]
+           }
+        })),
+        set((state)=>({
+          partidas: state.partidas.filter(
+            (partida)=> partida.id !== state.workingPartida.id
+          )
+        })),
+        set((state)=>({
+          partidas: [...state.partidas, state.workingPartida]
+        }))
+      }
     }),
     {
       name: "working-presupuesto-storage",

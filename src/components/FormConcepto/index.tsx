@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { v4 } from "uuid";
 
 // Local Reference
-import { useInsumoStore, useConceptoStore } from "../../store/projectStore";
+import { useInsumoStore, useConceptoStore, useWorkingPresupuesto } from "../../store/projectStore";
 import { useUxStore } from "../../store/uxStore";
 import { setFormat } from "../../utils/CurrencyFormat";
 import { Unidades } from "../../utils/SelectInputOptions";
@@ -18,7 +18,7 @@ import type {
   FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
-import { Concepto, PrecioUnitario } from "../../types/Concepto";
+import { Concepto, ListadoInsumos } from "../../types/Concepto";
 import { Insumo } from "../../types/Insumo";
 
 // Styles
@@ -26,13 +26,13 @@ import "./FormConcepto.scss";
 import dayjs from "dayjs";
 
 const conceptoDefaultValue = {
-  id: v4(),
+  id: "",
+  proyectoId: "",
+  fechaCreacion: "",
   clave: "",
   descripcion: "",
   unidad: "",
-  precioUnitario: [],
-  fechaCreacion: "",
-  proyectoId: "",
+  listadoInsumos: [],
 };
 
 const ErrorMsg = () => {
@@ -44,18 +44,21 @@ const ErrorMsg = () => {
   );
 };
 
-export default function FormConcepto() {
+export default function FormConcepto({ ProjectId }: any) {
   const [editConcepto, setEditConcepto] = useState(false);
   const [formError, setFormError] = useState(false);
   const [showConceptoTable, setShowConceptoTable] = useState(false);
+  const [formData, setFormData] = useState<Concepto>(conceptoDefaultValue);
   const { openModalFormConcepto } = useUxStore();
-
   const { addConcepto, conceptoToUpdate, setConceptoToUpdate, updateConcepto } =
     useConceptoStore();
+  const {addConceptoPartida}= useWorkingPresupuesto()
   const { insumos } = useInsumoStore();
-  const [formData, setFormData] = useState<Concepto>(conceptoDefaultValue);
 
   console.log("to update:", conceptoToUpdate);
+  console.log("projectId:", ProjectId);
+  console.log("formData:", formData);
+
   useEffect(() => {
     if (conceptoToUpdate !== undefined) {
       setFormData(conceptoToUpdate);
@@ -63,11 +66,12 @@ export default function FormConcepto() {
     } else {
       setFormData({
         id: v4(),
+        proyectoId: ProjectId,
+        fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
         clave: "",
         descripcion: "",
         unidad: "",
-        precioUnitario: [],
-        fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
+        listadoInsumos: [],
       });
     }
   }, []);
@@ -159,7 +163,7 @@ export default function FormConcepto() {
     },
   ];
 
-  //TEst
+  //Test
 
   const onSubmit = (event: any) => {
     event.preventDefault();
@@ -169,7 +173,7 @@ export default function FormConcepto() {
       formData.clave === "" ||
       formData.descripcion === "" ||
       formData.unidad === "" ||
-      formData.precioUnitario?.length === 0
+      formData.listadoInsumos?.length === 0
     ) {
       console.log(formData);
       setFormError(true);
@@ -177,9 +181,10 @@ export default function FormConcepto() {
     }
 
     if (editConcepto) {
-      updateConcepto(formData)
+      updateConcepto(formData);
     } else {
       addConcepto(formData);
+      addConceptoPartida({conceptoId:formData.id})
     }
 
     onClear();
@@ -207,47 +212,47 @@ export default function FormConcepto() {
   };
 
   const addInputInsumo = (id: string) => {
-    const oldInsumo: PrecioUnitario[] | undefined = formData.precioUnitario;
+    const oldInsumo: ListadoInsumos[] | undefined = formData.listadoInsumos;
     const newInsumo = {
       insumoId: id,
       cantidad: 0,
     };
     if (
-      formData.precioUnitario?.find((pu) => pu.insumoId === newInsumo.insumoId)
+      formData.listadoInsumos?.find((pu) => pu.insumoId === newInsumo.insumoId)
     ) {
       console.log("insumo ya existe");
       return;
     } else {
       setFormData({
         ...formData,
-        precioUnitario: [...(oldInsumo as []), newInsumo],
+        listadoInsumos: [...(oldInsumo as []), newInsumo],
       });
     }
   };
 
   const onCantidad = (event: any, index: number) => {
     const cantidad = Number(event.target.value);
-    const newArr = (formData.precioUnitario as []).map((insumo, i) => {
+    const newArr = (formData.listadoInsumos as []).map((insumo, i) => {
       if (index === i) {
         console.log(typeof insumo);
-        return { ...(insumo as PrecioUnitario), [event.target.name]: cantidad };
+        return { ...(insumo as ListadoInsumos), [event.target.name]: cantidad };
       } else {
         return insumo;
       }
     });
     setFormData({
       ...formData,
-      precioUnitario: newArr,
+      listadoInsumos: newArr,
     });
   };
 
   // Mandar a utils
-  const insumoData = (arrIsumos: Insumo[], findInsumo: PrecioUnitario) =>
+  const insumoData = (arrIsumos: Insumo[], findInsumo: ListadoInsumos) =>
     arrIsumos.find((element) => element.id === findInsumo.insumoId);
 
   const arrPrecioTotal: number[] = [];
 
-  (formData.precioUnitario as [])?.map((element) => {
+  (formData.listadoInsumos as [])?.map((element) => {
     const insumoPu = insumoData(insumos, element);
     const total =
       Number(element["cantidad"]) * Number((insumoPu as Insumo)["precio"]);
@@ -304,7 +309,7 @@ export default function FormConcepto() {
         </div>
       </div>
       <div className="inputInsumos">
-        {(formData.precioUnitario as PrecioUnitario[]).length > 0 ? (
+        {(formData.listadoInsumos as ListadoInsumos[])?.length > 0 ? (
           <table>
             <thead>
               <tr>
@@ -318,7 +323,7 @@ export default function FormConcepto() {
             </thead>
 
             <tbody>
-              {formData.precioUnitario?.map((insumo, index) => {
+              {formData.listadoInsumos?.map((insumo, index) => {
                 const insumoPU: any = insumoData(insumos, insumo);
 
                 console.log("insumoPU", insumoPU);

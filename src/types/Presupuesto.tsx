@@ -1,11 +1,16 @@
 import { Concepto } from "./Concepto";
 
+
+export interface ListadoConcepto{
+  conceptoId?:string,
+  cantidad?:number,
+}
 export interface Partida {
   id: string;
   clave: string;
   nombre: string;
   montoPartida?: number;
-  listadoConceptos?: Concepto[];
+  listadoConceptos?: ListadoConcepto[];
 }
 export interface Presupuesto {
   id: string;
@@ -14,7 +19,7 @@ export interface Presupuesto {
   descripcionProyecto: string;
   domicilioProyecto: string;
   clienteProyecto: string;
-  partida: Partida[];
+  partidas: Partida[];
   montoTotal: number;
 }
 

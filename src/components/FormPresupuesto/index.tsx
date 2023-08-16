@@ -15,7 +15,7 @@ const presupuestoDefaultValue = {
   descripcionProyecto:"",
   domicilioProyecto: "",
   clienteProyecto: "",
-  partida: [],
+  partidas: [],
   montoTotal: 0.0,
 };
 
@@ -47,7 +47,7 @@ export default function FormPresupuesto() {
       descripcionProyecto:'',
       domicilioProyecto: "",
       clienteProyecto: "",
-      partida: [],
+      partidas: [],
       montoTotal: 0.0,
     });
   }, []);
