@@ -39,7 +39,7 @@ interface WorkingPresupuesto extends Presupuesto {
   deletePartida: (id: string) => void;
   workingPartida: Partida  ;
   setWorkingPartida:(partida:Partida)=>void
-  // addConceptoPartida:(partidaId:string, conceptoPartida:ListadoConcepto)=>void
+  addConceptoPartida:(conceptoPartida:ListadoConcepto)=>void
 }
 
 const emptyPartida: Partida = {

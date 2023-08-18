@@ -33,6 +33,7 @@ const conceptoDefaultValue = {
   descripcion: "",
   unidad: "",
   listadoInsumos: [],
+  precioUnitario:0
 };
 
 const ErrorMsg = () => {
@@ -72,6 +73,7 @@ export default function FormConcepto({ ProjectId }: any) {
         descripcion: "",
         unidad: "",
         listadoInsumos: [],
+        precioUnitario:0
       });
     }
   }, []);
@@ -229,6 +231,16 @@ export default function FormConcepto({ ProjectId }: any) {
       });
     }
   };
+  const onPrecioUnitario =( )=>{
+      (formData.listadoInsumos as [])?.map((element) => {
+    const insumoPu = insumoData(insumos, element);
+    const total =
+      Number(element["cantidad"]) * Number((insumoPu as Insumo)["precio"]);
+    arrPrecioTotal.push(total);
+  });
+  const precioTotal = arrPrecioTotal.reduce((a, b) => a + b, 0);
+  return precioTotal  
+}
 
   const onCantidad = (event: any, index: number) => {
     const cantidad = Number(event.target.value);
@@ -240,9 +252,19 @@ export default function FormConcepto({ ProjectId }: any) {
         return insumo;
       }
     });
+    const pUnitario:number[]=[]
+    newArr.map((element) => {
+      const insumoPu = insumoData(insumos, element);
+      const total =
+        Number(element["cantidad"]) * Number((insumoPu as Insumo)["precio"]);
+        pUnitario.push(total);
+    });
+    const precioTotal = pUnitario.reduce((a, b) => a + b, 0);
+
     setFormData({
       ...formData,
       listadoInsumos: newArr,
+      precioUnitario:precioTotal
     });
   };
 
@@ -252,13 +274,7 @@ export default function FormConcepto({ ProjectId }: any) {
 
   const arrPrecioTotal: number[] = [];
 
-  (formData.listadoInsumos as [])?.map((element) => {
-    const insumoPu = insumoData(insumos, element);
-    const total =
-      Number(element["cantidad"]) * Number((insumoPu as Insumo)["precio"]);
-    arrPrecioTotal.push(total);
-  });
-  const precioTotal = arrPrecioTotal.reduce((a, b) => a + b, 0);
+
 
   return (
     <form className="AddConceptoForm" onSubmit={(event) => onSubmit(event)}>
@@ -305,7 +321,7 @@ export default function FormConcepto({ ProjectId }: any) {
         </div>
         <div className="input precio">
           <label htmlFor="unidad">Precio</label>
-          <p>{setFormat(precioTotal)}</p>
+          <p>{setFormat(onPrecioUnitario())}</p>
         </div>
       </div>
       <div className="inputInsumos">

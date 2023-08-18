@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import {
+  useConceptoStore,
+  useInsumoStore,
   usePresupuestoStore,
   useWorkingPresupuesto,
 } from "../../store/projectStore";
@@ -9,10 +11,15 @@ import AddButton from "../../components/AddButton";
 import { useUxStore } from "../../store/uxStore";
 import AsideModal from "../../components/AsideModal";
 import FormPartida from "../../components/FormPartida";
-import { Partida, Presupuesto } from "../../types/Presupuesto";
+import { ListadoConcepto, Partida, Presupuesto } from "../../types/Presupuesto";
 import { setFormat } from "../../utils/CurrencyFormat";
 import FormInsumo from "../../components/FormInsumo";
 import FormConcepto from "../../components/FormConcepto";
+import { Insumo } from "../../types/Insumo";
+import { Concepto } from "../../types/Concepto";
+import './Presupuesto.scss'
+
+
 
 export default function Presupuesto() {
   const {
@@ -24,11 +31,33 @@ export default function Presupuesto() {
     openModalFormInsumo,
   } = useUxStore();
   const workingProject = useWorkingPresupuesto();
-  const { setWorkingPresupuesto, deletePartida,setWorkingPartida } = useWorkingPresupuesto();
+  const { setWorkingPresupuesto, deletePartida, setWorkingPartida } =
+    useWorkingPresupuesto();
+    const { presupuestos, updatePresupuesto } = usePresupuestoStore();
+    const { projectId } = useParams();
+
+  const { insumos } = useInsumoStore();
+  const { conceptos } = useConceptoStore();
+  const allConceptos = conceptos.filter((concepto)=>concepto.proyectoId===projectId)
+  console.log(allConceptos)
+
+  type FindElement = {
+    id: string;
+    arr: Insumo | Concepto;
+  };
+  const findConcepto = (id: string, arr:Concepto[]) => {
+    // const array = new Array(arr);
+    const element = arr.find((element) => element.id === id);
+    return element;
+  };
+  const findInsumo = (id: string, arr:Insumo[]) => {
+    // const array = new Array(arr);
+    const element = arr.find((element) => element.id === id);
+    return element;
+  };
+
   console.log("leWork", workingProject);
 
-  const { presupuestos, updatePresupuesto } = usePresupuestoStore();
-  const { projectId } = useParams();
 
   useEffect(() => {
     const projectData = presupuestos.find(
@@ -68,11 +97,14 @@ export default function Presupuesto() {
       </h4>
       <p>{descripcionProyecto}</p>
       <div className="Presupuesto">
-        <table>
+        <table className="Presupuesto">
           <thead>
             <tr>
               <th>Clave</th>
-              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Unidad</th>
+              <th>PU</th>
+              <th>Canidad</th>
               <th>Monto</th>
               <th>Actions</th>
             </tr>
@@ -81,48 +113,58 @@ export default function Presupuesto() {
             {partidas
               ?.sort((a: Partida, b: Partida) => a.clave.localeCompare(b.clave))
               .map((element: Partida) => {
-                const addConcepto=()=>{
-                  setWorkingPartida(element)
-                  openModalFormConcepto(true)
-                }
+                const addConcepto = () => {
+                  setWorkingPartida(element);
+                  openModalFormConcepto(true);
+                };
                 return (
                   <>
-                  <tr key={element.id}>
-                    <td>{element.clave}</td>
-                    <td>{element.nombre}</td>
-                    <td>{setFormat(element.montoPartida as number)}</td>
-                    <td>
-                      <button onClick={addConcepto}>
-                        + Concepto{" "}
-                      </button>
-                      <button onClick={() => deletePartida(element.id)}>
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                  
-                  {element.listadoConceptos ? 
-                  element.listadoConceptos.map((concepto)=>{
+                    <tr key={element.id}>
+                      <td>{element.clave}</td>
+                      <td>{element.nombre}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
 
-                    return(
-                      <tr key={concepto.conceptoId}>
-                    <td>vamos bien</td>
-                    {/* <td>{element.nombre}</td>
-                    <td>{setFormat(element.montoPartida as number)}</td>
-                    <td>
-                      <button onClick={addConcepto}>
-                        + Concepto{" "}
-                      </button>
-                      <button onClick={() => deletePartida(element.id)}>
-                        Eliminar
-                      </button>
-                    </td> */}
-                  </tr>
-                    )
-                  })
-                  : null
-                }
-                  
+                      <td>{setFormat(element.montoPartida as number)}</td>
+                      <td>
+                        <button onClick={addConcepto}>+ Concepto </button>
+                        <button onClick={() => deletePartida(element.id)}>
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+
+                    {element.listadoConceptos
+                      ? element.listadoConceptos.map((concepto) => {
+                          if (concepto) {
+                            const leConcept = findConcepto(
+                              (concepto.conceptoId as string),
+                              allConceptos
+                            );
+                             
+                           
+                            return (
+                              <tr key={concepto.conceptoId}>
+                                 
+                                <td>{leConcept?.clave}</td>
+                                <td>{leConcept?.descripcion}</td>
+                                <td>{leConcept?.unidad}</td>
+                                <td>{setFormat(leConcept?.precioUnitario as number)}</td>
+
+                                <td>{leConcept?.cantidad}</td>
+                                <td>$ Monto </td>
+                                 
+                                <td><button>editar</button><button>Eliminar</button></td>
+
+                              
+                              </tr>
+                            );
+                          } else {
+                            null;
+                          }
+                        })
+                      : null}
                   </>
                 );
               })}
@@ -149,7 +191,7 @@ export default function Presupuesto() {
           openModal={modalFormConcepto}
           setOpenModal={openModalFormConcepto}
         >
-          <FormConcepto ProjectId={projectId}/>
+          <FormConcepto ProjectId={projectId} />
         </AsideModal>
       )}
       {modalFormInsumo && (
