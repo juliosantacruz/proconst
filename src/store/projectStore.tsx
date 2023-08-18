@@ -34,23 +34,21 @@ interface PresupuestoState {
 }
 
 interface WorkingPresupuesto extends Presupuesto {
-  setWorkingPresupuesto:(presupuesto:Presupuesto)=>void
-  addPartida:(partida:Partida)=>void
-  deletePartida:(id:string)=>void
-  workingPartida:Partida
+  setWorkingPresupuesto: (presupuesto: Presupuesto) => void;
+  addPartida: (partida: Partida) => void;
+  deletePartida: (id: string) => void;
+  workingPartida: Partida  ;
   setWorkingPartida:(partida:Partida)=>void
-  addConceptoPartida:(conceptoPartida:ListadoConcepto)=>void
+  // addConceptoPartida:(partidaId:string, conceptoPartida:ListadoConcepto)=>void
 }
 
-const emptyPartida:Partida={
-  id:'',
-  clave:'',
-  nombre:'',
-  montoPartida:0,
-  listadoConceptos: [] 
-
-}
-
+const emptyPartida: Partida = {
+  id: "",
+  clave: "",
+  nombre: "",
+  montoPartida: 0,
+  listadoConceptos: [],
+};
 
 export const useInsumoStore = create<InsumoState>()(
   persist(
@@ -105,7 +103,7 @@ export const useConceptoStore = create<ConceptoState>()(
       },
       updateConcepto: (updateConcepto) =>
         set((state) => ({
-          conceptos: state.conceptos.map((concepto:Concepto) =>
+          conceptos: state.conceptos.map((concepto: Concepto) =>
             concepto.id === updateConcepto.id ? updateConcepto : concepto
           ),
         })),
@@ -133,7 +131,7 @@ export const usePresupuestoStore = create<PresupuestoState>()(
         }));
       },
       workingPresupuesto: undefined,
-      setWorkingPresupuesto: (presupuesto:Presupuesto) => {
+      setWorkingPresupuesto: (presupuesto: Presupuesto) => {
         set(() => ({
           workingPresupuesto: presupuesto,
         }));
@@ -147,7 +145,7 @@ export const usePresupuestoStore = create<PresupuestoState>()(
           ),
         }));
       },
-      updatePresupuesto: (newPresupuesto:Presupuesto) =>
+      updatePresupuesto: (newPresupuesto: Presupuesto) =>
         set((state) => ({
           presupuestos: state.presupuestos.map((presupuesto) =>
             presupuesto.id === newPresupuesto.id ? newPresupuesto : presupuesto
@@ -164,17 +162,17 @@ export const usePresupuestoStore = create<PresupuestoState>()(
 export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
   persist(
     (set) => ({
-      setWorkingPresupuesto:(presupuesto)=>{
-        set(()=>({
-          id:presupuesto.id,
-          fechaCreacion:presupuesto.fechaCreacion,
-          nombreProyecto:presupuesto.nombreProyecto,
+      setWorkingPresupuesto: (presupuesto) => {
+        set(() => ({
+          id: presupuesto.id,
+          fechaCreacion: presupuesto.fechaCreacion,
+          nombreProyecto: presupuesto.nombreProyecto,
           descripcionProyecto: presupuesto.descripcionProyecto,
           domicilioProyecto: presupuesto.domicilioProyecto,
           clienteProyecto: presupuesto.clienteProyecto,
           partidas: presupuesto.partidas,
           montoTotal: presupuesto.montoTotal,
-        }))
+        }));
       },
       id: "",
       fechaCreacion: "",
@@ -184,29 +182,27 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
       clienteProyecto: "",
       partidas: [],
       montoTotal: 0,
-      addPartida:(partida)=>
-        set((state)=>({
-          partidas:[...(state.partidas as Partida[]), partida]
+      addPartida: (partida) =>
+        set((state) => ({
+          partidas: [...(state.partidas as Partida[]), partida],
         })),
-      deletePartida:(id)=>     
-      set((state)=>({
-          partidas: state.partidas.filter(
-            (partida)=> partida.id !== id
-          )
+      deletePartida: (id) =>
+        set((state) => ({
+          partidas: state.partidas.filter((partida) => partida.id !== id),
         })),
-      workingPartida:emptyPartida,
+      workingPartida: emptyPartida,
       setWorkingPartida:(partida:Partida)=>{
         set(()=>({
           workingPartida:partida
         }))
       },
+      // addConceptoPartida:(partidaId:string, conceptoPartida:ListadoConcepto)=>
+
       addConceptoPartida:(conceptoPartida:ListadoConcepto)=>{
         set((state)=>({
-           ...state.workingPartida,
            workingPartida:{
-            ...state.workingPartida,
-            listadoConceptos:[...(state.workingPartida.listadoConceptos as any), 
-              conceptoPartida ]
+            ...state.workingPartida, 
+            listadoConceptos:[...(state.workingPartida?.listadoConceptos as any), conceptoPartida] 
            }
         })),
         set((state)=>({
