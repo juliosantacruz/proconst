@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import { Insumo } from '../../types/Insumo';
 import { FilterValue, SorterResult } from 'antd/es/table/interface';
 import { setFormat } from '../../utils/CurrencyFormat';
-import { PrecioUnitario } from '../../types/Concepto';
 
 export default function TableInsumoAddConcepto({insumosData, addInputInsumo}:any) {
     const [filteredInfo, setFilteredInfo] = useState<
