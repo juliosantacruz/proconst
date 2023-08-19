@@ -31,7 +31,7 @@ export default function Presupuesto() {
     openModalFormInsumo,
   } = useUxStore();
   const workingProject = useWorkingPresupuesto();
-  const { setWorkingPresupuesto, deletePartida, setWorkingPartida } =
+  const { setWorkingPresupuesto, deletePartida, setWorkingPartida, addCantidadConcepto } =
     useWorkingPresupuesto();
     const { presupuestos, updatePresupuesto } = usePresupuestoStore();
     const { projectId } = useParams();
@@ -110,8 +110,8 @@ export default function Presupuesto() {
             </tr>
           </thead>
           <tbody>
-            {partidas
-              ?.sort((a: Partida, b: Partida) => a.clave.localeCompare(b.clave))
+            {partidas &&
+              partidas.sort((a: Partida, b: Partida) => a.clave.localeCompare(b.clave))
               .map((element: Partida) => {
                 const addConcepto = () => {
                   setWorkingPartida(element);
@@ -136,14 +136,24 @@ export default function Presupuesto() {
                     </tr>
 
                     {element.listadoConceptos
-                      ? element.listadoConceptos.map((concepto) => {
+                      ? element.listadoConceptos.map((concepto, index) => {
                           if (concepto) {
                             const leConcept = findConcepto(
                               (concepto.conceptoId as string),
                               allConceptos
                             );
-                             
-                           
+                   
+                      const onCantidad = (event:any, index:number)=>{
+                      
+                        let cantidadConcepto = (event.target.value as number)
+                          if(cantidadConcepto<0){
+                            cantidadConcepto= 0
+                          }
+                          addCantidadConcepto((concepto.conceptoId as string),cantidadConcepto, element.id)
+                    
+                        }     
+                        const montoConcepto = (concepto.cantidad as number) *(leConcept?.precioUnitario as number)
+                        console.log(montoConcepto) 
                             return (
                               <tr key={concepto.conceptoId}>
                                  
@@ -152,8 +162,10 @@ export default function Presupuesto() {
                                 <td>{leConcept?.unidad}</td>
                                 <td>{setFormat(leConcept?.precioUnitario as number)}</td>
 
-                                <td>{leConcept?.cantidad}</td>
-                                <td>$ Monto </td>
+                                <td>
+                                <input type="number" name="cantidad" value={concepto.cantidad} onChange={(event)=>onCantidad(event, index)}/>  
+                                </td>
+                                <td>{setFormat(montoConcepto)}</td>
                                  
                                 <td><button>editar</button><button>Eliminar</button></td>
 

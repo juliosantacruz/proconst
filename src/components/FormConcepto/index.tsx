@@ -56,9 +56,9 @@ export default function FormConcepto({ ProjectId }: any) {
   const {addConceptoPartida}= useWorkingPresupuesto()
   const { insumos } = useInsumoStore();
 
-  console.log("to update:", conceptoToUpdate);
-  console.log("projectId:", ProjectId);
-  console.log("formData:", formData);
+  // console.log("to update:", conceptoToUpdate);
+  // console.log("projectId:", ProjectId);
+  // console.log("formData:", formData);
 
   useEffect(() => {
     if (conceptoToUpdate !== undefined) {
@@ -342,7 +342,7 @@ export default function FormConcepto({ ProjectId }: any) {
               {formData.listadoInsumos?.map((insumo, index) => {
                 const insumoPU: any = insumoData(insumos, insumo);
 
-                console.log("insumoPU", insumoPU);
+                // console.log("insumoPU", insumoPU);
 
                 return (
                   <tr key={insumo.insumoId}>
