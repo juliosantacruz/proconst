@@ -1,6 +1,9 @@
 import { Concepto } from "../types/Concepto";
 import { Partida } from "../types/Presupuesto";
 
+
+// Obtiene el monto por partida
+// Recibe la Partida en cuestion y todos los conceptos del proyecto
 export const montoPartidaF = (
   partida: Partida,
   allProjectConcepts: Concepto[]
@@ -22,6 +25,9 @@ export const montoPartidaF = (
   return montoPartidaFinal;
 };
 
+// Obtiene el monto por partida
+// Recibe la Partida en cuestion y todos los conceptos del proyecto
+// Recibe la cantidad del concepto
 export const montoPartidaCant = (
   partida: Partida,
   allProjectConcepts: Concepto[],
@@ -43,3 +49,15 @@ export const montoPartidaCant = (
   const montoPartidaFinal = arrMontoConcepto.reduce((a, b) => a + b, 0);
   return montoPartidaFinal;
 };
+
+
+// Esta funcion regresa montoProyecto
+// recibe array de partidas 
+export const montoProyecto =(partidas:Partida[])=>{
+    const arrMontoProyecto:number[]=[]
+    partidas.map((partida)=>{
+        arrMontoProyecto.push(partida.montoPartida as number)
+    })
+    const montoProyectoFinal = arrMontoProyecto.reduce((a, b) => a + b, 0);
+    return montoProyectoFinal
+}

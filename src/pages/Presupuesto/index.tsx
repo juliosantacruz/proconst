@@ -18,7 +18,7 @@ import FormConcepto from "../../components/FormConcepto";
 import { Insumo } from "../../types/Insumo";
 import { Concepto } from "../../types/Concepto";
 import "./Presupuesto.scss";
-import { montoPartidaCant, montoPartidaF } from "../../utils/ProjectFunctions";
+import { montoPartidaCant, montoProyecto } from "../../utils/ProjectFunctions";
 
 export default function Presupuesto() {
   const {
@@ -35,7 +35,7 @@ export default function Presupuesto() {
     deletePartida,
     setWorkingPartida,
     addCantidadConcepto,
-    setMontoPartida,
+    setMontoProyecto,
   } = useWorkingPresupuesto();
   const { presupuestos, updatePresupuesto } = usePresupuestoStore();
   const { projectId } = useParams();
@@ -45,12 +45,8 @@ export default function Presupuesto() {
   const allConceptos = conceptos.filter(
     (concepto) => concepto.proyectoId === projectId
   );
-  console.log(allConceptos);
-
-  type FindElement = {
-    id: string;
-    arr: Insumo | Concepto;
-  };
+  
+ 
   const findConcepto = (id: string, arr: Concepto[]) => {
     // const array = new Array(arr);
     const element = arr.find((element) => element.id === id);
@@ -93,7 +89,9 @@ export default function Presupuesto() {
     partidas,
     montoTotal,
   } = workingProject;
-
+  const montoProyectoFinal = montoProyecto(partidas)
+  console.log('montoFinal',montoProyectoFinal)
+  
   return (
     <section className="workspace">
       <PageTitle title="Presupuesto de obra">
@@ -101,7 +99,7 @@ export default function Presupuesto() {
       </PageTitle>
 
       <h4>
-        {nombreProyecto} - {setFormat(montoTotal)}
+        {nombreProyecto} - {setFormat(montoProyectoFinal)}
       </h4>
       <p>{descripcionProyecto}</p>
       <div className="Presupuesto">
@@ -128,7 +126,7 @@ export default function Presupuesto() {
                     setWorkingPartida(element);
                     openModalFormConcepto(true);
                   };
-                  const montoPartida = montoPartidaF(element,allConceptos)
+                  //const montoPartida = montoPartidaF(element,allConceptos)
                    
                                     
                   return (
@@ -140,7 +138,7 @@ export default function Presupuesto() {
                         <td></td>
                         <td></td>
 
-                        <td>{setFormat(montoPartida)}</td>
+                        <td>{setFormat(element.montoPartida as number)}</td>
                         <td>
                           <button onClick={addConcepto}>+ Concepto </button>
                           <button onClick={() => deletePartida(element.id)}>
@@ -168,7 +166,7 @@ export default function Presupuesto() {
 
 
                               const montoPartida= montoPartidaCant(element , allConceptos,cantidadConcepto)
-                              
+                              setMontoProyecto(montoProyectoFinal)
                               addCantidadConcepto(
                                 concepto.conceptoId as string,
                                 cantidadConcepto,

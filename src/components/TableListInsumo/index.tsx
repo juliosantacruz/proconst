@@ -18,7 +18,7 @@ import { useUxStore } from "../../store/uxStore";
 
 export default function TableListInsumo({ insumosData }: any) {
   const { setInsumoToUpdate, deleteInsumo } = useInsumoStore();
-  const { openModal, setOpenModal } = useUxStore();
+  const { openModalFormInsumo } = useUxStore();
 
   const data: Insumo[] = insumosData;
 
@@ -137,8 +137,8 @@ export default function TableListInsumo({ insumosData }: any) {
   };
   const handleEdit = (element: Insumo) => {
     console.log(`se editar ${element.id}`);
-    setInsumoToUpdate(element);
-    setOpenModal(true);
+    setInsumoToUpdate(element); 
+    openModalFormInsumo(true);
   };
 
   const columns: ColumnsType<Insumo> = [

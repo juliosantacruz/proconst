@@ -44,9 +44,9 @@ interface WorkingPresupuesto extends Presupuesto {
     conceptoId: string,
     cantidad: number,
     partidaId: string,
-    montoPartida:number
+    montoPartida: number
   ) => void;
-  setMontoPartida: (monto: number, partidaId: string) => void;
+  setMontoProyecto: (monto: number) => void;
 }
 
 const emptyPartida: Partida = {
@@ -222,7 +222,12 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
             partidas: [...state.partidas, state.workingPartida],
           }));
       },
-      addCantidadConcepto: (leConceptoId, leCantidad, partidaId,montoPartida) => {
+      addCantidadConcepto: (
+        leConceptoId,
+        leCantidad,
+        partidaId,
+        montoPartida
+      ) => {
         set((state) => ({
           workingPartida: state.partidas.find(
             (partida) => partida.id === partidaId
@@ -231,7 +236,7 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
         set((state) => ({
           workingPartida: {
             ...state.workingPartida,
-            montoPartida:montoPartida,
+            montoPartida: montoPartida,
             listadoConceptos: state.workingPartida.listadoConceptos?.filter(
               (concepto) => concepto.conceptoId !== leConceptoId
             ),
@@ -255,26 +260,10 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
             partidas: [...state.partidas, state.workingPartida],
           }));
       },
-      setMontoPartida: (monto, partidaId) => {
-        set((state) => ({
-          workingPartida: state.partidas.find(
-            (partida) => partida.id === partidaId
-          ),
-        })),
-          set((state) => ({
-            workingPartida: {
-              ...state.workingPartida,
-              montoPartida: monto,
-            },
-          }));
-        // set((state) => ({
-        //   partidas: state.partidas.filter(
-        //     (partida) => partida.id !== state.workingPartida.id
-        //   ),
-        // })),
-        // set((state) => ({
-        //   partidas: [...state.partidas, state.workingPartida],
-        // }));
+      setMontoProyecto: (monto) => {
+        set(() => ({
+          montoTotal: monto,
+        }));
       },
     }),
     {
