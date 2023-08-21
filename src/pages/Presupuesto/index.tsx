@@ -19,6 +19,10 @@ import { Insumo } from "../../types/Insumo";
 import { Concepto } from "../../types/Concepto";
 import "./Presupuesto.scss";
 import { montoPartidaCant, montoProyecto } from "../../utils/ProjectFunctions";
+import AnyIcon from "../../components/AnyIcon";
+import editIcon from "../../assets/icons/bx-edit.svg";
+import deleteIcon from "../../assets/icons/bx-trash.svg";
+
 
 export default function Presupuesto() {
   const {
@@ -41,12 +45,11 @@ export default function Presupuesto() {
   const { projectId } = useParams();
 
   const { insumos } = useInsumoStore();
-  const { conceptos } = useConceptoStore();
+  const { conceptos, deleteConcepto, setConceptoToUpdate } = useConceptoStore();
   const allConceptos = conceptos.filter(
     (concepto) => concepto.proyectoId === projectId
   );
-  
- 
+
   const findConcepto = (id: string, arr: Concepto[]) => {
     // const array = new Array(arr);
     const element = arr.find((element) => element.id === id);
@@ -70,16 +73,11 @@ export default function Presupuesto() {
 
   useEffect(() => {
     updatePresupuesto(workingProject);
-
-
   }, [workingProject]);
 
   const handleAddPartida = () => {
     openModalFormPartida(true);
   };
-
-
-
 
   const {
     id,
@@ -89,9 +87,9 @@ export default function Presupuesto() {
     partidas,
     montoTotal,
   } = workingProject;
-  const montoProyectoFinal = montoProyecto(partidas)
-  console.log('montoFinal',montoProyectoFinal)
-  
+  const montoProyectoFinal = montoProyecto(partidas);
+  console.log("montoFinal", montoProyectoFinal);
+
   return (
     <section className="workspace">
       <PageTitle title="Presupuesto de obra">
@@ -127,8 +125,7 @@ export default function Presupuesto() {
                     openModalFormConcepto(true);
                   };
                   //const montoPartida = montoPartidaF(element,allConceptos)
-                   
-                                    
+
                   return (
                     <>
                       <tr key={element.id}>
@@ -149,69 +146,91 @@ export default function Presupuesto() {
 
                       {element.listadoConceptos
                         ? element.listadoConceptos.map((concepto, index) => {
-                          if (concepto) {
-                            const leConcept = findConcepto(
-                              concepto.conceptoId as string,
-                              allConceptos
-                            );
-
-                            const onCantidad = (
-                              event: any, 
-                            ) => {
-                              let cantidadConcepto = event.target
-                                .value as number;
-                              if (cantidadConcepto < 0) {
-                                cantidadConcepto = 0;
-                              }
-
-
-                              const montoPartida= montoPartidaCant(element , allConceptos,cantidadConcepto)
-                              setMontoProyecto(montoProyectoFinal)
-                              addCantidadConcepto(
+                            if (concepto) {
+                              const leConcept = findConcepto(
                                 concepto.conceptoId as string,
-                                cantidadConcepto,
-                                element.id,
-                                montoPartida
+                                allConceptos
                               );
-                            };
-                            const montoConcepto =
-                            (concepto.cantidad as number) *
-                            (leConcept?.precioUnitario as number);
-                            
-                           
-                            return (
-                              <tr key={concepto.conceptoId}>
-                                <td>{leConcept?.clave}</td>
-                                <td>{leConcept?.descripcion}</td>
-                                <td>{leConcept?.unidad}</td>
-                                <td>
-                                  {setFormat(
-                                    leConcept?.precioUnitario as number
-                                  )}
-                                </td>
 
-                                <td>
-                                  <input
-                                    type="number"
-                                    name="cantidad"
-                                    value={concepto.cantidad}
-                                    onChange={(event) =>
-                                      onCantidad(event)
-                                    }
-                                  />
-                                </td>
-                                <td>{setFormat(montoConcepto)}</td>
+                              const onCantidad = (event: any) => {
+                                let cantidadConcepto = event.target
+                                  .value as number;
+                                if (cantidadConcepto < 0) {
+                                  cantidadConcepto = 0;
+                                }
 
-                                <td>
-                                  <button>editar</button>
-                                  <button>Eliminar</button>
-                                </td>
-                              </tr>
-                            );
-                          } else {
-                            null;
-                          }
-                        })
+                                const montoPartida = montoPartidaCant(
+                                  element,
+                                  allConceptos,
+                                  cantidadConcepto
+                                );
+                                setMontoProyecto(montoProyectoFinal);
+                                addCantidadConcepto(
+                                  concepto.conceptoId as string,
+                                  cantidadConcepto,
+                                  element.id,
+                                  montoPartida
+                                );
+                              };
+                              const handleDelete = (id: string) => {
+                                deleteConcepto(id);
+                              };
+                              const handleEdit = (element: Concepto) => {
+                                console.log(`se editar ${element.id}`);
+                                setConceptoToUpdate(element); 
+                                openModalFormConcepto(true);
+                              };
+                              const montoConcepto =
+                                (concepto.cantidad as number) *
+                                (leConcept?.precioUnitario as number);
+
+                              return (
+                                <tr key={concepto.conceptoId}>
+                                  <td>{leConcept?.clave}</td>
+                                  <td>{leConcept?.descripcion}</td>
+                                  <td>{leConcept?.unidad}</td>
+                                  <td>
+                                    {setFormat(
+                                      leConcept?.precioUnitario as number
+                                    )}
+                                  </td>
+
+                                  <td>
+                                    <input
+                                      type="number"
+                                      name="cantidad"
+                                      value={concepto.cantidad}
+                                      onChange={(event) => onCantidad(event)}
+                                    />
+                                  </td>
+                                  <td>{setFormat(montoConcepto)}</td>
+
+                                  <td>
+                                    <a onClick={() => handleEdit(leConcept as Concepto)}>
+                                      <AnyIcon
+                                        className={"icon"}
+                                        iconSrc={editIcon}
+                                        iconWidth={14}
+                                        iconHeight={14}
+                                      />
+                                    </a>{" "}
+                                    |
+                                    <a onClick={() => handleDelete(leConcept?.id as string)}>
+                                      <AnyIcon
+                                        iconSrc={deleteIcon}
+                                        iconWidth={14}
+                                        iconHeight={14}
+                                      />
+                                    </a>
+                                    {/* <button>editar</button>
+                                  <button>Eliminar</button> */}
+                                  </td>
+                                </tr>
+                              );
+                            } else {
+                              null;
+                            }
+                          })
                         : null}
                     </>
                   );
