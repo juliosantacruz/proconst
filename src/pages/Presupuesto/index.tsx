@@ -39,7 +39,9 @@ export default function Presupuesto() {
     deletePartida,
     setWorkingPartida,
     addCantidadConcepto,
+    deleteConceptoPartida,
     setMontoProyecto,
+
   } = useWorkingPresupuesto();
   const { presupuestos, updatePresupuesto } = usePresupuestoStore();
   const { projectId } = useParams();
@@ -174,6 +176,7 @@ export default function Presupuesto() {
                               };
                               const handleDelete = (id: string) => {
                                 deleteConcepto(id);
+                                deleteConceptoPartida(id);
                               };
                               const handleEdit = (element: Concepto) => {
                                 console.log(`se editar ${element.id}`);

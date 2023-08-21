@@ -40,6 +40,7 @@ interface WorkingPresupuesto extends Presupuesto {
   workingPartida: Partida;
   setWorkingPartida: (partida: Partida) => void;
   addConceptoPartida: (conceptoPartida: ListadoConcepto) => void;
+  deleteConceptoPartida:(id:string)=>void;
   addCantidadConcepto: (
     conceptoId: string,
     cantidad: number,
@@ -211,6 +212,22 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
               ...(state.workingPartida?.listadoConceptos as any),
               conceptoPartida,
             ],
+          },
+        })),
+          set((state) => ({
+            partidas: state.partidas.filter(
+              (partida) => partida.id !== state.workingPartida.id
+            ),
+          })),
+          set((state) => ({
+            partidas: [...state.partidas, state.workingPartida],
+          }));
+      },
+      deleteConceptoPartida: (id: string) => {
+        set((state) => ({
+          workingPartida: {
+            ...state.workingPartida,
+            listadoConceptos: (state.workingPartida.listadoConceptos as any).filter((concepto:ListadoConcepto)=> concepto.conceptoId !==id),
           },
         })),
           set((state) => ({
