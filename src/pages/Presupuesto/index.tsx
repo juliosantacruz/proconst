@@ -104,7 +104,7 @@ export default function Presupuesto() {
       <div className="Presupuesto">
         <table className="Presupuesto">
           <thead>
-            <tr>
+            <tr className="tableHeader">
               <th>Clave</th>
               <th>Descripcion</th>
               <th>Unidad</th>
@@ -129,7 +129,7 @@ export default function Presupuesto() {
 
                   return (
                     <>
-                      <tr key={element.id}>
+                      <tr key={element.id} className="partida">
                         <td className="clave">{element.clave}</td>
                         <td className="descripcion">{element.nombre}</td>
                         <td className="unidad"></td>
@@ -201,7 +201,7 @@ export default function Presupuesto() {
                                 (leConcept?.precioUnitario as number);
 
                               return (
-                                <tr key={concepto.conceptoId}>
+                                <tr key={concepto.conceptoId} className="concepto" >
                                   <td className="clave">{leConcept?.clave}</td>
                                   <td className="descripcion">{leConcept?.descripcion}</td>
                                   <td className="unidad">{leConcept?.unidad}</td>
