@@ -186,7 +186,7 @@ export default function FormConcepto({ ProjectId }: any) {
       updateConcepto(formData);
     } else {
       addConcepto(formData);
-      addConceptoPartida({conceptoId:formData.id})
+      addConceptoPartida({conceptoId:formData.id, cantidad:0})
     }
 
     onClear();
@@ -274,7 +274,7 @@ export default function FormConcepto({ ProjectId }: any) {
 
   const arrPrecioTotal: number[] = [];
 
-
+ 
 
   return (
     <form className="AddConceptoForm" onSubmit={(event) => onSubmit(event)}>

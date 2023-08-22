@@ -20,9 +20,9 @@ import { Concepto } from "../../types/Concepto";
 import "./Presupuesto.scss";
 import { montoPartidaCant, montoProyecto } from "../../utils/ProjectFunctions";
 import AnyIcon from "../../components/AnyIcon";
+import addIcon from '../../assets/icons/bx-plus-circle.svg'
 import editIcon from "../../assets/icons/bx-edit.svg";
 import deleteIcon from "../../assets/icons/bx-trash.svg";
-
 
 export default function Presupuesto() {
   const {
@@ -41,7 +41,6 @@ export default function Presupuesto() {
     addCantidadConcepto,
     deleteConceptoPartida,
     setMontoProyecto,
-
   } = useWorkingPresupuesto();
   const { presupuestos, updatePresupuesto } = usePresupuestoStore();
   const { projectId } = useParams();
@@ -131,18 +130,32 @@ export default function Presupuesto() {
                   return (
                     <>
                       <tr key={element.id}>
-                        <td>{element.clave}</td>
-                        <td>{element.nombre}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td className="clave">{element.clave}</td>
+                        <td className="descripcion">{element.nombre}</td>
+                        <td className="unidad"></td>
+                        <td className="precioUnitario"></td>
+                        <td className="cantidad"></td>
 
-                        <td>{setFormat(element.montoPartida as number)}</td>
-                        <td>
-                          <button onClick={addConcepto}>+ Concepto </button>
-                          <button onClick={() => deletePartida(element.id)}>
-                            Eliminar
-                          </button>
+                        <td className="total">{setFormat(element.montoPartida as number)}</td>
+                        <td className="actions">
+                          
+                            <a onClick={addConcepto}>
+                              <AnyIcon
+                                className={"icon"}
+                                iconSrc={addIcon}
+                                iconWidth={14}
+                                iconHeight={14}
+                              />
+                            </a>{" "}
+                            |
+                            <a onClick={() => deletePartida(element.id)}>
+                              <AnyIcon
+                                iconSrc={deleteIcon}
+                                iconWidth={14}
+                                iconHeight={14}
+                              />
+                            </a>
+                          
                         </td>
                       </tr>
 
@@ -180,7 +193,7 @@ export default function Presupuesto() {
                               };
                               const handleEdit = (element: Concepto) => {
                                 console.log(`se editar ${element.id}`);
-                                setConceptoToUpdate(element); 
+                                setConceptoToUpdate(element);
                                 openModalFormConcepto(true);
                               };
                               const montoConcepto =
@@ -189,16 +202,16 @@ export default function Presupuesto() {
 
                               return (
                                 <tr key={concepto.conceptoId}>
-                                  <td>{leConcept?.clave}</td>
-                                  <td>{leConcept?.descripcion}</td>
-                                  <td>{leConcept?.unidad}</td>
-                                  <td>
+                                  <td className="clave">{leConcept?.clave}</td>
+                                  <td className="descripcion">{leConcept?.descripcion}</td>
+                                  <td className="unidad">{leConcept?.unidad}</td>
+                                  <td className="precioUnitario">
                                     {setFormat(
                                       leConcept?.precioUnitario as number
                                     )}
                                   </td>
 
-                                  <td>
+                                  <td className="cantidad">
                                     <input
                                       type="number"
                                       name="cantidad"
@@ -206,10 +219,14 @@ export default function Presupuesto() {
                                       onChange={(event) => onCantidad(event)}
                                     />
                                   </td>
-                                  <td>{setFormat(montoConcepto)}</td>
+                                  <td  className="total">{setFormat(montoConcepto)}</td>
 
-                                  <td>
-                                    <a onClick={() => handleEdit(leConcept as Concepto)}>
+                                  <td className="actions">
+                                    <a
+                                      onClick={() =>
+                                        handleEdit(leConcept as Concepto)
+                                      }
+                                    >
                                       <AnyIcon
                                         className={"icon"}
                                         iconSrc={editIcon}
@@ -218,15 +235,17 @@ export default function Presupuesto() {
                                       />
                                     </a>{" "}
                                     |
-                                    <a onClick={() => handleDelete(leConcept?.id as string)}>
+                                    <a
+                                      onClick={() =>
+                                        handleDelete(leConcept?.id as string)
+                                      }
+                                    >
                                       <AnyIcon
                                         iconSrc={deleteIcon}
                                         iconWidth={14}
                                         iconHeight={14}
                                       />
                                     </a>
-                                    {/* <button>editar</button>
-                                  <button>Eliminar</button> */}
                                   </td>
                                 </tr>
                               );
