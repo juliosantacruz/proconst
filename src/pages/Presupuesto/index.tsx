@@ -150,10 +150,19 @@ export default function Presupuesto() {
                         <td className="total">{setFormat(element.montoPartida as number)}</td>
                         <td className="actions">
                           
-                            <a onClick={addConcepto}>
+                        <a onClick={addConcepto}>
                               <AnyIcon
                                 className={"icon"}
                                 iconSrc={addIcon}
+                                iconWidth={14}
+                                iconHeight={14}
+                              />
+                            </a>{" "}
+                            |
+                            <a onClick={addConcepto}>
+                              <AnyIcon
+                                className={"icon"}
+                                iconSrc={editIcon}
                                 iconWidth={14}
                                 iconHeight={14}
                               />

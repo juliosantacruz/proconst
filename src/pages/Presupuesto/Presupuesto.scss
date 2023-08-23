@@ -74,11 +74,15 @@
             width: 10%;
         }
         .actions {
-            width: 10%;
+            // display: flex;
+            // flex-direction: row;
+            // justify-content: space-evenly;
+            // width: 10%; 
+            font-style: normal;
             a {
-                margin: 0 10px;
+                margin: 0 5px;
                 cursor: pointer;
-
+               
             }
         }
     }
