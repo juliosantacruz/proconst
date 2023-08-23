@@ -179,6 +179,14 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
           domicilioProyecto: presupuesto.domicilioProyecto,
           clienteProyecto: presupuesto.clienteProyecto,
           partidas: presupuesto.partidas,
+          fsc:{
+            costoIndirecto:presupuesto.fsc.costoIndirecto,
+            costoOperativo:presupuesto.fsc.costoOperativo,
+            financiamiento:presupuesto.fsc.financiamiento,
+            utilidad:presupuesto.fsc.utilidad,
+            iva:presupuesto.fsc.iva,
+            isr:presupuesto.fsc.isr,
+          },
           montoTotal: presupuesto.montoTotal,
         }));
       },
@@ -189,6 +197,14 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
       domicilioProyecto: "",
       clienteProyecto: "",
       partidas: [],
+      fsc:{
+        costoIndirecto:0,
+        costoOperativo:0,
+        financiamiento:0,
+        utilidad:0,
+        iva:0,
+        isr:0,
+      },
       montoTotal: 0,
       addPartida: (partida) =>
         set((state) => ({

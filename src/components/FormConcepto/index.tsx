@@ -186,7 +186,7 @@ export default function FormConcepto({ ProjectId }: any) {
       updateConcepto(formData);
     } else {
       addConcepto(formData);
-      addConceptoPartida({conceptoId:formData.id, cantidad:0})
+      addConceptoPartida({conceptoId:formData.id, cantidad:0, fechaCreacion:v4() })
     }
 
     onClear();

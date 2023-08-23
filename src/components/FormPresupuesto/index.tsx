@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Presupuesto } from "../../types/Presupuesto";
 import { useUxStore } from "../../store/uxStore";
-import { usePresupuestoStore } from '../../store/projectStore'
-
+import { usePresupuestoStore } from "../../store/projectStore";
+import "./FormPresupuesto.scss";
 import { v4 } from "uuid";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
@@ -12,11 +12,19 @@ const presupuestoDefaultValue = {
   id: "",
   fechaCreacion: "",
   nombreProyecto: "",
-  descripcionProyecto:"",
+  descripcionProyecto: "",
   domicilioProyecto: "",
   clienteProyecto: "",
   partidas: [],
   montoTotal: 0.0,
+  fsc: {
+    costoIndirecto: 1,
+    costoOperativo: 1,
+    financiamiento: 1,
+    utilidad: 1,
+    iva: 1,
+    isr: 1,
+  },
 };
 
 // Crear componente Alert (Error, Success, Warning)
@@ -30,43 +38,64 @@ const ErrorMsg = () => {
 
 export default function FormPresupuesto() {
   const { openModalFormProject } = useUxStore();
-  const {addPresupuesto} = usePresupuestoStore()
+  const { addPresupuesto } = usePresupuestoStore();
   const [formData, setFormData] = useState<Presupuesto>(
     presupuestoDefaultValue
   );
   const [formError, setFormError] = useState(false);
 
-  const navigate = useNavigate()
-  console.log('formData', formData)
+  const navigate = useNavigate();
+  console.log("formData", formData);
 
   useEffect(() => {
     setFormData({
       id: v4(),
       fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
       nombreProyecto: "",
-      descripcionProyecto:'',
+      descripcionProyecto: "",
       domicilioProyecto: "",
       clienteProyecto: "",
       partidas: [],
       montoTotal: 0.0,
+      fsc: {
+        costoIndirecto: 1,
+        costoOperativo: 1,
+        financiamiento: 1,
+        utilidad: 1,
+        iva: 1,
+        isr: 1,
+      },
     });
   }, []);
 
   const onChange = (event: any) => {
     const dato = event?.target.value;
-
     setFormData({
       ...formData,
       [event.target.name]: dato,
     });
   };
 
+  const onChangeFSC = (event:any)=>{
+    const value = event?.target.value;
+    console.log([event.target.name],value)
+    setFormData({
+      ...formData,
+      fsc:{
+        ...formData.fsc,
+        [event.target.name]:Number(value)
+      }
+    })
+
+  }
+  
+
   const onSubmit = (event: any) => {
     event.preventDefault();
-    console.log("newProject", formData);
-    addPresupuesto(formData)
-    navigate(RoutesDirectory.GO_WORKING_PRESUPUESTO(formData?.id as string))
-    onClear()
+    // console.log("newProject", formData);
+    addPresupuesto(formData);
+    navigate(RoutesDirectory.GO_WORKING_PRESUPUESTO(formData?.id as string));
+    onClear();
   };
 
   const onClear = () => {
@@ -124,6 +153,48 @@ export default function FormPresupuesto() {
           onChange={(event) => onChange(event)}
           value={formData.clienteProyecto}
         />
+      </div>
+      <div className="fscGroup">
+        <div className="input">
+          <label htmlFor="costoOperativo">FCD</label>
+          <input
+            type="number"
+            name="costoOperativo"
+            id="costoOperativo"
+            onChange={(event) => onChangeFSC(event)}
+            value={formData.fsc.costoOperativo}
+          />
+        </div>
+        <div className="input">
+          <label htmlFor="costoIndirecto">FCI</label>
+          <input
+            type="number"
+            name="costoIndirecto"
+            id="costoIndirecto"
+            onChange={(event) => onChangeFSC(event)}
+            value={formData.fsc.costoIndirecto}
+          />
+        </div>
+        <div className="input">
+          <label htmlFor="financiamiento">Financiamiento</label>
+          <input
+            type="number"
+            name="financiamiento"
+            id="financiamiento"
+            onChange={(event) => onChangeFSC(event)}
+            value={formData.fsc.financiamiento}
+          />
+        </div>
+        <div className="input">
+          <label htmlFor="utilidad">Utilidad</label>
+          <input
+            type="number"
+            name="utilidad"
+            id="utilidad"
+            onChange={(event) => onChangeFSC(event)}
+            value={formData.fsc.utilidad}
+          />
+        </div>
       </div>
       {formError && <ErrorMsg />}
       <div className="btn-group">

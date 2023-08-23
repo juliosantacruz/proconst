@@ -1,7 +1,16 @@
 import { Concepto } from "./Concepto";
 
+export interface FactorSobreCosto{
+  costoIndirecto:number,
+  costoOperativo:number,
+  financiamiento:number,
+  utilidad:number,
+  iva:number,
+  isr:number,
+}
 
 export interface ListadoConcepto{
+  fechaCreacion:string
   conceptoId?:string,
   cantidad?:number,
 }
@@ -21,6 +30,7 @@ export interface Presupuesto {
   clienteProyecto: string;
   partidas: Partida[];
   montoTotal: number;
+  fsc:FactorSobreCosto;
 }
 
 

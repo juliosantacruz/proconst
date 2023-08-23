@@ -160,7 +160,8 @@ export default function Presupuesto() {
                       </tr>
 
                       {element.listadoConceptos
-                        ? element.listadoConceptos.map((concepto, index) => {
+                        ? element.listadoConceptos
+                        .map((concepto, index) => {
                             if (concepto) {
                               const leConcept = findConcepto(
                                 concepto.conceptoId as string,
