@@ -27,8 +27,8 @@ interface PresupuestoState {
   presupuestos: Presupuesto[];
   addPresupuesto: (presupuesto: Presupuesto) => void;
   deletePresupuesto: (id: string) => void;
-  workingPresupuesto: any;
-  setWorkingPresupuesto: (presupuesto: Presupuesto) => void;
+  presupuestoToUpdate: Presupuesto | undefined;
+  setPresupuestoToUpdate: (presupuesto: Presupuesto | undefined) => void;
   addPartida: (id: string, partida: Partida) => void;
   updatePresupuesto: (presupuesto: Presupuesto) => void;
 }
@@ -138,10 +138,10 @@ export const usePresupuestoStore = create<PresupuestoState>()(
           ),
         }));
       },
-      workingPresupuesto: undefined,
-      setWorkingPresupuesto: (presupuesto: Presupuesto) => {
+      presupuestoToUpdate: undefined,
+      setPresupuestoToUpdate: (presupuesto) => {
         set(() => ({
-          workingPresupuesto: presupuesto,
+          presupuestoToUpdate: presupuesto,
         }));
       },
       addPartida: (id: string, partida: Partida) => {

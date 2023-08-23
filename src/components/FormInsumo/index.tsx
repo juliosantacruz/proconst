@@ -90,9 +90,7 @@ export default function FormInsumo() {
 
   const onChange = (event: any) => {
     const dato = event?.target.value;
-     
 
-    
     // Precio Validations
     if (event.target.name === "precio") {
       setFormData({

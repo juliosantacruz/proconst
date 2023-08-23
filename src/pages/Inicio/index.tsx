@@ -30,6 +30,7 @@ export default function Index() {
         >
           Agregar Proyecto
         </AddButton>
+        
       </PageTitle>
       <div className="btn-header"></div>
       <div className="Presupuestos">

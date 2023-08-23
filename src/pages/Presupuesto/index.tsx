@@ -23,6 +23,7 @@ import AnyIcon from "../../components/AnyIcon";
 import addIcon from '../../assets/icons/bx-plus-circle.svg'
 import editIcon from "../../assets/icons/bx-edit.svg";
 import deleteIcon from "../../assets/icons/bx-trash.svg";
+import FormPresupuesto from "../../components/FormPresupuesto";
 
 export default function Presupuesto() {
   const {
@@ -32,6 +33,8 @@ export default function Presupuesto() {
     openModalFormConcepto,
     modalFormInsumo,
     openModalFormInsumo,
+    modalFormProject,
+    openModalFormProject
   } = useUxStore();
   const workingProject = useWorkingPresupuesto();
   const {
@@ -42,7 +45,7 @@ export default function Presupuesto() {
     deleteConceptoPartida,
     setMontoProyecto,
   } = useWorkingPresupuesto();
-  const { presupuestos, updatePresupuesto } = usePresupuestoStore();
+  const { presupuestos, updatePresupuesto, setPresupuestoToUpdate } = usePresupuestoStore();
   const { projectId } = useParams();
 
   const { insumos } = useInsumoStore();
@@ -91,10 +94,18 @@ export default function Presupuesto() {
   const montoProyectoFinal = montoProyecto(partidas);
   console.log("montoFinal", montoProyectoFinal);
 
+  const handleEdit = (projectUpdate: Presupuesto) => {
+    console.log(`se editar ${projectUpdate.id}`);
+    setPresupuestoToUpdate(projectUpdate); 
+    openModalFormProject(true);
+  };
+
   return (
     <section className="workspace">
       <PageTitle title="Presupuesto de obra">
+        <AddButton onClick={()=>handleEdit(workingProject)}>Editar Proyecto</AddButton>
         <AddButton onClick={handleAddPartida}>Agregar Partida</AddButton>
+
       </PageTitle>
 
       <h4>
@@ -261,7 +272,17 @@ export default function Presupuesto() {
           </tbody>
         </table>
       </div>
-
+      {modalFormProject && (
+        <AsideModal
+          widthModal={"40vw"}
+          title="Agregar Proyecto"
+          clossable={true}
+          openModal={modalFormProject}
+          setOpenModal={openModalFormProject}
+        >
+          <FormPresupuesto />
+        </AsideModal>
+      )}
       {modalFormPartida && (
         <AsideModal
           widthModal={"40vw"}

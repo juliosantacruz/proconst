@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Presupuesto } from "../../types/Presupuesto";
 import { useUxStore } from "../../store/uxStore";
-import { usePresupuestoStore } from "../../store/projectStore";
+import { usePresupuestoStore, useWorkingPresupuesto } from "../../store/projectStore";
 import "./FormPresupuesto.scss";
 import { v4 } from "uuid";
 import dayjs from "dayjs";
@@ -36,9 +36,13 @@ const ErrorMsg = () => {
   );
 };
 
+// Se debe agregar funcion para guardar cambios...
+
 export default function FormPresupuesto() {
   const { openModalFormProject } = useUxStore();
-  const { addPresupuesto } = usePresupuestoStore();
+  const {setWorkingPresupuesto} = useWorkingPresupuesto()
+  const { addPresupuesto, setPresupuestoToUpdate, presupuestoToUpdate, updatePresupuesto } = usePresupuestoStore();
+  const [editInsumo, setEditInsumo] = useState(false)
   const [formData, setFormData] = useState<Presupuesto>(
     presupuestoDefaultValue
   );
@@ -48,7 +52,11 @@ export default function FormPresupuesto() {
   console.log("formData", formData);
 
   useEffect(() => {
-    setFormData({
+    if(presupuestoToUpdate !== undefined){
+      setFormData(presupuestoToUpdate)
+      setEditInsumo(true)
+    }else{
+       setFormData({
       id: v4(),
       fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
       nombreProyecto: "",
@@ -66,6 +74,8 @@ export default function FormPresupuesto() {
         isr: 1,
       },
     });
+    }
+   
   }, []);
 
   const onChange = (event: any) => {
@@ -93,13 +103,26 @@ export default function FormPresupuesto() {
   const onSubmit = (event: any) => {
     event.preventDefault();
     // console.log("newProject", formData);
-    addPresupuesto(formData);
-    navigate(RoutesDirectory.GO_WORKING_PRESUPUESTO(formData?.id as string));
+
+
+    if(editInsumo){
+      updatePresupuesto(formData)
+      setWorkingPresupuesto(formData)
+      // console.log('se debe hacer update')
+    }else{
+      addPresupuesto(formData);
+      navigate(RoutesDirectory.GO_WORKING_PRESUPUESTO(formData?.id as string));
+    }
+    
+    setFormError(false)
+    setEditInsumo(false)
     onClear();
+
   };
 
   const onClear = () => {
     setFormData(presupuestoDefaultValue);
+    setPresupuestoToUpdate(undefined)
     openModalFormProject(false);
   };
 
