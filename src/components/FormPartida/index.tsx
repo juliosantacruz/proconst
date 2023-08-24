@@ -14,14 +14,22 @@ const partidaDefaultValue = {
 };
 
 export default function FormPartida({projectId}:any) {
+  const [editPartida, setEditPartida] = useState(false)
+  const [formError, setFormError] = useState(false);
+  // conectar partidaToUpdate, editar useEffect, actualizar workingProject
+  // const { partidaToUpdate, setPartidaToUpdate} = usePresupuestoStore()
   const { openModalFormPartida } = useUxStore();
-  const {addPartida}=useWorkingPresupuesto()
+  const {addPartida, workingPartida, setWorkingPartida, updateWorkingPartida}=useWorkingPresupuesto()
   const [formData, setFormData] = useState<Partida>(partidaDefaultValue);
   
    
   
 
     useEffect(()=>{
+      if(workingPartida.id.length>1){
+        setFormData(workingPartida)
+        setEditPartida(true)
+      }else{
         setFormData({
             id: v4(),
             clave: "",
@@ -29,6 +37,8 @@ export default function FormPartida({projectId}:any) {
             montoPartida: 0,
             listadoConceptos: [],
         })
+
+      }
     },[])
 
 
@@ -44,11 +54,22 @@ export default function FormPartida({projectId}:any) {
   const onSubmit = (event: any) => {
     event.preventDefault();
     // console.log("newProject", formData);
-    addPartida(formData)
+
+
+    if(editPartida){
+      updateWorkingPartida(formData)
+      console.log('esto se actualiza')
+    }else{
+      addPartida(formData)
+    }
+    setFormError(false)
+    setEditPartida(false)
     onClear()
   };
 
   const onClear = () => {
+    setFormData(partidaDefaultValue)
+    setWorkingPartida(partidaDefaultValue)
     openModalFormPartida(false);
   };
 

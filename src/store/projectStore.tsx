@@ -29,8 +29,11 @@ interface PresupuestoState {
   deletePresupuesto: (id: string) => void;
   presupuestoToUpdate: Presupuesto | undefined;
   setPresupuestoToUpdate: (presupuesto: Presupuesto | undefined) => void;
-  addPartida: (id: string, partida: Partida) => void;
   updatePresupuesto: (presupuesto: Presupuesto) => void;
+  addPartida: (id: string, partida: Partida) => void;
+  // partidaToUpdate:Partida|undefined,
+  // setPartidaToUpdate:(partida:Partida | undefined)=>void,
+  // updatePartida:(partidaUpdate: Partida)=>void,
 }
 
 interface WorkingPresupuesto extends Presupuesto {
@@ -39,8 +42,9 @@ interface WorkingPresupuesto extends Presupuesto {
   deletePartida: (id: string) => void;
   workingPartida: Partida;
   setWorkingPartida: (partida: Partida) => void;
+  updateWorkingPartida: (updatePartida: Partida) => any;
   addConceptoPartida: (conceptoPartida: ListadoConcepto) => void;
-  deleteConceptoPartida:(id:string)=>void;
+  deleteConceptoPartida: (id: string) => void;
   addCantidadConcepto: (
     conceptoId: string,
     cantidad: number,
@@ -153,6 +157,17 @@ export const usePresupuestoStore = create<PresupuestoState>()(
           ),
         }));
       },
+      // partidaToUpdate:undefined,
+      // setPartidaToUpdate:(partida)=>{
+      //   set(()=>({
+      //     partidaToUpdate:partida
+      //   }))
+      // },
+      // updatePartida:(partidaUpdate: Partida)=>{
+      //   set((state)=>({
+
+      //   }))
+      // },
       updatePresupuesto: (newPresupuesto) =>
         set((state) => ({
           presupuestos: state.presupuestos.map((presupuesto) =>
@@ -179,13 +194,13 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
           domicilioProyecto: presupuesto.domicilioProyecto,
           clienteProyecto: presupuesto.clienteProyecto,
           partidas: presupuesto.partidas,
-          fsc:{
-            costoIndirecto:presupuesto.fsc.costoIndirecto,
-            costoOperativo:presupuesto.fsc.costoOperativo,
-            financiamiento:presupuesto.fsc.financiamiento,
-            utilidad:presupuesto.fsc.utilidad,
-            iva:presupuesto.fsc.iva,
-            isr:presupuesto.fsc.isr,
+          fsc: {
+            costoIndirecto: presupuesto.fsc.costoIndirecto,
+            costoOperativo: presupuesto.fsc.costoOperativo,
+            financiamiento: presupuesto.fsc.financiamiento,
+            utilidad: presupuesto.fsc.utilidad,
+            iva: presupuesto.fsc.iva,
+            isr: presupuesto.fsc.isr,
           },
           montoTotal: presupuesto.montoTotal,
         }));
@@ -196,14 +211,14 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
       descripcionProyecto: "",
       domicilioProyecto: "",
       clienteProyecto: "",
-      partidas: [],
-      fsc:{
-        costoIndirecto:0,
-        costoOperativo:0,
-        financiamiento:0,
-        utilidad:0,
-        iva:0,
-        isr:0,
+      partidas: [] as any,
+      fsc: {
+        costoIndirecto: 0,
+        costoOperativo: 0,
+        financiamiento: 0,
+        utilidad: 0,
+        iva: 0,
+        isr: 0,
       },
       montoTotal: 0,
       addPartida: (partida) =>
@@ -218,6 +233,11 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
       setWorkingPartida: (partida: Partida) => {
         set(() => ({
           workingPartida: partida,
+        }));
+      },
+      updateWorkingPartida: (updatePartida: Partida) => {
+        set((state) => ({
+          partidas: state.partidas.map((partida)=>partida.id===updatePartida.id ? updatePartida : partida)
         }));
       },
       addConceptoPartida: (conceptoPartida: ListadoConcepto) => {
@@ -243,7 +263,9 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
         set((state) => ({
           workingPartida: {
             ...state.workingPartida,
-            listadoConceptos: (state.workingPartida.listadoConceptos as any).filter((concepto:ListadoConcepto)=> concepto.conceptoId !==id),
+            listadoConceptos: (
+              state.workingPartida.listadoConceptos as any
+            ).filter((concepto: ListadoConcepto) => concepto.conceptoId !== id),
           },
         })),
           set((state) => ({

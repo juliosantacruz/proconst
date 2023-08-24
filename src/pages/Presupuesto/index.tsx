@@ -94,16 +94,22 @@ export default function Presupuesto() {
   const montoProyectoFinal = montoProyecto(partidas);
   console.log("montoFinal", montoProyectoFinal);
 
-  const handleEdit = (projectUpdate: Presupuesto) => {
+  const handleEditProject = (projectUpdate: Presupuesto) => {
     console.log(`se editar ${projectUpdate.id}`);
     setPresupuestoToUpdate(projectUpdate); 
     openModalFormProject(true);
   };
 
+  const handleEditPartida = (partida:Partida) =>{
+    console.log('se edita partida', partida.nombre)
+    setWorkingPartida(partida)
+    openModalFormPartida(true);
+  }
+
   return (
     <section className="workspace">
       <PageTitle title="Presupuesto de obra">
-        <AddButton onClick={()=>handleEdit(workingProject)}>Editar Proyecto</AddButton>
+        <AddButton onClick={()=>handleEditProject(workingProject)}>Editar Proyecto</AddButton>
         <AddButton onClick={handleAddPartida}>Agregar Partida</AddButton>
 
       </PageTitle>
@@ -159,7 +165,7 @@ export default function Presupuesto() {
                               />
                             </a>{" "}
                             |
-                            <a onClick={addConcepto}>
+                            <a onClick={()=>handleEditPartida(element)}>
                               <AnyIcon
                                 className={"icon"}
                                 iconSrc={editIcon}
