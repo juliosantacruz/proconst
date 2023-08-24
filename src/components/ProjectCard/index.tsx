@@ -8,7 +8,7 @@ import { Presupuesto } from "../../types/Presupuesto";
 
 
 export default function ProjectCard({projectId}:any) {
-  const { presupuestos, addPresupuesto, deletePresupuesto, setWorkingPresupuesto} = usePresupuestoStore()
+  const { presupuestos, addPresupuesto, deletePresupuesto} = usePresupuestoStore()
 
   const projectData = presupuestos.find((project)=> project.id === projectId)
   // console.log('card',projectData)
