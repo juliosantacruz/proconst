@@ -1,4 +1,17 @@
+.fsrButton{
+    padding: 3px 15px;
+    border-radius: 8px;
+    border: 1px solid black;
+background: #dfdfdf;
+}
+.fsrActive {
+    border: 1px solid rgb(255, 255, 255);
+    background: #000;
+    color: white;
+}
+
 .Presupuesto {
+    
     a {
         border: none;
     }

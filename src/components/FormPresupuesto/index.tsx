@@ -18,12 +18,12 @@ const presupuestoDefaultValue = {
   partidas: [],
   montoTotal: 0.0,
   fsc: {
-    costoIndirecto: 1,
-    costoOperativo: 1,
-    financiamiento: 1,
-    utilidad: 1,
-    iva: 1,
-    isr: 1,
+    costoIndirecto: 0,
+    costoOperativo: 0,
+    financiamiento: 0,
+    utilidad: 0,
+    iva: 0,
+    isr: 0,
   },
 };
 
@@ -179,7 +179,7 @@ export default function FormPresupuesto() {
       </div>
       <div className="fscGroup">
         <div className="input">
-          <label htmlFor="costoOperativo">FCD</label>
+          <label htmlFor="costoOperativo">FCD (%)</label>
           <input
             type="number"
             name="costoOperativo"
@@ -189,7 +189,7 @@ export default function FormPresupuesto() {
           />
         </div>
         <div className="input">
-          <label htmlFor="costoIndirecto">FCI</label>
+          <label htmlFor="costoIndirecto">FCI (%)</label>
           <input
             type="number"
             name="costoIndirecto"
@@ -198,8 +198,8 @@ export default function FormPresupuesto() {
             value={formData.fsc.costoIndirecto}
           />
         </div>
-        <div className="input">
-          <label htmlFor="financiamiento">Financiamiento</label>
+        <div className="input financiamiento">
+          <label htmlFor="financiamiento">Financiamiento (%)</label>
           <input
             type="number"
             name="financiamiento"
@@ -209,7 +209,7 @@ export default function FormPresupuesto() {
           />
         </div>
         <div className="input">
-          <label htmlFor="utilidad">Utilidad</label>
+          <label htmlFor="utilidad">Utilidad (%)</label>
           <input
             type="number"
             name="utilidad"

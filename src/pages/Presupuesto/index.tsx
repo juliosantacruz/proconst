@@ -47,9 +47,11 @@ export default function Presupuesto() {
   } = useWorkingPresupuesto();
   const { presupuestos, updatePresupuesto, setPresupuestoToUpdate } = usePresupuestoStore();
   const { projectId } = useParams();
-
   const { insumos } = useInsumoStore();
   const { conceptos, deleteConcepto, setConceptoToUpdate } = useConceptoStore();
+  const [ sumarFSR, setSumarFSR ] = useState(false)
+  
+  
   const allConceptos = conceptos.filter(
     (concepto) => concepto.proyectoId === projectId
   );
@@ -65,7 +67,6 @@ export default function Presupuesto() {
     return element;
   };
 
-  console.log("leWork", workingProject);
 
   useEffect(() => {
     const projectData = presupuestos.find(
@@ -90,10 +91,15 @@ export default function Presupuesto() {
     descripcionProyecto,
     partidas,
     montoTotal,
+    fsc
   } = workingProject;
+  
+  // cambiar los factores de sobre costo a porcentajes
+  const {costoIndirecto,costoOperativo,financiamiento,utilidad}= fsc
+  const factorSobreCosto = (1+((costoIndirecto+costoOperativo)/100))*(1+(financiamiento/100)) *(1+(utilidad/100))
+  console.log("montoFinal", factorSobreCosto);
+  
   const montoProyectoFinal = montoProyecto(partidas);
-  console.log("montoFinal", montoProyectoFinal);
-
   const handleEditProject = (projectUpdate: Presupuesto) => {
     console.log(`se editar ${projectUpdate.id}`);
     setPresupuestoToUpdate(projectUpdate); 
@@ -106,16 +112,23 @@ export default function Presupuesto() {
     openModalFormPartida(true);
   }
 
+  const handleFSR=()=>{
+    setSumarFSR(!sumarFSR)
+   
+  }
+
   return (
     <section className="workspace">
       <PageTitle title="Presupuesto de obra">
         <AddButton onClick={()=>handleEditProject(workingProject)}>Editar Proyecto</AddButton>
         <AddButton onClick={handleAddPartida}>Agregar Partida</AddButton>
+        <AddButton onClick={handleFSR} className={sumarFSR?'fsrButton fsrActive':'fsrButton'}>Agregar FSR</AddButton>
 
       </PageTitle>
 
       <h4>
-        {nombreProyecto} - {setFormat(montoProyectoFinal)}
+        {nombreProyecto} - {setFormat(montoProyectoFinal)}  
+         
       </h4>
       <p>{descripcionProyecto}</p>
       <div className="Presupuesto">
@@ -128,7 +141,7 @@ export default function Presupuesto() {
               <th>PU</th>
               <th>Canidad</th>
               <th>Monto</th>
-              <th>Actions</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -142,7 +155,16 @@ export default function Presupuesto() {
                     setWorkingPartida(element);
                     openModalFormConcepto(true);
                   };
-                  //const montoPartida = montoPartidaF(element,allConceptos)
+
+                  const montoPartidaFSR = () => {
+                    if(sumarFSR){
+                      const monto = factorSobreCosto * (element.montoPartida as number)
+                      return monto
+                    }else{
+                      const monto =   (element.montoPartida as number)
+                      return monto
+                    }
+                  }
 
                   return (
                     <>
@@ -153,7 +175,7 @@ export default function Presupuesto() {
                         <td className="precioUnitario"></td>
                         <td className="cantidad"></td>
 
-                        <td className="total">{setFormat(element.montoPartida as number)}</td>
+                        <td className="total">{setFormat(montoPartidaFSR())}</td>
                         <td className="actions">
                           
                         <a onClick={addConcepto}>
@@ -223,9 +245,20 @@ export default function Presupuesto() {
                                 setConceptoToUpdate(element);
                                 openModalFormConcepto(true);
                               };
+
+                              const fsrPU = ()=>{
+                                console.log('hay fsr',sumarFSR)
+                                if(sumarFSR){
+                                  const pu = (leConcept?.precioUnitario as number)* factorSobreCosto
+                                  return pu
+                                }else{
+                                  const pu = (leConcept?.precioUnitario as number)
+                                  return pu
+                                }
+                              }
+
                               const montoConcepto =
-                                (concepto.cantidad as number) *
-                                (leConcept?.precioUnitario as number);
+                                (concepto.cantidad as number) * fsrPU()
 
                               return (
                                 <tr key={concepto.conceptoId} className="concepto" >
@@ -233,9 +266,7 @@ export default function Presupuesto() {
                                   <td className="descripcion">{leConcept?.descripcion}</td>
                                   <td className="unidad">{leConcept?.unidad}</td>
                                   <td className="precioUnitario">
-                                    {setFormat(
-                                      leConcept?.precioUnitario as number
-                                    )}
+                                    {setFormat( fsrPU() )}
                                   </td>
 
                                   <td className="cantidad">
