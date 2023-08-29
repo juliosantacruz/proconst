@@ -107,7 +107,16 @@ export default function Presupuesto() {
     (1 + financiamiento / 100) *
     (1 + utilidad / 100);
 
-  const montoProyectoFinal = montoProyecto(partidas);
+  const montoProyectoFinal =()=> {
+    if(sumarFSR){
+      const monto = montoProyecto(partidas)
+      return monto * factorSobreCosto 
+    }else{
+      const monto = montoProyecto(partidas)
+      return monto  
+    }
+}
+
   const handleEditProject = (projectUpdate: Presupuesto) => {
     setPresupuestoToUpdate(projectUpdate);
     openModalFormProject(true);
@@ -138,7 +147,7 @@ export default function Presupuesto() {
       </PageTitle>
 
       <h4>
-        {nombreProyecto} - {setFormat(montoProyectoFinal)}
+        {nombreProyecto} - {setFormat(montoProyectoFinal())}
       </h4>
       <p>{descripcionProyecto}</p>
       <div className="Presupuesto">
@@ -256,7 +265,7 @@ export default function Presupuesto() {
                                   montoPartida
                                 );
                                
-                                setMontoProyecto(montoProyectoFinal);
+                                setMontoProyecto(montoProyectoFinal());
                               };
 
                                
