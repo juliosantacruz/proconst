@@ -237,7 +237,9 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
       },
       updateWorkingPartida: (updatePartida: Partida) => {
         set((state) => ({
-          partidas: state.partidas.map((partida)=>partida.id===updatePartida.id ? updatePartida : partida)
+          partidas: state.partidas.map((partida) =>
+            partida.id === updatePartida.id ? updatePartida : partida
+          ),
         }));
       },
       addConceptoPartida: (conceptoPartida: ListadoConcepto) => {
@@ -283,29 +285,40 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
         partidaId,
         montoPartida
       ) => {
-        set((state) => ({
-          workingPartida: state.partidas.find(
-            (partida) => partida.id === partidaId
-          ),
-        }));
+        // set((state) => ({
+        //   partidas: state.partidas.map((partida:Partida) => {
+        //     partida.id !== partidaId
+        //       ? partida
+        //       : partida.listadoConceptos.map((concepto) => {
+        //           concepto.conceptoId === leConceptoId
+        //             ? { conceptoId: leConceptoId, cantidad: leCantidad }
+        //             : concepto;
+        //         });
+        //   }),
+        // }))
+          set((state) => ({
+            workingPartida: state.partidas.find(
+              (partida) => partida.id === partidaId
+            ),
+          }));
         set((state) => ({
           workingPartida: {
             ...state.workingPartida,
             montoPartida: montoPartida,
-            listadoConceptos: state.workingPartida.listadoConceptos?.filter(
-              (concepto) => concepto.conceptoId !== leConceptoId
+            listadoConceptos: state.workingPartida.listadoConceptos?.map((concepto) => 
+            concepto.conceptoId !== leConceptoId?concepto: {...concepto, cantidad: leCantidad}
             ),
           },
         })),
-          set((state) => ({
-            workingPartida: {
-              ...state.workingPartida,
-              listadoConceptos: [
-                ...(state.workingPartida.listadoConceptos as any),
-                { conceptoId: leConceptoId, cantidad: leCantidad },
-              ],
-            },
-          })),
+          // set((state) => ({
+          //   workingPartida: {
+          //     ...state.workingPartida,
+          //     listadoConceptos: [
+          //       ...(state.workingPartida.listadoConceptos as any),
+          //       { conceptoId: leConceptoId, cantidad: leCantidad },
+          //     ],
+          //   },
+          // })),
           set((state) => ({
             partidas: state.partidas.filter(
               (partida) => partida.id !== state.workingPartida.id

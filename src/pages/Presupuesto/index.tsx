@@ -20,10 +20,12 @@ import { Concepto } from "../../types/Concepto";
 import "./Presupuesto.scss";
 import { montoPartidaCant, montoProyecto } from "../../utils/ProjectFunctions";
 import AnyIcon from "../../components/AnyIcon";
-import addIcon from '../../assets/icons/bx-plus-circle.svg'
+import addIcon from "../../assets/icons/bx-plus-circle.svg";
 import editIcon from "../../assets/icons/bx-edit.svg";
 import deleteIcon from "../../assets/icons/bx-trash.svg";
 import FormPresupuesto from "../../components/FormPresupuesto";
+import { useNavigate } from "react-router-dom";
+import { RoutesDirectory } from "../../routes/router";
 
 export default function Presupuesto() {
   const {
@@ -34,7 +36,7 @@ export default function Presupuesto() {
     modalFormInsumo,
     openModalFormInsumo,
     modalFormProject,
-    openModalFormProject
+    openModalFormProject,
   } = useUxStore();
   const workingProject = useWorkingPresupuesto();
   const {
@@ -45,13 +47,14 @@ export default function Presupuesto() {
     deleteConceptoPartida,
     setMontoProyecto,
   } = useWorkingPresupuesto();
-  const { presupuestos, updatePresupuesto, setPresupuestoToUpdate } = usePresupuestoStore();
+  const { presupuestos, updatePresupuesto, setPresupuestoToUpdate } =
+    usePresupuestoStore();
   const { projectId } = useParams();
   const { insumos } = useInsumoStore();
   const { conceptos, deleteConcepto, setConceptoToUpdate } = useConceptoStore();
-  const [ sumarFSR, setSumarFSR ] = useState(false)
-  
-  
+  const [sumarFSR, setSumarFSR] = useState(false);
+  const navigate = useNavigate();
+
   const allConceptos = conceptos.filter(
     (concepto) => concepto.proyectoId === projectId
   );
@@ -67,18 +70,21 @@ export default function Presupuesto() {
     return element;
   };
 
-
   useEffect(() => {
     const projectData = presupuestos.find(
       (project) => project.id === projectId
     );
-
-    setWorkingPresupuesto(projectData as Presupuesto);
+    if (projectData === undefined) {
+      console.log("proyecto no encontrado");
+      navigate(RoutesDirectory.HOME);
+    } else {
+      setWorkingPresupuesto(projectData as Presupuesto);
+    }
   }, []);
 
   useEffect(() => {
     updatePresupuesto(workingProject);
-  }, [workingProject]);
+  }, [updatePresupuesto, workingProject]);
 
   const handleAddPartida = () => {
     openModalFormPartida(true);
@@ -91,44 +97,48 @@ export default function Presupuesto() {
     descripcionProyecto,
     partidas,
     montoTotal,
-    fsc
+    fsc,
   } = workingProject;
-  
+
   // cambiar los factores de sobre costo a porcentajes
-  const {costoIndirecto,costoOperativo,financiamiento,utilidad}= fsc
-  const factorSobreCosto = (1+((costoIndirecto+costoOperativo)/100))*(1+(financiamiento/100)) *(1+(utilidad/100))
-  console.log("montoFinal", factorSobreCosto);
-  
+  const { costoIndirecto, costoOperativo, financiamiento, utilidad } = fsc;
+  const factorSobreCosto =
+    (1 + (costoIndirecto + costoOperativo) / 100) *
+    (1 + financiamiento / 100) *
+    (1 + utilidad / 100);
+
   const montoProyectoFinal = montoProyecto(partidas);
   const handleEditProject = (projectUpdate: Presupuesto) => {
-    console.log(`se editar ${projectUpdate.id}`);
-    setPresupuestoToUpdate(projectUpdate); 
+    setPresupuestoToUpdate(projectUpdate);
     openModalFormProject(true);
   };
 
-  const handleEditPartida = (partida:Partida) =>{
-    console.log('se edita partida', partida.nombre)
-    setWorkingPartida(partida)
+  const handleEditPartida = (partida: Partida) => {
+    setWorkingPartida(partida);
     openModalFormPartida(true);
-  }
+  };
 
-  const handleFSR=()=>{
-    setSumarFSR(!sumarFSR)
-   
-  }
+  const handleFSR = () => {
+    setSumarFSR(!sumarFSR);
+  };
 
   return (
     <section className="workspace">
       <PageTitle title="Presupuesto de obra">
-        <AddButton onClick={()=>handleEditProject(workingProject)}>Editar Proyecto</AddButton>
+        <AddButton onClick={() => handleEditProject(workingProject)}>
+          Editar Proyecto
+        </AddButton>
         <AddButton onClick={handleAddPartida}>Agregar Partida</AddButton>
-        <AddButton onClick={handleFSR} className={sumarFSR?'fsrButton fsrActive':'fsrButton'}>Agregar FSR</AddButton>
-
+        <AddButton
+          onClick={handleFSR}
+          className={sumarFSR ? "fsrButton fsrActive" : "fsrButton"}
+        >
+          Agregar FSR
+        </AddButton>
       </PageTitle>
 
       <h4>
-        {nombreProyecto} - {setFormat(montoProyectoFinal)}  
-         
+        {nombreProyecto} - {setFormat(montoProyectoFinal)}
       </h4>
       <p>{descripcionProyecto}</p>
       <div className="Presupuesto">
@@ -156,15 +166,22 @@ export default function Presupuesto() {
                     openModalFormConcepto(true);
                   };
 
+                  const montoPartida = montoPartidaCant(
+                    element,
+                    allConceptos
+                  );
+
+                  console.log("montoPartida1:", montoPartida);
                   const montoPartidaFSR = () => {
-                    if(sumarFSR){
-                      const monto = factorSobreCosto * (element.montoPartida as number)
-                      return monto
-                    }else{
-                      const monto =   (element.montoPartida as number)
-                      return monto
+                    if (sumarFSR) {
+                      const monto =
+                        factorSobreCosto * (montoPartida as number);
+                      return monto;
+                    } else {
+                      const monto = montoPartida as number;
+                      return monto;
                     }
-                  }
+                  };
 
                   return (
                     <>
@@ -175,41 +192,40 @@ export default function Presupuesto() {
                         <td className="precioUnitario"></td>
                         <td className="cantidad"></td>
 
-                        <td className="total">{setFormat(montoPartidaFSR())}</td>
+                        <td className="total">
+                          {setFormat(montoPartidaFSR())}
+                        </td>
                         <td className="actions">
-                          
-                        <a onClick={addConcepto}>
-                              <AnyIcon
-                                className={"icon"}
-                                iconSrc={addIcon}
-                                iconWidth={14}
-                                iconHeight={14}
-                              />
-                            </a>{" "}
-                            |
-                            <a onClick={()=>handleEditPartida(element)}>
-                              <AnyIcon
-                                className={"icon"}
-                                iconSrc={editIcon}
-                                iconWidth={14}
-                                iconHeight={14}
-                              />
-                            </a>{" "}
-                            |
-                            <a onClick={() => deletePartida(element.id)}>
-                              <AnyIcon
-                                iconSrc={deleteIcon}
-                                iconWidth={14}
-                                iconHeight={14}
-                              />
-                            </a>
-                          
+                          <a onClick={addConcepto}>
+                            <AnyIcon
+                              className={"icon"}
+                              iconSrc={addIcon}
+                              iconWidth={14}
+                              iconHeight={14}
+                            />
+                          </a>{" "}
+                          |
+                          <a onClick={() => handleEditPartida(element)}>
+                            <AnyIcon
+                              className={"icon"}
+                              iconSrc={editIcon}
+                              iconWidth={14}
+                              iconHeight={14}
+                            />
+                          </a>{" "}
+                          |
+                          <a onClick={() => deletePartida(element.id)}>
+                            <AnyIcon
+                              iconSrc={deleteIcon}
+                              iconWidth={14}
+                              iconHeight={14}
+                            />
+                          </a>
                         </td>
                       </tr>
 
                       {element.listadoConceptos
-                        ? element.listadoConceptos
-                        .map((concepto, index) => {
+                        ? element.listadoConceptos.map((concepto, index) => {
                             if (concepto) {
                               const leConcept = findConcepto(
                                 concepto.conceptoId as string,
@@ -223,19 +239,23 @@ export default function Presupuesto() {
                                   cantidadConcepto = 0;
                                 }
 
-                                const montoPartida = montoPartidaCant(
-                                  element,
-                                  allConceptos,
-                                  cantidadConcepto
-                                );
-                                setMontoProyecto(montoProyectoFinal);
-                                addCantidadConcepto(
+                                 addCantidadConcepto(
                                   concepto.conceptoId as string,
                                   cantidadConcepto,
                                   element.id,
                                   montoPartida
                                 );
+
+                                setMontoProyecto(montoProyectoFinal);
                               };
+
+                               
+                              const montoPartida = montoPartidaCant(
+                                element,
+                                allConceptos
+                              );
+                              console.log("montoPartida:", montoPartida);
+
                               const handleDelete = (id: string) => {
                                 deleteConcepto(id);
                                 deleteConceptoPartida(id);
@@ -246,27 +266,36 @@ export default function Presupuesto() {
                                 openModalFormConcepto(true);
                               };
 
-                              const fsrPU = ()=>{
-                                console.log('hay fsr',sumarFSR)
-                                if(sumarFSR){
-                                  const pu = (leConcept?.precioUnitario as number)* factorSobreCosto
-                                  return pu
-                                }else{
-                                  const pu = (leConcept?.precioUnitario as number)
-                                  return pu
+                              const fsrPU = () => {
+                                if (sumarFSR) {
+                                  const pu =
+                                    (leConcept?.precioUnitario as number) *
+                                    factorSobreCosto;
+                                  return pu;
+                                } else {
+                                  const pu =
+                                    leConcept?.precioUnitario as number;
+                                  return pu;
                                 }
-                              }
+                              };
 
                               const montoConcepto =
-                                (concepto.cantidad as number) * fsrPU()
+                                (concepto.cantidad as number) * fsrPU();
 
                               return (
-                                <tr key={concepto.conceptoId} className="concepto" >
+                                <tr
+                                  key={concepto.conceptoId}
+                                  className="concepto"
+                                >
                                   <td className="clave">{leConcept?.clave}</td>
-                                  <td className="descripcion">{leConcept?.descripcion}</td>
-                                  <td className="unidad">{leConcept?.unidad}</td>
+                                  <td className="descripcion">
+                                    {leConcept?.descripcion}
+                                  </td>
+                                  <td className="unidad">
+                                    {leConcept?.unidad}
+                                  </td>
                                   <td className="precioUnitario">
-                                    {setFormat( fsrPU() )}
+                                    {setFormat(fsrPU())}
                                   </td>
 
                                   <td className="cantidad">
@@ -277,7 +306,9 @@ export default function Presupuesto() {
                                       onChange={(event) => onCantidad(event)}
                                     />
                                   </td>
-                                  <td  className="total">{setFormat(montoConcepto)}</td>
+                                  <td className="total">
+                                    {setFormat(montoConcepto)}
+                                  </td>
 
                                   <td className="actions">
                                     <a

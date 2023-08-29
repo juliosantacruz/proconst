@@ -21,11 +21,11 @@ const AppRoutes = () => {
       { path: RoutesDirectory.HOME, element: <Inicio /> },
       { path: RoutesDirectory.LISTADO_CONCEPTOS, element: <ListadoConceptos /> },
       { path: RoutesDirectory.LISTADO_INSUMOS, element: <ListadoInsumos /> },
-      { path: RoutesDirectory.WORKING_PRESUPUESTO, element: <Presupuesto />},
+      { path: RoutesDirectory.WORKING_PRESUPUESTO, element: <Presupuesto />, errorElement:<NotFound />,  },
       { path: "/proconst/*", element: <NotFound /> },
   
     ]);
-    return routes;
+    return routes; 
   };
 
 export default AppRoutes

@@ -31,14 +31,15 @@ export const montoPartidaF = (
 export const montoPartidaCant = (
   partida: Partida,
   allProjectConcepts: Concepto[],
-  cantidad: number
+   
 ) => {
+   
   const listadoConceptos = partida.listadoConceptos;
   const arrMontoConcepto: number[] = [];
   const projectConceptos = allProjectConcepts;
 
   listadoConceptos?.map((concepto) => {
-    const { conceptoId } = concepto;
+    const { conceptoId, cantidad } = concepto;
     const pu = projectConceptos.find(
       (concepto) => concepto.id === conceptoId
     )?.precioUnitario;

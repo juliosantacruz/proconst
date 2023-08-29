@@ -66,12 +66,12 @@ export default function FormPresupuesto() {
       partidas: [],
       montoTotal: 0.0,
       fsc: {
-        costoIndirecto: 1,
-        costoOperativo: 1,
-        financiamiento: 1,
-        utilidad: 1,
-        iva: 1,
-        isr: 1,
+        costoIndirecto: 0,
+        costoOperativo: 0,
+        financiamiento: 0,
+        utilidad: 0,
+        iva: 0,
+        isr: 0,
       },
     });
     }
@@ -177,6 +177,7 @@ export default function FormPresupuesto() {
           value={formData.clienteProyecto}
         />
       </div>
+        <h4>Factores Sobre Costo</h4>
       <div className="fscGroup">
         <div className="input">
           <label htmlFor="costoOperativo">FCD (%)</label>
