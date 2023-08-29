@@ -18,7 +18,7 @@ import FormConcepto from "../../components/FormConcepto";
 import { Insumo } from "../../types/Insumo";
 import { Concepto } from "../../types/Concepto";
 import "./Presupuesto.scss";
-import { montoPartidaCant, montoProyecto } from "../../utils/ProjectFunctions";
+import { montoPartidaCant, montoProyecto, sumMontoPartida } from "../../utils/ProjectFunctions";
 import AnyIcon from "../../components/AnyIcon";
 import addIcon from "../../assets/icons/bx-plus-circle.svg";
 import editIcon from "../../assets/icons/bx-edit.svg";
@@ -166,7 +166,7 @@ export default function Presupuesto() {
                     openModalFormConcepto(true);
                   };
 
-                  const montoPartida = montoPartidaCant(
+                  const montoPartida = sumMontoPartida(
                     element,
                     allConceptos
                   );
@@ -239,22 +239,27 @@ export default function Presupuesto() {
                                   cantidadConcepto = 0;
                                 }
 
-                                 addCantidadConcepto(
+                               
+
+                                const montoPartida = montoPartidaCant(
+                                  element,
+                                  allConceptos,
+                                  cantidadConcepto,
+                                  concepto.conceptoId as string,
+                                );
+                                console.log("montoPartida:", montoPartida);
+
+                                addCantidadConcepto(
                                   concepto.conceptoId as string,
                                   cantidadConcepto,
                                   element.id,
                                   montoPartida
                                 );
-
+                               
                                 setMontoProyecto(montoProyectoFinal);
                               };
 
                                
-                              const montoPartida = montoPartidaCant(
-                                element,
-                                allConceptos
-                              );
-                              console.log("montoPartida:", montoPartida);
 
                               const handleDelete = (id: string) => {
                                 deleteConcepto(id);
