@@ -44,7 +44,7 @@ interface WorkingPresupuesto extends Presupuesto {
   setWorkingPartida: (partida: Partida) => void;
   updateWorkingPartida: (updatePartida: Partida) => any;
   addConceptoPartida: (conceptoPartida: ListadoConcepto) => void;
-  deleteConceptoPartida: (id: string) => void;
+  deleteConceptoPartida: (conceptoId: string, partidaId?: string) => void;
   addCantidadConcepto: (
     conceptoId: string,
     cantidad: number,
@@ -261,15 +261,23 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
             partidas: [...state.partidas, state.workingPartida],
           }));
       },
-      deleteConceptoPartida: (id: string) => {
+      deleteConceptoPartida: (conceptoId: string, partidaId?: string) => {
         set((state) => ({
-          workingPartida: {
-            ...state.workingPartida,
-            listadoConceptos: (
-              state.workingPartida.listadoConceptos as any
-            ).filter((concepto: ListadoConcepto) => concepto.conceptoId !== id),
-          },
-        })),
+          workingPartida: state.partidas.find(
+            (partida) => partida.id === partidaId
+          ),
+        }))
+          set((state) => ({
+            workingPartida: {
+              ...state.workingPartida,
+              listadoConceptos: (
+                state.workingPartida.listadoConceptos as unknown as ListadoConcepto[]
+              ).filter(
+                (concepto: ListadoConcepto) =>
+                  concepto.conceptoId !== conceptoId
+              ),
+            },
+          }))
           set((state) => ({
             partidas: state.partidas.filter(
               (partida) => partida.id !== state.workingPartida.id
@@ -277,6 +285,9 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
           })),
           set((state) => ({
             partidas: [...state.partidas, state.workingPartida],
+          })),
+          set(() => ({
+            workingPartida: emptyPartida,
           }));
       },
       addCantidadConcepto: (
@@ -285,29 +296,23 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
         partidaId,
         montoPartida
       ) => {
-          set((state) => ({
-            workingPartida: state.partidas.find(
-              (partida) => partida.id === partidaId
-            ),
-          }));
+        set((state) => ({
+          workingPartida: state.partidas.find(
+            (partida) => partida.id === partidaId
+          ),
+        }));
         set((state) => ({
           workingPartida: {
             ...state.workingPartida,
             montoPartida: montoPartida,
-            listadoConceptos: state.workingPartida.listadoConceptos?.map((concepto) => 
-            concepto.conceptoId !== leConceptoId?concepto: {...concepto, cantidad: leCantidad}
+            listadoConceptos: state.workingPartida.listadoConceptos?.map(
+              (concepto) =>
+                concepto.conceptoId !== leConceptoId
+                  ? concepto
+                  : { ...concepto, cantidad: leCantidad }
             ),
           },
         })),
-          // set((state) => ({
-          //   workingPartida: {
-          //     ...state.workingPartida,
-          //     listadoConceptos: [
-          //       ...(state.workingPartida.listadoConceptos as any),
-          //       { conceptoId: leConceptoId, cantidad: leCantidad },
-          //     ],
-          //   },
-          // })),
           set((state) => ({
             partidas: state.partidas.filter(
               (partida) => partida.id !== state.workingPartida.id
@@ -316,9 +321,9 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
           set((state) => ({
             partidas: [...state.partidas, state.workingPartida],
           }));
-          set(()=>({
-            workingPartida:emptyPartida
-          }))
+        set(() => ({
+          workingPartida: emptyPartida,
+        }));
       },
       setMontoProyecto: (monto) => {
         set(() => ({

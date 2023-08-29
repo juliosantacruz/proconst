@@ -107,15 +107,19 @@ export default function Presupuesto() {
     (1 + financiamiento / 100) *
     (1 + utilidad / 100);
 
-  const montoProyectoFinal =()=> {
+   
+   const findMontoProyectoFinal=()=>{
     if(sumarFSR){
+      const monto = montoProyecto(partidas)* factorSobreCosto 
+      return monto
+   }else{
       const monto = montoProyecto(partidas)
-      return monto * factorSobreCosto 
-    }else{
-      const monto = montoProyecto(partidas)
-      return monto  
-    }
-}
+      return monto
+   }
+   }
+   const montoProyectoFinal= findMontoProyectoFinal()
+
+ 
 
   const handleEditProject = (projectUpdate: Presupuesto) => {
     setPresupuestoToUpdate(projectUpdate);
@@ -147,7 +151,7 @@ export default function Presupuesto() {
       </PageTitle>
 
       <h4>
-        {nombreProyecto} - {setFormat(montoProyectoFinal())}
+        {nombreProyecto} - {setFormat(montoProyectoFinal)}
       </h4>
       <p>{descripcionProyecto}</p>
       <div className="Presupuesto">
@@ -248,8 +252,6 @@ export default function Presupuesto() {
                                   cantidadConcepto = 0;
                                 }
 
-                               
-
                                 const montoPartida = montoPartidaCant(
                                   element,
                                   allConceptos,
@@ -265,14 +267,14 @@ export default function Presupuesto() {
                                   montoPartida
                                 );
                                
-                                setMontoProyecto(montoProyectoFinal());
+                                setMontoProyecto(montoProyectoFinal);
                               };
 
                                
 
-                              const handleDelete = (id: string) => {
-                                deleteConcepto(id);
-                                deleteConceptoPartida(id);
+                              const handleDelete = (conceptoId: string, partidaId?:string) => {
+                                deleteConceptoPartida(conceptoId, partidaId);
+                                deleteConcepto(conceptoId);
                               };
                               const handleEdit = (element: Concepto) => {
                                 console.log(`se editar ${element.id}`);
@@ -340,7 +342,7 @@ export default function Presupuesto() {
                                     |
                                     <a
                                       onClick={() =>
-                                        handleDelete(leConcept?.id as string)
+                                        handleDelete(leConcept?.id as string, element.id as string)
                                       }
                                     >
                                       <AnyIcon
