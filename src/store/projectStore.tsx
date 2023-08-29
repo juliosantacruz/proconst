@@ -285,17 +285,6 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
         partidaId,
         montoPartida
       ) => {
-        // set((state) => ({
-        //   partidas: state.partidas.map((partida:Partida) => {
-        //     partida.id !== partidaId
-        //       ? partida
-        //       : partida.listadoConceptos.map((concepto) => {
-        //           concepto.conceptoId === leConceptoId
-        //             ? { conceptoId: leConceptoId, cantidad: leCantidad }
-        //             : concepto;
-        //         });
-        //   }),
-        // }))
           set((state) => ({
             workingPartida: state.partidas.find(
               (partida) => partida.id === partidaId
@@ -327,6 +316,9 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
           set((state) => ({
             partidas: [...state.partidas, state.workingPartida],
           }));
+          set(()=>({
+            workingPartida:emptyPartida
+          }))
       },
       setMontoProyecto: (monto) => {
         set(() => ({
