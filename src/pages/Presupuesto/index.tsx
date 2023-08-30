@@ -18,11 +18,19 @@ import FormConcepto from "../../components/FormConcepto";
 import { Insumo } from "../../types/Insumo";
 import { Concepto } from "../../types/Concepto";
 import "./Presupuesto.scss";
-import { montoPartidaCant, montoProyecto, sumMontoPartida } from "../../utils/ProjectFunctions";
+import {
+  montoPartidaCant,
+  montoProyecto,
+  sumMontoPartida,
+  createJSONFile
+} from "../../utils/ProjectFunctions";
 import AnyIcon from "../../components/AnyIcon";
 import addIcon from "../../assets/icons/bx-plus-circle.svg";
 import editIcon from "../../assets/icons/bx-edit.svg";
 import deleteIcon from "../../assets/icons/bx-trash.svg";
+import saveIcon from "../../assets/icons/bx-save.svg";
+import exportIcon from "../../assets/icons/bx-export.svg";
+
 import FormPresupuesto from "../../components/FormPresupuesto";
 import { useNavigate } from "react-router-dom";
 import { RoutesDirectory } from "../../routes/router";
@@ -107,19 +115,16 @@ export default function Presupuesto() {
     (1 + financiamiento / 100) *
     (1 + utilidad / 100);
 
-   
-   const findMontoProyectoFinal=()=>{
-    if(sumarFSR){
-      const monto = montoProyecto(partidas)* factorSobreCosto 
-      return monto
-   }else{
-      const monto = montoProyecto(partidas)
-      return monto
-   }
-   }
-   const montoProyectoFinal= findMontoProyectoFinal()
-
- 
+  const findMontoProyectoFinal = () => {
+    if (sumarFSR) {
+      const monto = montoProyecto(partidas) * factorSobreCosto;
+      return monto;
+    } else {
+      const monto = montoProyecto(partidas);
+      return monto;
+    }
+  };
+  const montoProyectoFinal = findMontoProyectoFinal();
 
   const handleEditProject = (projectUpdate: Presupuesto) => {
     setPresupuestoToUpdate(projectUpdate);
@@ -135,9 +140,26 @@ export default function Presupuesto() {
     setSumarFSR(!sumarFSR);
   };
 
+  const handleGuardar = (proyecto: Presupuesto) => {
+    console.log("se guarda", proyecto);
+  };
+  const handleExportarJSON = (proyecto: Presupuesto) => {
+    createJSONFile(proyecto)
+    console.log("se guarda", proyecto);
+  };
+
   return (
     <section className="workspace">
       <PageTitle title="Presupuesto de obra">
+        <button
+          type="button"
+          onClick={() => handleExportarJSON(workingProject)}
+        >
+          <AnyIcon iconSrc={exportIcon} />
+        </button>
+        <button type="button" onClick={() => handleGuardar(workingProject)}>
+          <AnyIcon iconSrc={saveIcon} />
+        </button>
         <AddButton onClick={() => handleEditProject(workingProject)}>
           Editar Proyecto
         </AddButton>
@@ -179,16 +201,12 @@ export default function Presupuesto() {
                     openModalFormConcepto(true);
                   };
 
-                  const montoPartida = sumMontoPartida(
-                    element,
-                    allConceptos
-                  );
+                  const montoPartida = sumMontoPartida(element, allConceptos);
 
                   console.log("montoPartida1:", montoPartida);
                   const montoPartidaFSR = () => {
                     if (sumarFSR) {
-                      const monto =
-                        factorSobreCosto * (montoPartida as number);
+                      const monto = factorSobreCosto * (montoPartida as number);
                       return monto;
                     } else {
                       const monto = montoPartida as number;
@@ -256,7 +274,7 @@ export default function Presupuesto() {
                                   element,
                                   allConceptos,
                                   cantidadConcepto,
-                                  concepto.conceptoId as string,
+                                  concepto.conceptoId as string
                                 );
                                 console.log("montoPartida:", montoPartida);
 
@@ -266,13 +284,14 @@ export default function Presupuesto() {
                                   element.id,
                                   montoPartida
                                 );
-                               
+
                                 setMontoProyecto(montoProyectoFinal);
                               };
 
-                               
-
-                              const handleDelete = (conceptoId: string, partidaId?:string) => {
+                              const handleDelete = (
+                                conceptoId: string,
+                                partidaId?: string
+                              ) => {
                                 deleteConceptoPartida(conceptoId, partidaId);
                                 deleteConcepto(conceptoId);
                               };
@@ -342,7 +361,10 @@ export default function Presupuesto() {
                                     |
                                     <a
                                       onClick={() =>
-                                        handleDelete(leConcept?.id as string, element.id as string)
+                                        handleDelete(
+                                          leConcept?.id as string,
+                                          element.id as string
+                                        )
                                       }
                                     >
                                       <AnyIcon

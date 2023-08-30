@@ -8,4 +8,10 @@
     border-bottom: 1px solid black;
     margin: 0 10px;
     background: #dfdfdf00;;
+
+    .buttonTitle{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
 }

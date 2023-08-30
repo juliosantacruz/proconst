@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import './AddButton.scss'
 
 
 type AddButtonProps = {
     className?:string,
-    children:string,
+    children:string|ReactNode,
     bgColor?:string,
     fontColor?:string,
     onClick:()=>void,
