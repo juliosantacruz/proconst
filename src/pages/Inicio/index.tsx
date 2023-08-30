@@ -28,7 +28,7 @@ export default function Index() {
           bgColor="rgb(31, 57, 204)"
           fontColor={"rgb(255, 255, 255)"}
         >
-          Agregar Proyecto
+          + Proyecto
         </AddButton>
         
       </PageTitle>

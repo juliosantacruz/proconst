@@ -6,6 +6,11 @@ import FormInsumo from "../../components/FormInsumo";
 import AsideModal from "../../components/AsideModal";
 // import TableTabsListInsumo from "../../components/TableTabsListInsumo";
 import "./ListadoInsumos.scss";
+import AnyIcon from "../../components/AnyIcon";
+import { Insumo } from "../../types/Insumo";
+import { createJSONFile, createJSONFileInsumos } from "../../utils/ProjectFunctions";
+import exportIcon from "../../assets/icons/bx-export.svg";
+import { useInsumoStore } from "../../store/projectStore";
 
 const TableTabsListInsumo = lazy(
   () => import("../../components/TableTabsListInsumo")
@@ -13,6 +18,9 @@ const TableTabsListInsumo = lazy(
 
 export default function ListadoInsumos() {
   const { modalFormInsumo, openModalFormInsumo } = useUxStore();
+  const { insumos } = useInsumoStore();
+
+  
 
   const handleAddInsumo = () => {
     console.log("Inicio");
@@ -20,15 +28,28 @@ export default function ListadoInsumos() {
     console.log("fin");
   };
 
+  const handleExportInsumo = (arrInsumos: Insumo[]) => {
+    console.log(arrInsumos)
+    createJSONFileInsumos(arrInsumos)
+    console.log("se guarda", arrInsumos);
+  };
+
+
   return (
     <section className="workspace">
       <PageTitle title="Mis Insumos">
+      <button
+          type="button"
+          onClick={() => handleExportInsumo(insumos)}
+        >
+          <AnyIcon iconSrc={exportIcon} />
+        </button>
         <AddButton
           onClick={handleAddInsumo}
           bgColor="rgb(31, 57, 204)"
           fontColor={"rgb(255, 255, 255)"}
         >
-          Agregar Insumo
+          + Insumo
         </AddButton>
       </PageTitle>
       <div className="btn-header">

@@ -2,6 +2,7 @@ import { Concepto } from "../types/Concepto";
 import { Partida, Presupuesto } from "../types/Presupuesto";
 import {saveAs} from 'file-saver'
 import * as dayjs from 'dayjs'
+import { Insumo } from "../types/Insumo";
 
 
 // Obtiene el monto por partida
@@ -98,17 +99,18 @@ export const montoProyecto =(partidas:Partida[])=>{
     return montoProyectoFinal
 }
 
-// export Json File 
+// export Json File Project
 
 export const createJSONFile=(project:Presupuesto)=>{
-  // 1.- Obtener el objeto a exportar
-  const localStorageProjects = localStorage.getItem('presupuesto-storage')
-  const parseProjects = JSON.parse(localStorageProjects as string).state.presupuestos
-  console.log(parseProjects[0])
-
   const blob = new Blob([JSON.stringify(project)], {type:'application/json;charset=utf-8'})
-    
   saveAs(blob, `export_${project.nombreProyecto}_${dayjs().format('YYYY-MM-DD')}.json`)
 }
 
+// export Json File Insumos
+
+export const createJSONFileInsumos=(Insumos:Insumo[])=>{   
+
+  const blob = new Blob([JSON.stringify(Insumos)], {type:'application/json;charset=utf-8'})
+  saveAs(blob, `export_Insumos_${dayjs().format('YYYY-MM-DD')}.json`)
+}
 
