@@ -8,7 +8,7 @@ import AsideModal from "../../components/AsideModal";
 import "./ListadoInsumos.scss";
 import AnyIcon from "../../components/AnyIcon";
 import { Insumo } from "../../types/Insumo";
-import { createJSONFile, createJSONFileInsumos } from "../../utils/ProjectFunctions";
+import { createJSONFileInsumos } from "../../utils/ProjectFunctions";
 import exportIcon from "../../assets/icons/bx-export.svg";
 import { useInsumoStore } from "../../store/projectStore";
 

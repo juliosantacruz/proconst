@@ -1,7 +1,9 @@
 import { Tabs } from "antd";
 import { useInsumoStore } from "../../store/projectStore";
 import { Insumo } from "../../types/Insumo"; 
-import TableListInsumo from "../TableListInsumo";
+// import TableListInsumo from "../TableListInsumo";
+import TableInsumo from "../TableInsumo";
+
 
 export default function TableTabsInsumo() {
 
@@ -10,7 +12,7 @@ export default function TableTabsInsumo() {
   const insumoFilter = (arr: Insumo[], categoria: string) => {
     return arr.filter((element) => element.categoria === categoria);
   };
-  const TodosInsumos = insumos;
+  const TodosInsumos = insumos.sort((a,b)=>  a.clave.localeCompare(b.clave));
   const MaterialInsumos = insumoFilter(insumos, "Materiales");
   const ManoObraInsumos = insumoFilter(insumos, "Mano de Obra");
   const HerramientaInsumos = insumoFilter(insumos, "Herramienta");
@@ -25,32 +27,32 @@ export default function TableTabsInsumo() {
     {
       label: `Todos`,
       key: "1",
-      children: <TableListInsumo insumosData={TodosInsumos} />,
+      children: <TableInsumo insumosData={TodosInsumos} />,
     },
     {
       label: `Materiales`,
       key: "2",
-      children: <TableListInsumo insumosData={MaterialInsumos} />,
+      children: <TableInsumo insumosData={MaterialInsumos} />,
     },
     {
       label: `Mano de Obra`,
       key: "3",
-      children: <TableListInsumo insumosData={ManoObraInsumos} />,
+      children: <TableInsumo insumosData={ManoObraInsumos} />,
     },
     {
       label: `Herramienta`,
       key: "4",
-      children: <TableListInsumo insumosData={HerramientaInsumos} />,
+      children: <TableInsumo insumosData={HerramientaInsumos} />,
     },
     {
       label: `Equipos`,
       key: "5",
-      children: <TableListInsumo insumosData={EquipoInsumos} />,
+      children: <TableInsumo insumosData={EquipoInsumos} />,
     },
     {
       label: `SubContratos`,
       key: "6",
-      children: <TableListInsumo insumosData={SubContratoInsumos} />,
+      children: <TableInsumo insumosData={SubContratoInsumos} />,
     },
   ];
 
