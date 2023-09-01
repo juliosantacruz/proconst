@@ -103,23 +103,23 @@ export const montoProyecto =(partidas:Partida[])=>{
 
 export const createJSONFile=(project:Presupuesto)=>{
   const blob = new Blob([JSON.stringify(project)], {type:'application/json;charset=utf-8'})
-  saveAs(blob, `export_${project.nombreProyecto}_${dayjs().format('YYYY-MM-DD')}.json`)
+  saveAs(blob, `export_${project.nombreProyecto}.json`)
 }
 
 // export Json File Insumos
 
-export const createJSONFileInsumos=(Insumos:Insumo[])=>{   
-  
-  try {
-    const isFileSaverSupported = !!new Blob;
-    console.log('leTry',isFileSaverSupported)
-} catch (e) {
-  console.log(e)
-}
+// export const createJSONFileInsumos=(Insumos:Insumo[])=>{   
+//   console.log('esto inicia')
+//   const insumoToExport = {insumos:Insumos}
+//   const blob = new Blob([JSON.stringify(insumoToExport)], {type:'application/json;charset=utf-8' })
+//   saveAs(blob, `export_Insumos_${dayjs().format('YYYY-MM-DD')}.json`)
+// }
 
-  const insumoToExport = {insumos:Insumos}
-  const blob = new Blob([JSON.stringify(insumoToExport)], {type:'application/json;charset=utf-8' })
-  saveAs(blob, `export_Insumos_${dayjs().format('YYYY-MM-DD')}.json`)
+export async function createJSONFileInsumos(insumos: Insumo[]) {
+  console.log('esto inicia');
+  const insumoToExport = {insumos: insumos};
+  const blob = await new Blob([JSON.stringify(insumoToExport)], {type: 'application/json;charset=utf-8'});
+  await saveAs(blob, `export_Insumos.json`);
 }
 
 
@@ -174,9 +174,8 @@ export const createPresupuestoJSON=(project:Presupuesto, conceptos:Concepto[], i
     conceptos:findConcepto(),
     insumos:findInsumos()
   }
-
-
+  const setName =()=>`export_${project.nombreProyecto}.json`
 
   const blob = new Blob([JSON.stringify(fileObject)], {type:'application/json;charset=utf-8'})
-  saveAs(blob, `export_${project.nombreProyecto}_${dayjs().format('YYYY-MM-DD')}.json`)
+  saveAs(blob, setName())
 }

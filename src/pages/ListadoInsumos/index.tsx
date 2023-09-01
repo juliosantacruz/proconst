@@ -20,7 +20,12 @@ const TableTabsListInsumo = lazy(
 );
 
 export default function ListadoInsumos() {
-  const { modalFormInsumo, openModalFormInsumo, modalFormLoad, openModalFormLoad } = useUxStore();
+  const {
+    modalFormInsumo,
+    openModalFormInsumo,
+    modalFormLoad,
+    openModalFormLoad,
+  } = useUxStore();
   const { insumos } = useInsumoStore();
 
   const handleAddInsumo = () => {
@@ -30,24 +35,35 @@ export default function ListadoInsumos() {
   };
 
   const handleExportInsumo = (arrInsumos: Insumo[]) => {
-    createJSONFileInsumos(arrInsumos);
+    // createJSONFileInsumos(arrInsumos);
+    const promise = createJSONFileInsumos(arrInsumos);
+
+    promise.then(() => {
+      console.log('El archivo JSON se ha creado correctamente.')
+    });
+
+    promise.catch((err) => {
+      console.log(' Se ha producido un error al crear el archivo JSON.', err)
+
+      //
+    });
   };
 
-  const handleImportInsumo = ()=>{
-    openModalFormLoad(!modalFormLoad)
-    console.log('cargar :D')
-  }
+  const handleImportInsumo = () => {
+    openModalFormLoad(!modalFormLoad);
+    console.log("cargar :D");
+  };
 
   return (
     <section className="workspace">
       <PageTitle title="Mis Insumos">
-        <AddButton   onClick={() => handleExportInsumo(insumos)}>
-          <AnyIcon iconSrc={downloadIcon}   />
+        <AddButton onClick={() => handleExportInsumo(insumos)}>
+          <AnyIcon iconSrc={downloadIcon} />
           Descargar
         </AddButton>
 
-        <AddButton   onClick={() => handleImportInsumo()}>
-          <AnyIcon iconSrc={uploadIcon}  />
+        <AddButton onClick={() => handleImportInsumo()}>
+          <AnyIcon iconSrc={uploadIcon} />
           Cargar
         </AddButton>
 
