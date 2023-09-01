@@ -14,6 +14,8 @@ interface UxState{
     openModalFormPartida: (value:boolean)=>void,
     modalFormProject: boolean,
     openModalFormProject: (value:boolean)=>void,
+    modalFormLoad: boolean,
+    openModalFormLoad: (value:boolean)=>void,
     isWorkingProject:boolean,
     setIsWorkingProject:(value:boolean)=>void
 }
@@ -29,6 +31,8 @@ export const useUxStore = create<UxState>((set)=>({
     openModalFormPartida: (value:boolean)=>set(()=>({modalFormPartida:value})),
     modalFormProject: false,
     openModalFormProject: (value:boolean)=>set(()=>({modalFormProject:value})),
+    modalFormLoad: false,
+    openModalFormLoad: (value:boolean)=>set(()=>({modalFormLoad:value})),
     isWorkingProject: false,
     setIsWorkingProject: (value:boolean)=>set(()=>({isWorkingProject:value})),
 }))

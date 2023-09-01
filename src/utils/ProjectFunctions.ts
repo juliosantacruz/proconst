@@ -109,8 +109,17 @@ export const createJSONFile=(project:Presupuesto)=>{
 // export Json File Insumos
 
 export const createJSONFileInsumos=(Insumos:Insumo[])=>{   
+  // const firmaInsumo = {id: 'insumo',
+  //   clave: '',
+  //   descripcion: '',
+  //   unidad: '',
+  //   precio: 0,
+  //   categoria: '',
+  //   fechaCreacion: '',}
 
-  const blob = new Blob([JSON.stringify(Insumos)], {type:'application/json;charset=utf-8'})
+  // Insumos.unshift(firmaInsumo)
+  const insumoToExport = {insumos:Insumos}
+  const blob = new Blob([JSON.stringify(insumoToExport)], {type:'application/json;charset=utf-8'})
   saveAs(blob, `export_Insumos_${dayjs().format('YYYY-MM-DD')}.json`)
 }
 
