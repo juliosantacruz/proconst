@@ -41,13 +41,15 @@ export default function ListadoInsumos() {
   return (
     <section className="workspace">
       <PageTitle title="Mis Insumos">
-        <button type="button" onClick={() => handleExportInsumo(insumos)}>
-          <AnyIcon iconSrc={downloadIcon} footer="Descarga" />
-        </button>
+        <AddButton   onClick={() => handleExportInsumo(insumos)}>
+          <AnyIcon iconSrc={downloadIcon}   />
+          Descargar
+        </AddButton>
 
-        <button type="button" onClick={() => handleImportInsumo()}>
-          <AnyIcon iconSrc={uploadIcon} footer="Cargar" />
-        </button>
+        <AddButton   onClick={() => handleImportInsumo()}>
+          <AnyIcon iconSrc={uploadIcon}  />
+          Cargar
+        </AddButton>
 
         <AddButton
           onClick={handleAddInsumo}
@@ -78,7 +80,7 @@ export default function ListadoInsumos() {
       {modalFormLoad && (
         <AsideModal
           widthModal={"40vw"}
-          title="Agregar Insumo"
+          title=" "
           clossable={true}
           openModal={modalFormLoad}
           setOpenModal={openModalFormLoad}

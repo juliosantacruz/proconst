@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./FormLoad.scss";
 import { Insumo } from "../../types/Insumo";
 import { useInsumoStore } from "../../store/projectStore";
+import { useUxStore } from "../../store/uxStore";
 
 type UploadJSON = {
   insumos?: Insumo[];
@@ -10,11 +11,12 @@ type UploadJSON = {
 export default function FormLoad() {
   const [obj, setObj] = useState<UploadJSON>();
   const [valid, setValid] = useState(false);
+  const [message, setMessage] = useState("");
   const { insumos, addInsumo } = useInsumoStore();
+  const { modalFormLoad, openModalFormLoad } = useUxStore();
 
-  const ReadFile = (event: any) => {
+  const SetFileData = (event: any) => {
     const file = event.target.files[0];
-
     if (file === undefined) return;
     if (!file) return;
 
@@ -23,18 +25,38 @@ export default function FormLoad() {
 
     fileReader.onload = () => {
       const data = JSON.parse(fileReader.result as any);
-      // console.log(typeof(data))
-      setObj(data);
-      ValidarDatos(data)
-        
+      ValidarDatos(data);
     };
 
     fileReader.onerror = () => {
       console.log(fileReader.error);
     };
   };
-  console.log(valid)
-  const SaveInsumos = (dataNew:any) => {
+
+  const ValidarDatos = (data: any) => {
+    // Validaciones para Insumos
+    const lol = new Object(data);
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (lol.hasOwnProperty("insumos")) {
+      setMessage("Archivo Valido");
+      setValid(true);
+      setObj(data);
+    } else {
+      setMessage("Archivo no valido");
+    }
+  };
+
+  const ReadFile = () => {
+    SaveInsumos(obj);
+    onClear();
+  };
+
+  const onClear = () => {
+    openModalFormLoad(false);
+  };
+
+  const SaveInsumos = (dataNew: any) => {
     if (dataNew) {
       const data = new Array(dataNew.insumos);
       // console.log(data)
@@ -50,21 +72,6 @@ export default function FormLoad() {
     }
   };
 
-  const ValidarDatos=(data:any)=>{
-    // Validaciones para Insumos
-  const lol = new Object(data);
-
-  // eslint-disable-next-line no-prototype-builtins
-  if (lol.hasOwnProperty("insumos")) {
-    console.log("es valido");
-    setValid(true)
-    SaveInsumos(data)
-  } else {
-    console.log("archivo no valido");
-  }
-  }
-  
-
   return (
     <div className="cargarArchivo">
       <label htmlFor="cargar">Cargar Archivo</label>
@@ -73,11 +80,17 @@ export default function FormLoad() {
         name="cargar"
         id="cargar"
         multiple={false}
-        onChange={(event) => ReadFile(event)}
+        onChange={(event) => SetFileData(event)}
       />
-      {/* <button type="button" >
-        Cargar
-      </button> */}
+      {message.length > 0 ? <p>{message}</p> : <p> </p>}
+      <div className="btnGroup">
+        <button type="button" className="cargarBtn onCancel" onClick={onClear}>
+          Cancelar
+        </button>
+        <button type="button" className="cargarBtn" onClick={ReadFile}>
+          Cargar
+        </button>
+      </div>
     </div>
   );
 }

@@ -22,7 +22,8 @@ import {
   montoPartidaCant,
   montoProyecto,
   sumMontoPartida,
-  createJSONFile
+  createJSONFile,
+  createPresupuestoJSON
 } from "../../utils/ProjectFunctions";
 import AnyIcon from "../../components/AnyIcon";
 import addIcon from "../../assets/icons/bx-plus-circle.svg";
@@ -153,7 +154,8 @@ export default function Presupuesto() {
       <PageTitle title="Presupuesto de obra">
         <button
           type="button"
-          onClick={() => handleExportarJSON(workingProject)}
+          // onClick={() => handleExportarJSON(workingProject)}
+          onClick={()=>createPresupuestoJSON(workingProject, allConceptos, insumos)}
         >
           <AnyIcon iconSrc={exportIcon} />
         </button>
