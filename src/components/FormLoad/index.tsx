@@ -21,6 +21,14 @@ export default function FormLoad() {
 
   const SetFileData = (event: any) => {
     const file = event.target.files[0];
+    const fileName =file.name
+    const fileExtension = fileName.split('.')[1]
+    if(fileExtension!=='json'){
+      setMessage(`${fileName} Archivo invalido, extension .${fileExtension} no valida`)
+      return
+    }else{
+      setMessage('')
+    }
     if (file === undefined) return;
     if (!file) return;
 
