@@ -1,7 +1,7 @@
 import { Concepto } from "../types/Concepto";
 import { Partida, Presupuesto } from "../types/Presupuesto";
 import {saveAs} from 'file-saver'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import { Insumo } from "../types/Insumo";
 
 
@@ -119,7 +119,7 @@ export async function createJSONFileInsumos(insumos: Insumo[]) {
   console.log('esto inicia');
   const insumoToExport = {insumos: insumos};
   const blob = await new Blob([JSON.stringify(insumoToExport)], {type: 'application/json;charset=utf-8'});
-  await saveAs(blob, `export_Insumos.json`);
+  await saveAs(blob, `export_Insumos_${dayjs().format('YYYY-MM-DD')}.json`);
 }
 
 
@@ -174,7 +174,7 @@ export const createPresupuestoJSON=(project:Presupuesto, conceptos:Concepto[], i
     conceptos:findConcepto(),
     insumos:findInsumos()
   }
-  const setName =()=>`export_${project.nombreProyecto}.json`
+  const setName =()=>`export_${project.nombreProyecto}_${dayjs().format('YYYY-MM-DD')}.json`
 
   const blob = new Blob([JSON.stringify(fileObject)], {type:'application/json;charset=utf-8'})
   saveAs(blob, setName())

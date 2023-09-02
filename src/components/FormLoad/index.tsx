@@ -3,9 +3,13 @@ import "./FormLoad.scss";
 import { Insumo } from "../../types/Insumo";
 import { useInsumoStore } from "../../store/projectStore";
 import { useUxStore } from "../../store/uxStore";
+import { Concepto } from "../../types/Concepto";
+import { Presupuesto } from "../../types/Presupuesto";
 
 type UploadJSON = {
   insumos?: Insumo[];
+  conceptos?:Concepto[];
+  presupuesto?:Presupuesto
 };
 
 export default function FormLoad() {

@@ -3,7 +3,7 @@ import  { useState, useEffect } from "react";
 
 // Librerias
 import { v4 } from "uuid";
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 // Local Reference
 import { useInsumoStore } from "../../store/projectStore";
