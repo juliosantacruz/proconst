@@ -5,7 +5,7 @@ import { useInsumoStore } from "../../store/projectStore";
 import { useUxStore } from "../../store/uxStore";
 import { Concepto } from "../../types/Concepto";
 import { Presupuesto } from "../../types/Presupuesto";
-import { SaveInsumos } from "../../utils/ImportFunctions";
+import { importFile } from "../../utils/ImportFunctions";
 
 type UploadJSON = {
   insumos?: Insumo[];
@@ -43,6 +43,7 @@ export default function FormLoad({typeForm}:Props) {
     fileReader.onload = () => {
       const data = JSON.parse(fileReader.result as any);
       console.log(data)
+      
       ValidarDatos(data);
     };
 
@@ -66,7 +67,8 @@ export default function FormLoad({typeForm}:Props) {
   };
 
   const ReadFile = () => {
-    SaveInsumos(obj);
+    importFile(obj as UploadJSON)
+     
     onClear();
   };
 

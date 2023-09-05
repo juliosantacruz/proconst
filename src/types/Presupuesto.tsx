@@ -10,8 +10,8 @@ export interface FactorSobreCosto{
 }
 
 export interface ListadoConcepto{
-  fechaCreacion?:string
-  conceptoId?:string,
+  fechaCreacion:string
+  conceptoId:string,
   cantidad?:number,
 }
 export interface Partida {
