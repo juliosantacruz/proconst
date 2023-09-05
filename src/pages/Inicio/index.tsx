@@ -8,29 +8,49 @@ import { useUxStore } from "../../store/uxStore";
 import { usePresupuestoStore } from "../../store/projectStore";
 import AsideModal from "../../components/AsideModal";
 import FormPresupuesto from "../../components/FormPresupuesto";
+import uploadIcon from "../../assets/icons/bx-upload.svg";
+import AnyIcon from "../../components/AnyIcon";
+import FormLoad from "../../components/FormLoad";
 
 export default function Index() {
-  const { modalFormProject, openModalFormProject } = useUxStore();
+  const {
+    modalFormProject,
+    openModalFormProject,
+    modalFormLoad,
+    openModalFormLoad,
+  } = useUxStore();
   const { presupuestos, addPresupuesto, deletePresupuesto } =
     usePresupuestoStore();
   console.log("presupuestos", presupuestos);
 
-  const handleAddInsumo = () => {
+  const handleAddProject = () => {
     console.log("Inicio");
     openModalFormProject(true);
     console.log("fin");
   };
+
+  const handleImportProject = () => {
+    openModalFormLoad(!modalFormLoad);
+    console.log("cargar :D");
+  };
+ 
   return (
     <section className="workspace">
       <PageTitle title="Mis Presupuestos">
         <AddButton
-          onClick={handleAddInsumo}
+          onClick={handleImportProject}
+          bgColor="rgb(226, 230, 255)"
+          fontColor={"rgb(0, 0, 0)"}
+        >
+          <AnyIcon iconSrc={uploadIcon} /> Proyecto
+        </AddButton>
+        <AddButton
+          onClick={handleAddProject}
           bgColor="rgb(31, 57, 204)"
           fontColor={"rgb(255, 255, 255)"}
         >
           + Proyecto
         </AddButton>
-        
       </PageTitle>
       <div className="btn-header"></div>
       <div className="Presupuestos">
@@ -50,6 +70,18 @@ export default function Index() {
           setOpenModal={openModalFormProject}
         >
           <FormPresupuesto />
+        </AsideModal>
+      )}
+
+      {modalFormLoad && (
+        <AsideModal
+          widthModal={"40vw"}
+          title=" "
+          clossable={true}
+          openModal={modalFormLoad}
+          setOpenModal={openModalFormLoad}
+        >
+          <FormLoad typeForm='presupuesto'/>
         </AsideModal>
       )}
     </section>

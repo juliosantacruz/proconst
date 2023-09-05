@@ -5,6 +5,7 @@ import { useInsumoStore } from "../../store/projectStore";
 import { useUxStore } from "../../store/uxStore";
 import { Concepto } from "../../types/Concepto";
 import { Presupuesto } from "../../types/Presupuesto";
+import { SaveInsumos } from "../../utils/ImportFunctions";
 
 type UploadJSON = {
   insumos?: Insumo[];
@@ -12,15 +13,18 @@ type UploadJSON = {
   presupuesto?:Presupuesto
 };
 
-export default function FormLoad() {
+type Props ={
+  typeForm?:string
+}
+export default function FormLoad({typeForm}:Props) {
   const [obj, setObj] = useState<UploadJSON>();
   const [valid, setValid] = useState(false);
   const [message, setMessage] = useState("");
   const { insumos, addInsumo } = useInsumoStore();
   const { modalFormLoad, openModalFormLoad } = useUxStore();
 
-  const SetFileData = (event: any) => {
-    const file = event.target.files[0];
+  const SetFileData = (event: React.FormEvent<HTMLInputElement>) => {
+    const file = (event.target as any).files[0]  
     const fileName =file.name
     const fileExtension = fileName.split('.')[1]
     if(fileExtension!=='json'){
@@ -33,10 +37,12 @@ export default function FormLoad() {
     if (!file) return;
 
     const fileReader = new FileReader();
+
     fileReader.readAsText(file);
 
     fileReader.onload = () => {
       const data = JSON.parse(fileReader.result as any);
+      console.log(data)
       ValidarDatos(data);
     };
 
@@ -44,7 +50,7 @@ export default function FormLoad() {
       console.log(fileReader.error);
     };
   };
-
+ 
   const ValidarDatos = (data: any) => {
     // Validaciones para Insumos
     const lol = new Object(data);
@@ -68,21 +74,21 @@ export default function FormLoad() {
     openModalFormLoad(false);
   };
 
-  const SaveInsumos = (dataNew: any) => {
-    if (dataNew) {
-      const data = new Array(dataNew.insumos);
-      // console.log(data)
-      data[0]?.map((insumoUploaded: Insumo) => {
-        // Revizamos si existe el insumo cargado en la base de datos
-        const findInsumo = insumos.find(
-          (insumo) => insumo?.id === (insumoUploaded?.id as string)
-        );
-        if (!findInsumo) {
-          addInsumo(insumoUploaded);
-        }
-      });
-    }
-  };
+  // const SaveInsumos = (dataNew: any) => {
+  //   if (dataNew) {
+  //     const data = new Array(dataNew.insumos);
+  //     // console.log(data)
+  //     data[0]?.map((insumoUploaded: Insumo) => {
+  //       // Revizamos si existe el insumo cargado en la base de datos
+  //       const findInsumo = insumos.find(
+  //         (insumo) => insumo?.id === (insumoUploaded?.id as string)
+  //       );
+  //       if (!findInsumo) {
+  //         addInsumo(insumoUploaded);
+  //       }
+  //     });
+  //   }
+  // };
 
   return (
     <div className="cargarArchivo">

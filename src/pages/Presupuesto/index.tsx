@@ -22,9 +22,11 @@ import {
   montoPartidaCant,
   montoProyecto,
   sumMontoPartida,
-  createJSONFile,
-  createPresupuestoJSON
 } from "../../utils/ProjectFunctions";
+import {
+  createJSONFile,
+  createPresupuestoJSON,
+} from "../../utils/ExportFunctions";
 import AnyIcon from "../../components/AnyIcon";
 import addIcon from "../../assets/icons/bx-plus-circle.svg";
 import editIcon from "../../assets/icons/bx-edit.svg";
@@ -145,7 +147,7 @@ export default function Presupuesto() {
     console.log("se guarda", proyecto);
   };
   const handleExportarJSON = (proyecto: Presupuesto) => {
-    createJSONFile(proyecto)
+    createJSONFile(proyecto);
     console.log("se guarda", proyecto);
   };
 
@@ -155,7 +157,9 @@ export default function Presupuesto() {
         <button
           type="button"
           // onClick={() => handleExportarJSON(workingProject)}
-          onClick={()=>createPresupuestoJSON(workingProject, allConceptos, insumos)}
+          onClick={() =>
+            createPresupuestoJSON(workingProject, allConceptos, insumos)
+          }
         >
           <AnyIcon iconSrc={exportIcon} />
         </button>
