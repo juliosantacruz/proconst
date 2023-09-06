@@ -84,3 +84,14 @@ export const createJSONFile=(project:Presupuesto)=>{
     const blob = new Blob([JSON.stringify(fileObject)], {type:'application/json;charset=utf-8'})
     saveAs(blob, setName())
   }
+
+  export const createPresupuetoCVS= (project:Presupuesto)=>{
+    const fileObject={
+      project
+    }
+
+    const setName =()=>`export_${project.nombreProyecto}_${dayjs().format('YYYY-MM-DD')}.csv`
+    // const csv = convertProjectToCSV(project)
+    const blob = new Blob([JSON.stringify(fileObject)], {type:'text/csv;charset=utf-8;'})
+    saveAs(blob, setName())
+  }

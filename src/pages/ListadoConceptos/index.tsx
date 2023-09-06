@@ -23,45 +23,28 @@ export default function ListadoConceptos() {
   const insumoData = (arrIsumos: Insumo[], findInsumo: ListadoInsumos) =>
     arrIsumos.find((element) => element.id === findInsumo.insumoId);
 
-  const columns: ColumnsType<Concepto> = [
-    { title: "Clave", dataIndex: "clave", key: "clave" },
-    { title: "Descripcion", dataIndex: "descripcion", key: "descripcion" },
-    { title: "Unidad", dataIndex: "unidad", key: "unidad" },
-    {
-      title: "Precio",
-      render: (_, record) => {
-        const arrPrecio: number[] = [];
-        record.listadoInsumos?.map((element) => {
-          const insumo = insumoData(insumos, element);
-          const precio = element.cantidad * (insumo as Insumo).precio;
-          arrPrecio.push(precio);
-        });
-        const precioTotal = arrPrecio.reduce((a, b) => a + b, 0);
-        return <p>{setFormat(precioTotal)}</p>;
-      },
-    },
-    {
-      title: "Opciones",
-      render: (_, record) => {
-        return (
-          <>
-            <a onClick={() => handleEdit(record)}>
-              <AnyIcon
-                className={"icon"}
-                iconSrc={editIcon}
-                iconWidth={14}
-                iconHeight={14}
-              />
-            </a>{" "}
-            |
-            <a onClick={() => handleDelete(record.id)}>
-              <AnyIcon iconSrc={deleteIcon} iconWidth={14} iconHeight={14} />
-            </a>
-          </>
-        );
-      },
-    },
-  ];
+  // const columns: ColumnsType<Concepto> = [
+  //   { title: "Clave", dataIndex: "clave", key: "clave" },
+  //   { title: "Descripcion", dataIndex: "descripcion", key: "descripcion" },
+  //   { title: "Unidad", dataIndex: "unidad", key: "unidad" },
+  //   {
+  //     title: "Precio",
+  //     render: (_, record) => {
+  //       const arrPrecio: number[] = [];
+  //       record.listadoInsumos?.map((element) => {
+  //         const insumo = insumoData(insumos, element);
+  //         const precio = element.cantidad * (insumo as Insumo).precio;
+  //         arrPrecio.push(precio);
+  //       });
+  //       const precioTotal = arrPrecio.reduce((a, b) => a + b, 0);
+  //       return <p>{setFormat(precioTotal)}</p>;
+  //     },
+  //   },
+  //   {
+  //     title: "Opciones",
+
+  //   },
+  // ];
 
   const handleAddConcepto = () => {
     console.log("Inicio");
@@ -88,16 +71,61 @@ export default function ListadoConceptos() {
           Agregar Concepto
         </AddButton>
       </PageTitle>
-      <div className="btn-header">
-        
-      </div>
+      <div className="btn-header"></div>
 
-      <Table
+      <table className="ListadoConceptos">
+        <thead>
+          <tr>
+            <td>Clave</td>
+            <td>Descripcion</td>
+            <td>Unidad</td>
+            <td>Precio</td>
+            <td>Actions</td>
+          </tr>
+        </thead>
+        <tbody>
+          {conceptos &&
+            conceptos.map((concepto) => {
+              return (
+                <tr key={concepto.id}>
+                  <td className="clave">{concepto.clave}</td>
+                  <td className="descripcion">{concepto.descripcion}</td>
+                  <td className="unidad">{concepto.unidad}</td>
+                  <td className="precio">
+                    {setFormat(concepto.precioUnitario as number)}
+                  </td>
+                  <td className="actions">
+                    <>
+                      <a onClick={() => handleEdit(concepto)}>
+                        <AnyIcon
+                          className={"icon"}
+                          iconSrc={editIcon}
+                          iconWidth={14}
+                          iconHeight={14}
+                        />
+                      </a>{" "}
+                      |
+                      <a onClick={() => handleDelete(concepto.id)}>
+                        <AnyIcon
+                          iconSrc={deleteIcon}
+                          iconWidth={14}
+                          iconHeight={14}
+                        />
+                      </a>
+                    </>
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+
+      {/* <Table
         columns={columns}
         dataSource={conceptos}
         rowKey={(record) => record.id}
         pagination={false}
-      />
+      /> */}
       {modalFormConcepto && (
         <AsideModal
           widthModal={"70vw"}

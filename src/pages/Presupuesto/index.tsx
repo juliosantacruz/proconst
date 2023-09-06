@@ -26,6 +26,7 @@ import {
 import {
   createJSONFile,
   createPresupuestoJSON,
+  createPresupuetoCVS,
 } from "../../utils/ExportFunctions";
 import AnyIcon from "../../components/AnyIcon";
 import addIcon from "../../assets/icons/bx-plus-circle.svg";
@@ -144,10 +145,12 @@ export default function Presupuesto() {
   };
 
   const handleGuardar = (proyecto: Presupuesto) => {
+    createPresupuetoCVS(proyecto)
     console.log("se guarda", proyecto);
   };
   const handleExportarJSON = (proyecto: Presupuesto) => {
-    createJSONFile(proyecto);
+    //createJSONFile(proyecto);
+    createPresupuestoJSON(workingProject, allConceptos, insumos)
     console.log("se guarda", proyecto);
   };
 
@@ -156,10 +159,8 @@ export default function Presupuesto() {
       <PageTitle title="Presupuesto de obra">
         <button
           type="button"
-          // onClick={() => handleExportarJSON(workingProject)}
-          onClick={() =>
-            createPresupuestoJSON(workingProject, allConceptos, insumos)
-          }
+          onClick={() => handleExportarJSON(workingProject)}
+           
         >
           <AnyIcon iconSrc={exportIcon} />
         </button>
