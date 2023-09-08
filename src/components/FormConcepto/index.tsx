@@ -172,10 +172,10 @@ export default function FormConcepto({ ProjectId }: any) {
 
     // Form Validations (No empty arrays)
     if (
-      formData.clave === "" ||
-      formData.descripcion === "" ||
-      formData.unidad === "" ||
-      formData.listadoInsumos?.length === 0
+      formData.clave === "" 
+      // formData.descripcion === "" ||
+      // formData.unidad === "" ||
+      // formData.listadoInsumos?.length === 0
     ) {
       console.log(formData);
       setFormError(true);

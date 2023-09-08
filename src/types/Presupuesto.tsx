@@ -8,7 +8,7 @@ export interface FactorSobreCosto{
   iva:number,
   isr:number,
 }
-
+ 
 export interface ListadoConcepto{
   fechaCreacion:string
   conceptoId:string,

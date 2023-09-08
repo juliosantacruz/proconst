@@ -280,7 +280,7 @@ export default function Presupuesto() {
                                 const montoPartida = montoPartidaCant(
                                   element,
                                   allConceptos,
-                                  cantidadConcepto,
+                                  Number(cantidadConcepto) ,
                                   concepto.conceptoId as string
                                 );
                                 console.log("montoPartida:", montoPartida);

@@ -32,7 +32,9 @@ export default function ProjectCard({projectId}:any) {
       <div className="footer">
         <p className="amountCard"><b>{setFormat((projectData?.montoTotal as number))}</b></p>
         <button type="button" onClick={()=>handleDelete(projectData?.id)}>Eliminar</button>
+        <NavLink to={RoutesDirectory.GO_EXPLOSION_INSUMOS(projectData?.id as string)} >ExIn</NavLink>
         <NavLink to={RoutesDirectory.GO_WORKING_PRESUPUESTO(projectData?.id as string)} >Abrir</NavLink>
+
       </div>
     </article>
   );

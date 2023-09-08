@@ -4,6 +4,7 @@ import Inicio from "../pages/Inicio";
 import NotFound from "../pages/NotFound";
 import LogIn from '../pages/LogIn';
 import SignIn from '../pages/SignIn';
+import ExplosionInsumos from '../pages/ExplosionInsumos';
 
 const ListadoConceptos = lazy( ()=> import("../pages/ListadoConceptos"))
 const ListadoInsumos = lazy( ()=> import("../pages/ListadoInsumos"))
@@ -17,6 +18,9 @@ export const RoutesDirectory={
   LISTADO_INSUMOS:'/proconst/listado-de-insumos',
   WORKING_PRESUPUESTO: '/proconst/presupuesto/:projectId',
   GO_WORKING_PRESUPUESTO:(projectId:string)=>`/proconst/presupuesto/${projectId}`,
+  EXPLOSION_INSUMOS: '/proconst/analisis/:projectId',
+  GO_EXPLOSION_INSUMOS:(projectId:string)=>`/proconst/analisis/${projectId}`,
+
 }
 
 const AppRoutes = () => {
@@ -27,6 +31,7 @@ const AppRoutes = () => {
       { path: RoutesDirectory.LISTADO_CONCEPTOS, element: <ListadoConceptos /> },
       { path: RoutesDirectory.LISTADO_INSUMOS, element: <ListadoInsumos /> },
       { path: RoutesDirectory.WORKING_PRESUPUESTO, element: <Presupuesto />, errorElement:<NotFound />,  },
+      { path: RoutesDirectory.EXPLOSION_INSUMOS, element: <ExplosionInsumos />, errorElement:<NotFound />,  },
       
       { path: "/proconst/*", element: <NotFound /> },
   

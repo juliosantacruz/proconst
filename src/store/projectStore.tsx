@@ -211,7 +211,7 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
       descripcionProyecto: "",
       domicilioProyecto: "",
       clienteProyecto: "",
-      partidas: [] as any,
+      partidas: [] as Partida[],
       fsc: {
         costoIndirecto: 0,
         costoOperativo: 0,
