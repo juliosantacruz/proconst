@@ -10,6 +10,7 @@ import { RoutesDirectory } from "../../routes/router";
 import { Presupuesto } from "../../types/Presupuesto";
 import { Insumo } from "../../types/Insumo";
 import { setFormat } from "../../utils/CurrencyFormat";
+import { CategoriasInsumos } from "../../utils/SelectInputOptions";
 
 export default function ExplosionInsumos() {
   const { presupuestos } = usePresupuestoStore();
@@ -37,7 +38,7 @@ export default function ExplosionInsumos() {
   }, []);
 
   interface InsumosExp extends Insumo {
-    cantidadTotal:number
+    cantidadTotal: number;
     cantidadInsumo: number;
     cantidadConcepto: number | undefined;
     conceptoId: string;
@@ -58,10 +59,10 @@ export default function ExplosionInsumos() {
           );
           const newInsumo = {
             ...(findInsumo as Insumo),
-            cantidadTotal: insumo.cantidad*(concepto.cantidad as number),
+            cantidadTotal: insumo.cantidad * (concepto.cantidad as number),
             cantidadInsumo: insumo.cantidad,
             conceptoId: concepto.conceptoId,
-            cantidadConcepto: (concepto.cantidad as number),
+            cantidadConcepto: concepto.cantidad as number,
           };
           //console.log(newInsumo)
           projectInsumos.push(newInsumo);
@@ -82,12 +83,14 @@ export default function ExplosionInsumos() {
 
   const sumatoriaInsumos = (arrInsumos: InsumosExp[]) => {
     const resultado: InsumosExp[] = [];
-  
+
     // Iteramos sobre el array original
     arrInsumos.forEach((insumo) => {
       // Buscamos si ya existe un insumo con el mismo id en el resultado
-      const insumoExistente = resultado.find((resultadoInsumo) => resultadoInsumo.id === insumo.id);
-  
+      const insumoExistente = resultado.find(
+        (resultadoInsumo) => resultadoInsumo.id === insumo.id
+      );
+
       if (insumoExistente) {
         // Si existe, sumamos la cantidad del insumo al existente
         insumoExistente.cantidadTotal += insumo.cantidadTotal;
@@ -96,25 +99,29 @@ export default function ExplosionInsumos() {
         resultado.push({ ...insumo });
       }
     });
-  
+
     return resultado;
   };
 
-  const materialesInsumos = sumatoriaInsumos(setInsumosByCategory(projectInsumos, "Materiales"));
-  const manoObraInsumos = sumatoriaInsumos(setInsumosByCategory(projectInsumos, "Mano de Obra")
-  );
-  const herramientaInsumos = setInsumosByCategory(
-    projectInsumos,
-    "Herramienta"
-  );
-  const equiposInsumos = setInsumosByCategory(projectInsumos, "Equipos");
-  const subcontratosInsumos = setInsumosByCategory(
-    projectInsumos,
-    "SubContratos"
-  );
-  const fletesInsumos = setInsumosByCategory(projectInsumos, "Fletes");
+  const costoFinalInsumo = (obj:InsumosExp) =>{
+    const total = obj.cantidadTotal*obj.precio
+    return total
+  }
+  const costoFinalCategoria = (arrObj:InsumosExp[]) =>{
+    const arrCostoFinalInsumo:number[] = []
 
-  console.log(materialesInsumos);
+    arrObj.map((insumo)=>{
+      const costo = costoFinalInsumo(insumo)
+      arrCostoFinalInsumo.push(costo)
+    })
+    const costoCategoria = arrCostoFinalInsumo.reduce((a,b)=> a+b)
+    return costoCategoria
+  }
+
+  // const materialesInsumos = sumatoriaInsumos(
+  //   setInsumosByCategory(projectInsumos, "Materiales")
+  // );
+  // console.log(materialesInsumos);
 
   return (
     <section>
@@ -122,58 +129,61 @@ export default function ExplosionInsumos() {
 
       <h3>{workingProject.nombreProyecto}</h3>
 
-      <p>Materiales </p>
       <table>
         <thead>
           <tr>
             <th>Clave</th>
             <th>Descripcion</th>
             <th>Unidad</th>
-            <th>PU</th>
+            <th>Costo</th>
+            <th>Cantidad</th>
+            <th>Total</th>
           </tr>
         </thead>
-        <tbody>
-          {materialesInsumos.length > 0 &&
-            materialesInsumos.map((insumo) => {
-              return (
-                <tr key={insumo.id}>
-                  <td>{insumo.clave}</td>
-                  <td>{insumo.descripcion}</td>
-                  <td>{insumo.unidad}</td>
-                  <td>{setFormat(insumo.precio)}</td>
-                  <td>{insumo.cantidadTotal}</td>
+        
+          {CategoriasInsumos.map((objCategoria) => {
+            const insumosList = sumatoriaInsumos(
+              setInsumosByCategory(projectInsumos, objCategoria.name)
+            );
+            let costoCategoria:number
+            if(insumosList.length>0){
+              costoCategoria=costoFinalCategoria(insumosList)
+            }else{
+              costoCategoria=0
+            }
 
+            return (
+              <tbody key={objCategoria.name}>
+                <tr className="insumoTitle" >
+                  <th>{objCategoria.name}</th>
+                  <th> </th> 
+                  <th> </th> 
+                  <th> </th>
+                  <th> </th>
+                  <th>{setFormat(costoCategoria)} </th>
                 </tr>
-              );
-            })}
-
-          {manoObraInsumos.length > 0 &&
-            manoObraInsumos.map((insumo) => {
-              return (
-                <tr key={insumo.id}>
-                  <td>{insumo.clave}</td>
-                  <td>{insumo.descripcion}</td>
-                  <td>{insumo.unidad}</td>
-                  <td>{setFormat(insumo.precio)}</td>
-                  <td>{insumo.cantidadTotal}</td>
-                </tr>
-              );
-            })}
-
-          {herramientaInsumos.length > 0 &&
-            herramientaInsumos.map((insumo) => {
-              return (
-                <tr key={insumo.id}>
-                  <td>{insumo.clave}</td>
-                  <td>{insumo.descripcion}</td>
-                  <td>{insumo.unidad}</td>
-                  <td>{setFormat(insumo.precio)}</td>
-                  <td>{insumo.cantidadTotal}</td>
-
-                </tr>
-              );
-            })}
-        </tbody>
+                {insumosList.length > 0 ? (
+                  insumosList.map((insumo) => {
+                    return (
+                      <tr key={insumo.id}>
+                        <td>{insumo.clave}</td>
+                        <td>{insumo.descripcion}</td>
+                        <td>{insumo.unidad}</td>
+                        <td>{setFormat(insumo.precio)}</td>
+                        <td>{insumo.cantidadTotal.toFixed(2)}</td>
+                        <td>
+                          {setFormat(costoFinalInsumo(insumo))}
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr><td>no hay insumos</td></tr>
+                )}
+              </tbody>
+            );
+          })}
+        
       </table>
     </section>
   );
