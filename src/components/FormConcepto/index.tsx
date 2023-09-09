@@ -24,6 +24,7 @@ import { Insumo } from "../../types/Insumo";
 // Styles
 import "./FormConcepto.scss";
 import dayjs from "dayjs";
+import TableInsumo from "../TableInsumo";
 
 const conceptoDefaultValue = {
   id: "",
@@ -86,17 +87,7 @@ export default function FormConcepto({ ProjectId }: any) {
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<Insumo>>({});
 
-  const handleChange: TableProps<Insumo>["onChange"] = (
-    pagination,
-    filters,
-    sorter
-  ) => {
-    console.log("Various parameters", pagination, filters, sorter);
-    setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<Insumo>);
-  };
-
-  const clearFilters = () => {
+    const clearFilters = () => {
     setFilteredInfo({});
   };
 
@@ -390,7 +381,8 @@ export default function FormConcepto({ ProjectId }: any) {
           </button>
         </div>
         {showConceptoTable ? (
-          <TableTabsAddConcepto data={data} addInputInsumo={addInputInsumo} />
+          <TableInsumo insumosData={data} addInputInsumo={addInputInsumo}/>
+          // <TableTabsAddConcepto data={data} addInputInsumo={addInputInsumo} />
         ) : null}
       </div>
     </form>

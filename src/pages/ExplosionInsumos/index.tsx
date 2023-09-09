@@ -11,6 +11,18 @@ import { Presupuesto } from "../../types/Presupuesto";
 import { Insumo } from "../../types/Insumo";
 import { setFormat } from "../../utils/CurrencyFormat";
 import { CategoriasInsumos } from "../../utils/SelectInputOptions";
+import "./ExplosionInsumos.scss";
+import ChartDougnut from "../../components/ChartDougnut";
+import { costoFinalCategoria, costoFinalInsumo, setInsumosByCategory, sumatoriaInsumos } from "../../utils/ExplosionInsumos";
+
+export interface InsumosExp extends Insumo {
+  cantidadTotal: number;
+  cantidadInsumo: number;
+  cantidadConcepto: number | undefined;
+  conceptoId: string;
+}
+
+
 
 export default function ExplosionInsumos() {
   const { presupuestos } = usePresupuestoStore();
@@ -37,12 +49,7 @@ export default function ExplosionInsumos() {
     }
   }, []);
 
-  interface InsumosExp extends Insumo {
-    cantidadTotal: number;
-    cantidadInsumo: number;
-    cantidadConcepto: number | undefined;
-    conceptoId: string;
-  }
+
 
   const projectInsumos: InsumosExp[] = [];
 
@@ -71,52 +78,6 @@ export default function ExplosionInsumos() {
     });
   });
 
-  const setInsumosByCategory = (arrInsumos: InsumosExp[], category: string) => {
-    const newArr: InsumosExp[] = [];
-    arrInsumos.map((insumo) => {
-      if (insumo.categoria === category) {
-        newArr.push(insumo);
-      }
-    });
-    return newArr;
-  };
-
-  const sumatoriaInsumos = (arrInsumos: InsumosExp[]) => {
-    const resultado: InsumosExp[] = [];
-
-    // Iteramos sobre el array original
-    arrInsumos.forEach((insumo) => {
-      // Buscamos si ya existe un insumo con el mismo id en el resultado
-      const insumoExistente = resultado.find(
-        (resultadoInsumo) => resultadoInsumo.id === insumo.id
-      );
-
-      if (insumoExistente) {
-        // Si existe, sumamos la cantidad del insumo al existente
-        insumoExistente.cantidadTotal += insumo.cantidadTotal;
-      } else {
-        // Si no existe, agregamos el insumo al resultado
-        resultado.push({ ...insumo });
-      }
-    });
-
-    return resultado;
-  };
-
-  const costoFinalInsumo = (obj:InsumosExp) =>{
-    const total = obj.cantidadTotal*obj.precio
-    return total
-  }
-  const costoFinalCategoria = (arrObj:InsumosExp[]) =>{
-    const arrCostoFinalInsumo:number[] = []
-
-    arrObj.map((insumo)=>{
-      const costo = costoFinalInsumo(insumo)
-      arrCostoFinalInsumo.push(costo)
-    })
-    const costoCategoria = arrCostoFinalInsumo.reduce((a,b)=> a+b)
-    return costoCategoria
-  }
 
   // const materialesInsumos = sumatoriaInsumos(
   //   setInsumosByCategory(projectInsumos, "Materiales")
@@ -124,40 +85,45 @@ export default function ExplosionInsumos() {
   // console.log(materialesInsumos);
 
   return (
-    <section>
+    <section className="workspace">
       <h2>Explosion de insumos :D</h2>
 
       <h3>{workingProject.nombreProyecto}</h3>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Clave</th>
-            <th>Descripcion</th>
-            <th>Unidad</th>
-            <th>Costo</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        
+      <div className="explosionInsumos">
+        <div className="chart">
+          <ChartDougnut arrInsumos={projectInsumos} />
+        </div>
+
+        <table className="listadoInsumos">
+          <thead>
+            <tr>
+              <th>Clave</th>
+              <th>Descripcion</th>
+              <th>Unidad</th>
+              <th>Costo</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+
           {CategoriasInsumos.map((objCategoria) => {
             const insumosList = sumatoriaInsumos(
               setInsumosByCategory(projectInsumos, objCategoria.name)
             );
-            let costoCategoria:number
-            if(insumosList.length>0){
-              costoCategoria=costoFinalCategoria(insumosList)
-            }else{
-              costoCategoria=0
+            let costoCategoria: number;
+            if (insumosList.length > 0) {
+              costoCategoria = costoFinalCategoria(insumosList);
+            } else {
+              costoCategoria = 0;
             }
 
             return (
               <tbody key={objCategoria.name}>
-                <tr className="insumoTitle" >
+                <tr className="insumoTitle">
                   <th>{objCategoria.name}</th>
-                  <th> </th> 
-                  <th> </th> 
+                  <th> </th>
+                  <th> </th>
                   <th> </th>
                   <th> </th>
                   <th>{setFormat(costoCategoria)} </th>
@@ -171,20 +137,20 @@ export default function ExplosionInsumos() {
                         <td>{insumo.unidad}</td>
                         <td>{setFormat(insumo.precio)}</td>
                         <td>{insumo.cantidadTotal.toFixed(2)}</td>
-                        <td>
-                          {setFormat(costoFinalInsumo(insumo))}
-                        </td>
+                        <td>{setFormat(costoFinalInsumo(insumo))}</td>
                       </tr>
                     );
                   })
                 ) : (
-                  <tr><td>no hay insumos</td></tr>
+                  <tr>
+                    <td>no hay insumos</td>
+                  </tr>
                 )}
               </tbody>
             );
           })}
-        
-      </table>
+        </table>
+      </div>
     </section>
   );
 }
