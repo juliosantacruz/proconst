@@ -104,6 +104,7 @@ export default function ExplosionInsumos() {
               <th>Costo</th>
               <th>Cantidad</th>
               <th>Total</th>
+              <th>%</th>
             </tr>
           </thead>
 
@@ -127,6 +128,7 @@ export default function ExplosionInsumos() {
                   <th> </th>
                   <th> </th>
                   <th>{setFormat(costoCategoria)} </th>
+                  <th>{insumosList.length>0?' 100 %': ''}</th>
                 </tr>
                 {insumosList.length > 0 ? (
                   insumosList.map((insumo) => {
@@ -138,6 +140,7 @@ export default function ExplosionInsumos() {
                         <td>{setFormat(insumo.precio)}</td>
                         <td>{insumo.cantidadTotal.toFixed(2)}</td>
                         <td>{setFormat(costoFinalInsumo(insumo))}</td>
+                        <td>{ ((costoFinalInsumo(insumo)/ costoCategoria)*100 ).toFixed(2)}%</td>
                       </tr>
                     );
                   })
