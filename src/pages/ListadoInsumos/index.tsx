@@ -14,6 +14,7 @@ import uploadIcon from "../../assets/icons/bx-upload.svg";
 
 import { useInsumoStore } from "../../store/projectStore";
 import FormLoad from "../../components/FormLoad";
+import TableInsumo from "../../components/TableInsumo";
 
 const TableTabsListInsumo = lazy(
   () => import("../../components/TableTabsListInsumo")
@@ -79,7 +80,7 @@ export default function ListadoInsumos() {
 
       <div className="insumosGroup">
         <Suspense fallback={<div> loading </div>}>
-          <TableTabsListInsumo />
+        <TableInsumo insumosData={insumos} />
         </Suspense>
       </div>
       {modalFormInsumo && (

@@ -12,9 +12,11 @@ import { setFormat } from "../../utils/CurrencyFormat";
 import { useUxStore } from "../../store/uxStore";
 import { Insumo } from "../../types/Insumo";
 import TableConcepto from "../../components/TableConcepto";
+import FormInsumo from "../../components/FormInsumo";
 
 export default function ListadoConceptos() {
-  const { modalFormConcepto, openModalFormConcepto } = useUxStore();
+  const { modalFormInsumo,
+    openModalFormInsumo, modalFormConcepto, openModalFormConcepto } = useUxStore();
   const { insumos } = useInsumoStore();
   const { conceptos, setConceptoToUpdate, deleteConcepto } = useConceptoStore();
 
@@ -53,6 +55,17 @@ export default function ListadoConceptos() {
           setOpenModal={openModalFormConcepto}
         >
           <FormConcepto />
+        </AsideModal>
+      )}
+      {modalFormInsumo && (
+        <AsideModal
+          widthModal={"40vw"}
+          title="Agregar Insumo"
+          clossable={false}
+          openModal={modalFormInsumo}
+          setOpenModal={openModalFormInsumo}
+        >
+          <FormInsumo />
         </AsideModal>
       )}
     </section>

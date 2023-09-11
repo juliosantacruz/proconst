@@ -42,6 +42,7 @@ export default function TableInsumo({ insumosData, addInputInsumo }: Props) {
     } else {
       arrData = data.filter((insumo) => insumo.categoria === categoria);
     }
+    arrData.sort((a,b)=>  a.clave.localeCompare(b.clave))
     return arrData;
   };
   const tabClassName =(category?:string)=>{
