@@ -132,7 +132,9 @@ export default function FormPresupuesto() {
   };
 
   return (
-    <form onSubmit={(event) => onSubmit(event)}>
+    <form onSubmit={(event) => onSubmit(event)} className="formPresupuesto">
+        <h4>Informacion de Proyecto</h4>
+
       <div className="input">
         <label htmlFor="nombreProyecto">Nombre de Proyecto</label>
         <input
@@ -209,7 +211,7 @@ export default function FormPresupuesto() {
             value={formData.fsc.financiamiento}
           />
         </div>
-        <div className="input">
+        <div className="input utilidad">
           <label htmlFor="utilidad">Utilidad (%)</label>
           <input
             type="number"
@@ -222,10 +224,10 @@ export default function FormPresupuesto() {
       </div>
       {formError && <ErrorMsg />}
       <div className="btn-group">
-        <button type="button" onClick={onCancel}>
+        <button type="button" onClick={onCancel} className="cancelBtn">
           Cancelar
         </button>
-        <button type="submit">Guardar</button>
+        <button type="submit" className="successBtn">Guardar</button>
       </div>
     </form>
   );

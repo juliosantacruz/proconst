@@ -5,7 +5,9 @@
     // width: 50vw;
     max-width: 80vw;
     height: 100%;
-    background-color: #ffffff;
+    background-color: #ffffffc4;
+    backdrop-filter: blur(8.7px);
+-webkit-backdrop-filter: blur(8.7px);
     /* background-image: linear-gradient(135deg, #4b5ca7 0%rgb(118, 75, 162) 100%); */
     display: flex;
     flex-direction: column;

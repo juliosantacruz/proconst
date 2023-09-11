@@ -63,7 +63,7 @@ export default function Index() {
 
       {modalFormProject && (
         <AsideModal
-          widthModal={"40vw"}
+          widthModal={"50vw"}
           title="Agregar Proyecto"
           clossable={true}
           openModal={modalFormProject}
