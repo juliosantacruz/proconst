@@ -104,10 +104,10 @@ export default function FormPartida({projectId}:any) {
         />
       </div> 
       <div className="btn-group">
-        <button type="button" onClick={onCancel}>
+        <button type="button" onClick={onCancel} className="cancelBtn">
           Cancelar
         </button>
-        <button type="submit">Guardar</button>
+        <button type="submit" className="successBtn">Guardar</button>
       </div>
     </form>
   );

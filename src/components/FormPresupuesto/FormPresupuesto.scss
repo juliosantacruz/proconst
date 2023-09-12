@@ -36,24 +36,6 @@
         }
     }
 
-    .btn-group{
-        margin: 15px 0 ;
-        display: flex;
-        flex-direction: row;
-        justify-content:space-between;
-        button{
-            width: 48%;
-            height: 30px;
-            border-radius: 10px;
-            border: 1px solid gray;
-        }
-        .successBtn{
-            background: #2bbd57;
-        }
-
-        .cancelBtn{
-            background: #c41818;
-        }
-    }
+    
 }
 
