@@ -198,7 +198,7 @@ export default function FormConcepto({ ProjectId }: any) {
     console.log("fin");
   };
   return (
-    <form className="AddConceptoForm" onSubmit={(event) => onSubmit(event)}>
+    <form className="AddConceptoForm form" onSubmit={(event) => onSubmit(event)}>
       <div className="inputRow">
         <div className="input clave">
           <label htmlFor="clave">Clave</label>
@@ -291,7 +291,7 @@ export default function FormConcepto({ ProjectId }: any) {
           </table>
         ) : undefined}
       </div>
-
+ 
       {formError && <ErrorMsg />}
       <div className="btn-group">
         <button type="button" onClick={onCancel}>
