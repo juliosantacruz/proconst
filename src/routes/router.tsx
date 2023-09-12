@@ -12,7 +12,7 @@ const Presupuesto = lazy( ()=> import("../pages/Presupuesto"))
 
 export const RoutesDirectory={
   LOG_IN:'/proconst/login',
-  SIGN_IN:'/proconst/signin',
+  SIGN_IN:'/proconst/registro',
   HOME :'/proconst/',
   LISTADO_CONCEPTOS:'/proconst/listado-de-conceptos',
   LISTADO_INSUMOS:'/proconst/listado-de-insumos',

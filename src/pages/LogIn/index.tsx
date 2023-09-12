@@ -2,6 +2,8 @@ import React from "react";
 import "./LogIn.scss";
 import heroImg from "../../assets/img/bgLogin3-min.jpg";
 import logInImg from "../../assets/img/logIn_image.svg";
+import { Link } from "react-router-dom";
+import { RoutesDirectory } from "../../routes/router";
 
 
 export default function LogIn() {
@@ -26,14 +28,14 @@ export default function LogIn() {
             <input type="text" placeholder="usuario@ejemplo.com" />
           </div>
           <div className="input">
-            <label htmlFor="">Contrasenia</label>
+            <label htmlFor="">contraseña</label>
             <input type="password" />
           </div>
-          <a href="/">Olvidaste tu contrasenia..?</a>
+          <a href="/">Olvidaste tu contraseña..?</a>
           <button type="submit" className="successBtn" >
             Iniciar Sesion
           </button>
-          <a href=""className="registerBtn">Registrarse</a>
+          <Link to={RoutesDirectory.SIGN_IN}className="registerBtn">Registrarse</Link>
         </form>
       </div>
     </section>

@@ -16,18 +16,18 @@ export default function MainLayout({children, showLayout}:Props) {
   const location = useLocation()
   console.log('location' , location.pathname)
 
-  if(location.pathname=== RoutesDirectory.LOG_IN){
+  if(location.pathname=== RoutesDirectory.LOG_IN ||location.pathname=== RoutesDirectory.SIGN_IN ){
     return (
-      <div id='proConst'>
+      <main id='proConst'>
           
           {/* <Navbar/> */}
-          <main>
+          
           {/* <AsideMenu/> */}
              {children}
-          </main>
+          
           {/* <Footer/> */}
          
-      </div>
+      </main>
     )
   }else{
     return (
