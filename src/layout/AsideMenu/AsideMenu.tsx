@@ -9,6 +9,14 @@ export default function AsideMenu() {
     <aside id="sideMenu">
       <nav>
         <ul>
+        <li>
+            <NavLink
+              to={RoutesDirectory.LOG_IN}
+              
+            >
+              Iniciar Sesion
+            </NavLink>
+          </li>
           {/* Menu general */}
           <li>
             <NavLink

@@ -8,11 +8,10 @@ import { RoutesDirectory } from '../routes/router'
 
 
 type Props={
-  children:ReactNode,
-  showLayout?:boolean
+  children:ReactNode
 }
 
-export default function MainLayout({children, showLayout}:Props) {
+export default function MainLayout({children}:Props) {
   const location = useLocation()
   console.log('location' , location.pathname)
 
