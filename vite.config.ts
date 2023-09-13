@@ -5,4 +5,20 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   base: '/proconst/',
   plugins: [react()],
+  ...(process.env.NODE_ENV === 'development'
+  ? {
+    define: {
+      global: {},
+    },
+  }
+  : {}),
+resolve: {
+  alias: {
+    ...(process.env.NODE_ENV !== 'development'
+      ? {
+        './runtimeConfig': './runtimeConfig.browser', //fix production build
+      }
+      : {}),
+  },
+},
 })

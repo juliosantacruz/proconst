@@ -5,6 +5,10 @@ import NotFound from "../pages/NotFound";
 import LogIn from '../pages/LogIn';
 import SignIn from '../pages/SignIn';
 import ExplosionInsumos from '../pages/ExplosionInsumos';
+import { ProtectedRoute } from '../libs/ProtectedRoutes';
+import {useAuthStore} from '../store/authStore'
+
+const isAuth = useAuthStore.getState().isAuth
 
 const ListadoConceptos = lazy( ()=> import("../pages/ListadoConceptos"))
 const ListadoInsumos = lazy( ()=> import("../pages/ListadoInsumos"))
@@ -27,11 +31,16 @@ const AppRoutes = () => {
     const routes = useRoutes([
       { path: RoutesDirectory.LOG_IN, element: <LogIn /> },
       { path: RoutesDirectory.SIGN_IN, element: <SignIn /> },
-      { path: RoutesDirectory.HOME, element: <Inicio /> },
-      { path: RoutesDirectory.LISTADO_CONCEPTOS, element: <ListadoConceptos /> },
-      { path: RoutesDirectory.LISTADO_INSUMOS, element: <ListadoInsumos /> },
-      { path: RoutesDirectory.WORKING_PRESUPUESTO, element: <Presupuesto />, errorElement:<NotFound />,  },
-      { path: RoutesDirectory.EXPLOSION_INSUMOS, element: <ExplosionInsumos />, errorElement:<NotFound />,  },
+      { element: <ProtectedRoute isAllowed={isAuth} />, children:[
+        { path: RoutesDirectory.HOME, element: <Inicio /> },
+        { path: RoutesDirectory.LISTADO_CONCEPTOS, element: <ListadoConceptos /> },
+        { path: RoutesDirectory.LISTADO_INSUMOS, element: <ListadoInsumos /> },
+        { path: RoutesDirectory.WORKING_PRESUPUESTO, element: <Presupuesto />, errorElement:<NotFound />,  },
+        { path: RoutesDirectory.EXPLOSION_INSUMOS, element: <ExplosionInsumos />, errorElement:<NotFound />,  },
+
+      ] },
+
+
       
       { path: "/proconst/*", element: <NotFound /> },
   
