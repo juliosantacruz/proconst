@@ -1,10 +1,13 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./DropDown.scss";
-import icon from "../../assets/icons/bxs-download.svg";
+import user from "../../assets/icons/bx-user-circle.svg";
+import logout from "../../assets/icons/bx-log-out.svg";
+import { useAuthStore } from "../../store/authStore";
+
 
 export default function DropDown() {
   const [open, setOpen] = useState(false);
-
+  const {profile} = useAuthStore()
   const menuRef = useRef();
 
   useEffect(() => {
@@ -26,12 +29,15 @@ export default function DropDown() {
       </div>
 
       <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
+        <div className="dropdownIcon">
+
+        <img src={user} alt="" />
+        </div>
         <h3>
-          title <br /> <span>SubTitle?</span>
+          {(profile as any).name} <br /> <span>{(profile as any).email}</span>
         </h3>
         <ul>
           <LogOut />
-          <DropDownItem />
           <DropDownItem />
         </ul>
       </div>
@@ -39,9 +45,10 @@ export default function DropDown() {
   );
 }
 
-import { useAuthStore } from "../../store/authStore";
+ 
 import { useNavigate } from "react-router-dom";
 import { RoutesDirectory } from "../../routes/router";
+
 function LogOut() {
   const navigate = useNavigate();
   const { setLogout } = useAuthStore();
@@ -53,7 +60,7 @@ function LogOut() {
 
   return (
     <li className="dropdownItem noBtn">
-      <img src={icon} alt="icon" />
+      <img src={logout} alt="icon" />
       <button type="button" onClick={LogOut}>
         Cerrar Session
       </button>
@@ -64,7 +71,7 @@ function LogOut() {
 function DropDownItem() {
   return (
     <li className="dropdownItem">
-      <img src={icon} alt="icon" />
+      <img src={user} alt="icon" />
       <a href="">link</a>
     </li>
   );
