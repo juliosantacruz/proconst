@@ -22,7 +22,7 @@ export default function LogIn() {
 
     const email = (event.currentTarget.elements[0] as HTMLInputElement).value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement).value;
-    console.log('login',email,password)
+    // console.log('login',email,password)
 
      // Proceso de Login
      const user = new CognitoUser({
@@ -37,7 +37,7 @@ export default function LogIn() {
 
     user.authenticateUser(authDetails, {
       onSuccess: (data) => {
-        console.log("onSuccess", data);
+        // console.log("onSuccess", data);
 
         const userSession = data as CognitoUserSession;
         const idToken = userSession.getIdToken().getJwtToken();

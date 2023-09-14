@@ -17,14 +17,7 @@ export default function TableInsumo({ insumosData, addInputInsumo }: Props) {
   const { openModalFormInsumo } = useUxStore();
 
   const data: Insumo[] = insumosData;
-  if (addInputInsumo) {
-    console.log("loles");
-  } else {
-    console.log("nones");
-  }
-
-  console.log(data);
-
+ 
   const handleDelete = (id: string) => {
     deleteInsumo(id);
   };
@@ -62,7 +55,7 @@ export default function TableInsumo({ insumosData, addInputInsumo }: Props) {
         {CategoriasInsumos.map((category) => {
 
           return (
-            <button type="button" className={tabClassName(category.name)} onClick={() => setFilter(category.name)}>
+            <button key={category.name} type="button" className={tabClassName(category.name)} onClick={() => setFilter(category.name)}>
               {category.name}
             </button>
           );
