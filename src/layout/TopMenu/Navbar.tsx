@@ -2,6 +2,7 @@ import React from "react";
 
 import logoProConst from '../../assets/LogoProConst/Logo_proConst_350x130.png'
 import "./Navbar.scss";
+import DropDown from "../../components/DropDown";
 
 export default function Navbar() {
   return (
@@ -12,7 +13,8 @@ export default function Navbar() {
         </div>
 
         <div className="user">
-          <div className="userIcon">JS</div>
+          <DropDown/>
+          {/* <div className="userIcon">JS</div> */}
         </div>
       </nav>
     </header>
