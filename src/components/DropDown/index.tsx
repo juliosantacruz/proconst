@@ -21,7 +21,7 @@ export default function DropDown() {
     document.addEventListener("mousedown", (event) => handler(event));
   }, []);
 
-  console.log(menuRef);
+  //console.log(menuRef);
   return (
     <div className="menuContainer " ref={menuRef as any}>
       <div className="menuTrigger" onClick={() => setOpen(!open)}>

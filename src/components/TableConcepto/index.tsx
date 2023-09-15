@@ -1,37 +1,57 @@
-import React from 'react'
-import './TableConcepto.scss'
-import AnyIcon from '../AnyIcon';
-import { Concepto } from '../../types/Concepto';
-import { useConceptoStore, useInsumoStore } from '../../store/projectStore';
-import { useUxStore } from '../../store/uxStore';
+import React, { ReactEventHandler, useState } from "react";
+import "./TableConcepto.scss";
+import AnyIcon from "../AnyIcon";
+import { Concepto } from "../../types/Concepto";
+import { useConceptoStore, useInsumoStore } from "../../store/projectStore";
+import { useUxStore } from "../../store/uxStore";
 import editIcon from "../../assets/icons/bx-edit.svg";
 import deleteIcon from "../../assets/icons/bx-trash.svg";
-import { setFormat } from '../../utils/CurrencyFormat';
-
+import { setFormat } from "../../utils/CurrencyFormat";
 
 export default function TableConcepto() {
+  const [searchValue, setSearchValue]=useState<string>('')
   const { modalFormConcepto, openModalFormConcepto } = useUxStore();
 
-    const { insumos } = useInsumoStore();
-    const { conceptos, setConceptoToUpdate, deleteConcepto } = useConceptoStore();
+  const { insumos } = useInsumoStore();
+  const { conceptos, setConceptoToUpdate, deleteConcepto } = useConceptoStore();
 
-    const handleEdit = (element: Concepto) => {
-        setConceptoToUpdate(element);
-        openModalFormConcepto(true);
-        console.log(`se editar ${element.id}`);
-      };
-      const handleDelete = (id: string) => {
-        deleteConcepto(id);
-      };
+  const handleEdit = (element: Concepto) => {
+    setConceptoToUpdate(element);
+    openModalFormConcepto(true);
+    console.log(`se editar ${element.id}`);
+  };
+  const handleDelete = (id: string) => {
+    deleteConcepto(id);
+  };
 
+  const leSearchValue=(event:any)=>{
+    setSearchValue(event.target.value)
+  }
+
+  let searchedConceptos:Concepto[] =[]
+  if(searchValue.length>0){
+    searchedConceptos= conceptos.filter((concepto)=>{
+      const description = concepto.descripcion.toLocaleLowerCase()
+      const searchText  = searchValue.toLowerCase() 
+      return description.includes(searchText)
+    })
+  }else{
+    searchedConceptos = conceptos
+  }
 
   return (
     <>
-    <div className="searchBar">
-<label htmlFor="searchInput">Busqueda: </label>
-    <input type="text" className="searchInput" placeholder='Buscas un concepto?'/>
-    </div>
-    <table className="ListadoConceptos">
+      <div className="searchBar">
+        <label htmlFor="searchInput">Busqueda: </label>
+        <input
+          type="text"
+          className="searchInput"
+          placeholder="Buscas un concepto?"
+          value={searchValue}
+          onChange={leSearchValue}
+        />
+      </div>
+      <table className="ListadoConceptos">
         <thead>
           <tr>
             <td>Clave</td>
@@ -42,8 +62,8 @@ export default function TableConcepto() {
           </tr>
         </thead>
         <tbody>
-          {conceptos &&
-            conceptos.map((concepto) => {
+          {searchedConceptos &&
+            searchedConceptos.map((concepto) => {
               return (
                 <tr key={concepto.id}>
                   <td className="clave">{concepto.clave}</td>
@@ -78,5 +98,5 @@ export default function TableConcepto() {
         </tbody>
       </table>
     </>
-  )
+  );
 }
