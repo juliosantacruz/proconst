@@ -43,7 +43,8 @@ const ErrorMsg = () => {
   );
 };
 
-type Props={ ProjectId:string}
+type Props={ ProjectId?:string}
+
 export default function FormConcepto({ ProjectId }: Props) {
   const [editConcepto, setEditConcepto] = useState(false);
   const [formError, setFormError] = useState(false);
