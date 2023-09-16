@@ -42,7 +42,7 @@ const AppRoutes = () => {
 
 
       
-      { path: "/proconst/*", element: <NotFound /> },
+      { path: "/*", element: <NotFound /> },
   
     ]);
     return routes; 
