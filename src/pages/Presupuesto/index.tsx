@@ -418,18 +418,18 @@ export default function Presupuesto() {
       )}
       {modalFormConcepto && (
         <AsideModal
-          widthModal={"70vw"}
+          widthModal={"65vw"}
           clossable={false}
           title="Agregar Concepto"
           openModal={modalFormConcepto}
           setOpenModal={openModalFormConcepto}
         >
-          <FormConcepto ProjectId={projectId} />
+          <FormConcepto ProjectId={projectId as string} />
         </AsideModal>
       )}
       {modalFormInsumo && (
         <AsideModal
-          widthModal={"40vw"}
+          widthModal={"50vw"}
           title="Agregar Insumo"
           clossable={false}
           openModal={modalFormInsumo}

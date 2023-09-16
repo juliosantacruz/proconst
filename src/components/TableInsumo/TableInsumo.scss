@@ -1,81 +1,88 @@
-.tabsFiltred{
-    display: flex;
-    flex-direction: row;
+.insumoList{
+    width: 100%;
+    height: calc(100vh - 180px);
     
-    height: 30px;
-
-    .tab{
-
-        padding: 0 10px;
-        margin: 0 5px;
-        border: 1px solid rgb(155, 155, 155);
-        border-bottom: none;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-        background: #fff;
-
-    }
-    .active{
-        background: #c45a5a;
-
-    }
-}
-
-.insumosTable{
-     
-    table {
-        display: block;
-        min-height: 800px;
-        height: 100%;
+    .tabsFiltred{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         width: 100%;
-        overflow-y: scroll;
-      }
+        height: 30px;
     
-    .tableInsumo{
-        border-collapse: collapse;
-        width: 100%;
-        table,
-        th,
-        td {
-            border-bottom: 1px solid #9e9e9e;
-            border-left: 1px solid #f3f3f3;
-            padding: 8px;
-        }
-        thead{
-            text-align: center;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
+        .tab{
+            padding: 0 10px;
+            border: 1px solid rgb(155, 155, 155);
+            border-bottom: none;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
             background: #fff;
+    
         }
-        
-        tbody{
+        .active{
+            background: #ebebeb;
+    
+        }
+    }
+    
+    .insumosTable{
+        width: 100%;
+         height: calc(100% - 80px);
+         overflow-y: scroll;
+        table {
+            display: block;
+            
+             
+            width: 100%;
             overflow-y: scroll;
-    
-            text-align: center;
-            tr{
-                .clave{ width: 10%;}
-                .descripcion{width: 40%; text-align: left;}
-                .unidad{width: 10%;}
-                .precio{width: 10%;}
-                .categoria{width: 15%;}
-                .actions{width: 15%;// display: flex;
-                    // flex-direction: row;
-                    // justify-content: space-evenly;
-                    // width: 10%; 
-                    font-style: normal;
-                    a {
-                        margin: 0 10px;
-                        cursor: pointer;
-                       
-                    }}
-    
+          }
+        
+        .tableInsumo{
+            border-collapse: collapse;
+            width: 100%;
+            table,
+            th,
+            td {
+                border-bottom: 1px solid #9e9e9e;
+                border-left: 1px solid #f3f3f3;
+                padding: 8px;
             }
-            tr:hover {
-                background-color: #ddd;
+            thead{
+                text-align: center;
+                font-weight: 600;
+                position: sticky;
+                top: 0;
+                background: #fff;
             }
-            td:hover {
-                background-color: rgb(241, 241, 241)
+            
+            tbody{
+                 
+        
+                text-align: center;
+                font-size: 12px;
+                tr{
+                    .clave{ width: 10%;}
+                    .descripcion{width: 40%; text-align: left;}
+                    .unidad{width: 10%;}
+                    .precio{width: 10%;}
+                    .categoria{width: 15%;}
+                    .actions{width: 15%;// display: flex;
+                        // flex-direction: row;
+                        // justify-content: space-evenly;
+                        // width: 10%; 
+                        font-style: normal;
+                        a {
+                            margin: 0 10px;
+                            cursor: pointer;
+                           
+                        }}
+        
+                }
+                tr:hover {
+                    background-color: #ddd;
+                }
+                td:hover {
+                    background-color: rgb(241, 241, 241)
+                }
             }
         }
     }

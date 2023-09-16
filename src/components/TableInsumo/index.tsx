@@ -45,10 +45,10 @@ export default function TableInsumo({ insumosData, addInputInsumo }: Props) {
       return 'tab'
     }
   }
+  const TabFilters=()=>{
 
-  return (
-    <>
-      <div className="tabsFiltred">
+    
+    return(<div className="tabsFiltred">
         <button type="button" className={filter==='todos'?"tab active":"tab"} onClick={() => setFilter("todos")}>
           Todos
         </button>
@@ -60,7 +60,12 @@ export default function TableInsumo({ insumosData, addInputInsumo }: Props) {
             </button>
           );
         })}
-      </div>
+      </div>)
+  }
+
+  return (
+    <div className="insumoList">
+      <TabFilters/>
       <div className="insumosTable">
         <table className="tableInsumo">
           <thead>
@@ -136,6 +141,6 @@ export default function TableInsumo({ insumosData, addInputInsumo }: Props) {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }

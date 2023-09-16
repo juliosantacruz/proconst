@@ -10,16 +10,16 @@ export default function AsideModal(Props: any) {
 
   const modalRef = useRef();
   
-  useEffect(() => {
-    const handler = (event: any) => {
-      if (!(modalRef.current as any).contains(event.target)) {
-        console.log(modalRef);
-        setOpenModal(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handler = (event: any) => {
+  //     if (!(modalRef.current as any).contains(event.target)) {
+  //       // console.log(modalRef);
+  //       setOpenModal(false);
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", (event) => handler(event));
-  }, []);
+  //   document.addEventListener("mousedown", (event) => handler(event));
+  // }, []);
 
   const classModal = () => {
     if (openModal) {

@@ -7,7 +7,7 @@
     height: 100%;
     background-color: #ffffffc4;
     backdrop-filter: blur(8.7px);
--webkit-backdrop-filter: blur(8.7px);
+    -webkit-backdrop-filter: blur(8.7px);
     /* background-image: linear-gradient(135deg, #4b5ca7 0%rgb(118, 75, 162) 100%); */
     display: flex;
     flex-direction: column;
@@ -25,12 +25,13 @@
         align-items: center;
         justify-content: space-between;
 
+        h3{margin: 20px 30px 10px; }
         .closeIconBtn {
             border: none;
             background: none;
             margin: 0 10px 0 0;
             cursor: pointer;
-            :hover{
+            :hover {
                 border: 1px solid black;
                 border-radius: 5px;
             }

@@ -15,15 +15,15 @@ const ListadoInsumos = lazy( ()=> import("../pages/ListadoInsumos"))
 const Presupuesto = lazy( ()=> import("../pages/Presupuesto"))
 
 export const RoutesDirectory={
-  LOG_IN:'/proconst/login',
-  SIGN_IN:'/proconst/registro',
-  HOME :'/proconst/',
-  LISTADO_CONCEPTOS:'/proconst/listado-de-conceptos',
-  LISTADO_INSUMOS:'/proconst/listado-de-insumos',
-  WORKING_PRESUPUESTO: '/proconst/presupuesto/:projectId',
-  GO_WORKING_PRESUPUESTO:(projectId:string)=>`/proconst/presupuesto/${projectId}`,
-  EXPLOSION_INSUMOS: '/proconst/analisis/:projectId',
-  GO_EXPLOSION_INSUMOS:(projectId:string)=>`/proconst/analisis/${projectId}`,
+  LOG_IN:'/login',
+  SIGN_IN:'/registro',
+  HOME :'/',
+  LISTADO_CONCEPTOS:'/listado-de-conceptos',
+  LISTADO_INSUMOS:'/listado-de-insumos',
+  WORKING_PRESUPUESTO: '/presupuesto/:projectId',
+  GO_WORKING_PRESUPUESTO:(projectId:string)=>`/presupuesto/${projectId}`,
+  EXPLOSION_INSUMOS: '/analisis/:projectId',
+  GO_EXPLOSION_INSUMOS:(projectId:string)=>`/analisis/${projectId}`,
 
 }
 

@@ -43,7 +43,8 @@ const ErrorMsg = () => {
   );
 };
 
-export default function FormConcepto({ ProjectId }: any) {
+type Props={ ProjectId:string}
+export default function FormConcepto({ ProjectId }: Props) {
   const [editConcepto, setEditConcepto] = useState(false);
   const [formError, setFormError] = useState(false);
   const [showConceptoTable, setShowConceptoTable] = useState(false);
@@ -53,10 +54,6 @@ export default function FormConcepto({ ProjectId }: any) {
     useConceptoStore();
   const { addConceptoPartida } = useWorkingPresupuesto();
   const { insumos } = useInsumoStore();
-
-  // console.log("to update:", conceptoToUpdate);
-  // console.log("projectId:", ProjectId);
-  // console.log("formData:", formData);
 
   useEffect(() => {
     if (conceptoToUpdate !== undefined) {
@@ -76,10 +73,9 @@ export default function FormConcepto({ ProjectId }: any) {
     }
   }, []);
 
-  //TEST
+  
   const data: Insumo[] = insumos;
-
-  //Test
+ 
 
   const onSubmit = (event: any) => {
     event.preventDefault();
@@ -164,7 +160,7 @@ export default function FormConcepto({ ProjectId }: any) {
     const cantidad = Number(event.target.value);
     const newArr = (formData.listadoInsumos as []).map((insumo, i) => {
       if (index === i) {
-        console.log(typeof insumo);
+        // console.log(typeof insumo);
         return { ...(insumo as ListadoInsumos), [event.target.name]: cantidad };
       } else {
         return insumo;
