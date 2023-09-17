@@ -43,14 +43,14 @@ const ErrorMsg = () => {
   );
 };
 
-type Props={ ProjectId?:string}
+type Props = { ProjectId?: string };
 
 export default function FormConcepto({ ProjectId }: Props) {
   const [editConcepto, setEditConcepto] = useState(false);
   const [formError, setFormError] = useState(false);
   const [showConceptoTable, setShowConceptoTable] = useState(false);
   const [formData, setFormData] = useState<Concepto>(conceptoDefaultValue);
-  const { openModalFormInsumo,openModalFormConcepto } = useUxStore();
+  const { openModalFormInsumo, openModalFormConcepto } = useUxStore();
   const { addConcepto, conceptoToUpdate, setConceptoToUpdate, updateConcepto } =
     useConceptoStore();
   const { addConceptoPartida } = useWorkingPresupuesto();
@@ -69,14 +69,12 @@ export default function FormConcepto({ ProjectId }: Props) {
         descripcion: "",
         unidad: "",
         listadoInsumos: [],
-        precioUnitario: 0,
+        precioUnitario: 0.00,
       });
     }
   }, []);
 
-  
   const data: Insumo[] = insumos;
- 
 
   const onSubmit = (event: any) => {
     event.preventDefault();
@@ -99,7 +97,7 @@ export default function FormConcepto({ ProjectId }: Props) {
       addConcepto(formData);
       addConceptoPartida({
         conceptoId: formData.id,
-        cantidad: 0,
+        cantidad: 0.00,
         fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
       });
     }
@@ -129,10 +127,10 @@ export default function FormConcepto({ ProjectId }: Props) {
   };
 
   const addInputInsumo = (id: string) => {
-    const oldInsumo: ListadoInsumos[] | undefined = formData.listadoInsumos;
+    const oldInsumos: ListadoInsumos[] | undefined = formData.listadoInsumos;
     const newInsumo = {
       insumoId: id,
-      cantidad: 0,
+      cantidad: 0.000,
     };
     if (
       formData.listadoInsumos?.find((pu) => pu.insumoId === newInsumo.insumoId)
@@ -142,7 +140,7 @@ export default function FormConcepto({ ProjectId }: Props) {
     } else {
       setFormData({
         ...formData,
-        listadoInsumos: [...(oldInsumo as []), newInsumo],
+        listadoInsumos: [...(oldInsumos as []), newInsumo],
       });
     }
   };
@@ -157,12 +155,14 @@ export default function FormConcepto({ ProjectId }: Props) {
     return precioTotal;
   };
 
-  const onCantidad = (event: any, index: number) => {
-    const cantidad = Number(event.target.value);
+  const onCantidad = ( event:React.FormEvent<HTMLInputElement>, index:number)  => {
+    const cantidad = Number((event.target as HTMLInputElement).value);
     const newArr = (formData.listadoInsumos as []).map((insumo, i) => {
       if (index === i) {
-        // console.log(typeof insumo);
-        return { ...(insumo as ListadoInsumos), [event.target.name]: cantidad };
+        return {
+          ...(insumo as ListadoInsumos),
+          [(event.target as HTMLInputElement).name]: cantidad,
+        };
       } else {
         return insumo;
       }
@@ -194,8 +194,22 @@ export default function FormConcepto({ ProjectId }: Props) {
     openModalFormInsumo(true);
     console.log("fin");
   };
+
+  const deleteInsumo=(id:string)=>{
+    console.log(id)
+    const oldInsumos: ListadoInsumos[]|undefined = formData.listadoInsumos
+    const newInsumos = oldInsumos?.filter((insumo)=>insumo.insumoId!==id)
+    setFormData({
+      ...formData,
+      listadoInsumos:newInsumos
+    })
+    console.log(newInsumos)
+  }
   return (
-    <form className="AddConceptoForm form" onSubmit={(event) => onSubmit(event)}>
+    <form
+      className="AddConceptoForm form"
+      onSubmit={(event) => onSubmit(event)}
+    >
       <div className="inputRow">
         <div className="input clave">
           <label htmlFor="clave">Clave</label>
@@ -253,14 +267,15 @@ export default function FormConcepto({ ProjectId }: Props) {
                 <th>Cantidad</th>
                 <th>Precio</th>
                 <th>Total</th>
+                <th>Actions</th>
+
               </tr>
             </thead>
 
             <tbody>
               {formData.listadoInsumos?.map((insumo, index) => {
                 const insumoPU: any = insumoData(insumos, insumo);
-
-                // console.log("insumoPU", insumoPU);
+ 
 
                 return (
                   <tr key={insumo.insumoId}>
@@ -281,6 +296,9 @@ export default function FormConcepto({ ProjectId }: Props) {
                     <td className="total">
                       {setFormat(insumoPU.precio * insumo.cantidad)}
                     </td>
+                    <td>
+                      <button onClick={()=>deleteInsumo(insumo.insumoId)} type="button">del</button>
+                    </td>
                   </tr>
                 );
               })}
@@ -288,33 +306,31 @@ export default function FormConcepto({ ProjectId }: Props) {
           </table>
         ) : undefined}
       </div>
- 
+
       {formError && <ErrorMsg />}
       <div className="btn-group">
         <button type="button" onClick={onCancel} className="cancelBtn">
           Cancelar
         </button>
-        <button type="submit" className="successBtn">Guardar</button>
+        <button type="submit" className="successBtn">
+          Guardar
+        </button>
       </div>
       <div className="tableInsumo">
         <hr />
         <div className="tableInsumoHeader">
           <h3>Listado de Insumos</h3>
-              <div className="insumosButtons">
-
-          <button
-            type="button"
-            onClick={() => setShowConceptoTable(!showConceptoTable)}
-          >
-            Cargar Insumo
-          </button>
-          <button
-            type="button"
-            onClick={handleAddInsumo}
-          >
-            Agregar Insumo
-          </button>
-              </div>
+          <div className="insumosButtons">
+            <button
+              type="button"
+              onClick={() => setShowConceptoTable(!showConceptoTable)}
+            >
+              Cargar Insumo
+            </button>
+            <button type="button" onClick={handleAddInsumo}>
+              Agregar Insumo
+            </button>
+          </div>
         </div>
         {showConceptoTable ? (
           <TableInsumo insumosData={data} addInputInsumo={addInputInsumo} />
