@@ -145,12 +145,12 @@ export default function Presupuesto() {
   };
 
   const handleGuardar = (proyecto: Presupuesto) => {
-    createPresupuetoCVS(proyecto)
+    createPresupuetoCVS(proyecto);
     console.log("se guarda", proyecto);
   };
   const handleExportarJSON = (proyecto: Presupuesto) => {
     //createJSONFile(proyecto);
-    createPresupuestoJSON(workingProject, allConceptos, insumos)
+    createPresupuestoJSON(workingProject, allConceptos, insumos);
     console.log("se guarda", proyecto);
   };
 
@@ -160,7 +160,6 @@ export default function Presupuesto() {
         <button
           type="button"
           onClick={() => handleExportarJSON(workingProject)}
-           
         >
           <AnyIcon iconSrc={exportIcon} />
         </button>
@@ -222,7 +221,7 @@ export default function Presupuesto() {
                   };
 
                   return (
-                    <>
+                    <React.Fragment >
                       <tr key={element.id} className="partida">
                         <td className="clave">{element.clave}</td>
                         <td className="descripcion">{element.nombre}</td>
@@ -280,7 +279,7 @@ export default function Presupuesto() {
                                 const montoPartida = montoPartidaCant(
                                   element,
                                   allConceptos,
-                                  Number(cantidadConcepto) ,
+                                  Number(cantidadConcepto),
                                   concepto.conceptoId as string
                                 );
                                 console.log("montoPartida:", montoPartida);
@@ -302,6 +301,7 @@ export default function Presupuesto() {
                                 deleteConceptoPartida(conceptoId, partidaId);
                                 deleteConcepto(conceptoId);
                               };
+
                               const handleEdit = (element: Concepto) => {
                                 console.log(`se editar ${element.id}`);
                                 setConceptoToUpdate(element);
@@ -388,7 +388,7 @@ export default function Presupuesto() {
                             }
                           })
                         : null}
-                    </>
+                    </React.Fragment>
                   );
                 })}
           </tbody>

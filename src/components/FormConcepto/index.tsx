@@ -203,7 +203,7 @@ export default function FormConcepto({ ProjectId }: Props) {
       ...formData,
       listadoInsumos:newInsumos
     })
-    console.log(newInsumos)
+     
   }
   return (
     <form

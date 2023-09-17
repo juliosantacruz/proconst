@@ -13,7 +13,7 @@ export default function DropDown() {
   useEffect(() => {
     const handler = (event: any) => {
       if (!(menuRef.current as any).contains(event.target)) {
-        console.log(menuRef);
+        // console.log(menuRef);
         setOpen(false);
       }
     };
