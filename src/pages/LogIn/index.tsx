@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./LogIn.scss";
 import heroImg from "../../assets/img/bgLogin3-min.jpg";
 import logInImg from "../../assets/img/logIn_image.svg";
@@ -14,8 +14,17 @@ import UserPoolCognito from "../../utils/UserPool";
 
 
 export default function LogIn() {
+  const [loginError, setLoginError] = useState<any>();
+ 
   const navigate = useNavigate();
-  const { setToken, setProfile } = useAuthStore();
+  const { isAuth, setToken, setProfile } = useAuthStore();
+
+  useEffect(()=>{
+    if(isAuth){
+      navigate(RoutesDirectory.HOME);
+
+    }
+  },[])
 
   const onsubmit= (event:React.FormEvent<HTMLFormElement>)=>{
     event.preventDefault()
@@ -49,15 +58,18 @@ export default function LogIn() {
       },
 
       onFailure(err) {
-        console.error("error", err);
+        // console.error("error", err);
+        setLoginError(err)
+        navigate(RoutesDirectory.GO_VERIFY_USER(email))
+        
         return;
       },
       newPasswordRequired: (data) => {
-        console.log("newPasswordRequired", data);
+        // console.log("newPasswordRequired", data);
       },
     });
   }
-
+  // console.log(loginError)
   return (
     <section className="loginPage">
       <div

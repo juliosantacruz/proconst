@@ -3,10 +3,11 @@ import { useRoutes } from "react-router-dom";
 import Inicio from "../pages/Inicio"; 
 import NotFound from "../pages/NotFound";
 import LogIn from '../pages/LogIn';
-import SignIn from '../pages/SignIn';
 import ExplosionInsumos from '../pages/ExplosionInsumos';
 import { ProtectedRoute } from '../libs/ProtectedRoutes';
 import {useAuthStore} from '../store/authStore'
+import Register from '../pages/Register';
+import VerifyUser from '../pages/VerifyUser';
 
 const isAuth = useAuthStore.getState().isAuth
 
@@ -17,6 +18,8 @@ const Presupuesto = lazy( ()=> import("../pages/Presupuesto"))
 export const RoutesDirectory={
   LOG_IN:'/login',
   SIGN_IN:'/registro',
+  VERIFY_USER:'/verify/:email',
+  GO_VERIFY_USER:(email:string)=>`/verify/${email}`,
   HOME :'/',
   LISTADO_CONCEPTOS:'/listado-de-conceptos',
   LISTADO_INSUMOS:'/listado-de-insumos',
@@ -30,7 +33,8 @@ export const RoutesDirectory={
 const AppRoutes = () => {
     const routes = useRoutes([
       { path: RoutesDirectory.LOG_IN, element: <LogIn /> },
-      { path: RoutesDirectory.SIGN_IN, element: <SignIn /> },
+      { path: RoutesDirectory.SIGN_IN, element: <Register /> },
+      { path: RoutesDirectory.VERIFY_USER, element: <VerifyUser /> },
       { element: <ProtectedRoute isAllowed={isAuth} />, children:[
         { path: RoutesDirectory.HOME, element: <Inicio /> },
         { path: RoutesDirectory.LISTADO_CONCEPTOS, element: <ListadoConceptos /> },

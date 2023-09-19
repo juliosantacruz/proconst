@@ -3,6 +3,7 @@ export const Unidades = [
   { name: "Milimetro", simbol: "mm", category: "Longitud" },
   { name: "Centimetro", simbol: "cm", category: "Longitud" },
   { name: "Metro", simbol: "m", category: "Longitud" },
+  { name: "Metro Lineal", simbol: "mL", category: "Longitud" },
   { name: "Pulgada", simbol: "in", category: "Longitud" },
   { name: "Pie", simbol: "ft", category: "Longitud" },
   { name: "Yarda", simbol: "yr", category: "Longitud" },
