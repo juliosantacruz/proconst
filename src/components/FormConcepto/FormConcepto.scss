@@ -117,6 +117,10 @@
                         width: 15%;
                         text-align: center;
                     }
+                    .actions{
+                        text-align: center;
+                        button{border: none; background: none;}
+                    }
                     
                 }
                 tr:nth-child(even){

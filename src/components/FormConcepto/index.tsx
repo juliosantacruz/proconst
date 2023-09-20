@@ -22,6 +22,8 @@ import { Insumo } from "../../types/Insumo";
 import "./FormConcepto.scss";
 import dayjs from "dayjs";
 import TableInsumo from "../TableInsumo";
+import AnyIcon from "../AnyIcon";
+import minusIcon from '../../assets/icons/bx-minus-circle.svg'
 
 const conceptoDefaultValue = {
   id: "",
@@ -296,8 +298,10 @@ export default function FormConcepto({ ProjectId }: Props) {
                     <td className="total">
                       {setFormat(insumoPU.precio * insumo.cantidad)}
                     </td>
-                    <td>
-                      <button onClick={()=>deleteInsumo(insumo.insumoId)} type="button">del</button>
+                    <td className="actions">
+                      <button className='minusBtn' onClick={()=>deleteInsumo(insumo.insumoId)} type="button">
+                        <AnyIcon iconSrc={minusIcon}/>  
+                      </button>
                     </td>
                   </tr>
                 );
