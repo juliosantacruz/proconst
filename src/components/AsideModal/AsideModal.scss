@@ -1,14 +1,14 @@
 .asideModal {
+    
     position: fixed;
     top: 0;
     right: 0;
     // width: 50vw;
     max-width: 80vw;
     height: 100%;
-    background-color: #ffffffc4;
     backdrop-filter: blur(8.7px);
     -webkit-backdrop-filter: blur(8.7px);
-    /* background-image: linear-gradient(135deg, #4b5ca7 0%rgb(118, 75, 162) 100%); */
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,11 +24,18 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-
-        h3{margin: 20px 30px 10px; }
+        margin: 0 0 20px;
+        h3{margin: 20px 30px 10px; font-size: 26px; }
         .closeIconBtn {
-            border: none;
-            background: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            
+            border: 1px solid black;
+            background: white;
+            border-radius: 50%;
             margin: 0 10px 0 0;
             cursor: pointer;
             :hover {

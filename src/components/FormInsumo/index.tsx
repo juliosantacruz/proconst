@@ -117,7 +117,7 @@ export default function FormInsumo() {
   };
 
   return (
-    <form onSubmit={(event) => onSubmit(event)} className="form">
+    <form onSubmit={(event) => onSubmit(event)} className="form formInsumo" >
       <div className="input">
         <label htmlFor="clave">Clave</label>
         <input

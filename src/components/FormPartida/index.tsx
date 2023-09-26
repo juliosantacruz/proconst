@@ -4,7 +4,7 @@ import { useUxStore } from "../../store/uxStore";
 
 import { v4 } from "uuid";
 import { usePresupuestoStore, useWorkingPresupuesto } from "../../store/projectStore";
-
+import './FormPartida.scss'
 const partidaDefaultValue = {
   id: "",
   clave: "",
@@ -80,7 +80,7 @@ export default function FormPartida({projectId}:any) {
 
   
   return (
-    <form onSubmit={(event) => onSubmit(event)} className="form">
+    <form onSubmit={(event) => onSubmit(event)} className="form formPartida">
       <div className="input">
         <label htmlFor="clave">Clave</label>
         <input

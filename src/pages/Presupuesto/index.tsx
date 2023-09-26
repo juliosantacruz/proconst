@@ -396,11 +396,12 @@ export default function Presupuesto() {
       </div>
       {modalFormProject && (
         <AsideModal
-          widthModal={"40vw"}
+          widthModal={"50vw"}
           title="Agregar Proyecto"
           clossable={true}
           openModal={modalFormProject}
           setOpenModal={openModalFormProject}
+          modalType={'Presupuesto'}
         >
           <FormPresupuesto />
         </AsideModal>
@@ -412,6 +413,7 @@ export default function Presupuesto() {
           clossable={false}
           openModal={modalFormPartida}
           setOpenModal={openModalFormPartida}
+          modalType={'Partida'}
         >
           <FormPartida projectId={id} />
         </AsideModal>
@@ -423,6 +425,7 @@ export default function Presupuesto() {
           title="Agregar Concepto"
           openModal={modalFormConcepto}
           setOpenModal={openModalFormConcepto}
+          modalType={'Concepto'}
         >
           <FormConcepto ProjectId={projectId as string} />
         </AsideModal>
@@ -434,6 +437,7 @@ export default function Presupuesto() {
           clossable={false}
           openModal={modalFormInsumo}
           setOpenModal={openModalFormInsumo}
+          modalType={'Insumo'}
         >
           <FormInsumo />
         </AsideModal>

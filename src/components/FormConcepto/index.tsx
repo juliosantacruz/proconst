@@ -209,7 +209,7 @@ export default function FormConcepto({ ProjectId }: Props) {
   }
   return (
     <form
-      className="AddConceptoForm form"
+      className="form AddConceptoForm"
       onSubmit={(event) => onSubmit(event)}
     >
       <div className="inputRow">
@@ -268,7 +268,7 @@ export default function FormConcepto({ ProjectId }: Props) {
                 <th>Unidad</th>
                 <th>Cantidad</th>
                 <th>Precio</th>
-                <th>Total</th>
+                <th>Total</th> 
                 <th>Actions</th>
 
               </tr>

@@ -53,6 +53,8 @@ export default function ListadoConceptos() {
           title="Agregar Concepto"
           openModal={modalFormConcepto}
           setOpenModal={openModalFormConcepto}
+          modalType={'Concepto'}
+
         >
           <FormConcepto />
         </AsideModal>
@@ -64,6 +66,8 @@ export default function ListadoConceptos() {
           clossable={false}
           openModal={modalFormInsumo}
           setOpenModal={openModalFormInsumo}
+          modalType={'Insumo'}
+
         >
           <FormInsumo />
         </AsideModal>

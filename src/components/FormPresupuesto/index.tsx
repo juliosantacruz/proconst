@@ -132,7 +132,7 @@ export default function FormPresupuesto() {
   };
 
   return (
-    <form onSubmit={(event) => onSubmit(event)} className="formPresupuesto form">
+    <form onSubmit={(event) => onSubmit(event)} className="form formPresupuesto">
         <h4>Informacion de Proyecto</h4>
 
       <div className="input">

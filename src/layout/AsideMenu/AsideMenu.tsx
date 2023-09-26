@@ -6,7 +6,7 @@ import "./AsideMenu.scss";
 export default function AsideMenu() {
    
   return (
-    <aside id="sideMenu">
+    <aside id="sideMenu" className="sideMenu">
       <nav>
         <ul>
         

@@ -1,6 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
 
+:root{
+
+  --formColorInsumo:#9eb77e81;
+  --formColorConcepto:#7FB77E81;
+  --formColorPartida:#7eb5b781;
+  --formColorProyecto:#7e92b781;
+}
+
 body {
   margin: 0;
   padding: 0;

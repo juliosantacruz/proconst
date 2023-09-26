@@ -93,7 +93,7 @@ export default function FormLoad({typeForm}:Props) {
   // };
 
   return (
-    <div className="cargarArchivo">
+    <div className="form cargarArchivo">
       <label htmlFor="cargar">Cargar Archivo</label>
       <input
         type="file"

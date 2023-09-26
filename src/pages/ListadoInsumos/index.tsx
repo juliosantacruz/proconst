@@ -90,6 +90,8 @@ export default function ListadoInsumos() {
           clossable={false}
           openModal={modalFormInsumo}
           setOpenModal={openModalFormInsumo}
+          modalType={'Insumo'}
+
         >
           <FormInsumo />
         </AsideModal>
@@ -101,6 +103,7 @@ export default function ListadoInsumos() {
           clossable={true}
           openModal={modalFormLoad}
           setOpenModal={openModalFormLoad}
+          modalType={'Load'}
         >
           <FormLoad />
         </AsideModal>

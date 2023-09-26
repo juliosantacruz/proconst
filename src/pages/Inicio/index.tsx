@@ -68,6 +68,7 @@ export default function Index() {
           clossable={true}
           openModal={modalFormProject}
           setOpenModal={openModalFormProject}
+          modalType={'Presupuesto'}
         >
           <FormPresupuesto />
         </AsideModal>
@@ -80,6 +81,8 @@ export default function Index() {
           clossable={true}
           openModal={modalFormLoad}
           setOpenModal={openModalFormLoad}
+          modalType={'Load'}
+
         >
           <FormLoad typeForm='presupuesto'/>
         </AsideModal>
