@@ -40,7 +40,7 @@ export default function AsideModal(Props: AsideProps) {
 
   const ColorType=[
     {type:'Insumo', bgColor:'#b7987e50'},
-    {type:'Concepto', bgColor:'#adb77e50'},
+    {type:'Concepto', bgColor:'#adb77e29'},
     {type:'Partida', bgColor:'#7eb79150'},
     {type:'Presupuesto', bgColor:'#0c899250'},
     {type:'Load', bgColor:'#7e87b750'},
@@ -71,7 +71,10 @@ export default function AsideModal(Props: AsideProps) {
           </button>
         )}
       </div>
+      <div className="body">
+
       {children}
+      </div>
     </aside>
   );
 }

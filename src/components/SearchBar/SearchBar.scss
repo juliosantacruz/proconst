@@ -1,0 +1,17 @@
+.searchBar{
+    width: 95%;
+    margin: 0 auto 10px;
+    display: flex;
+    flex-direction: row;
+    
+    .searchLabel{
+        width: 10%;
+
+    }
+    .searchInput{
+        width: 90%;
+        height: 20px;
+        border: none;
+        border-bottom: 1px solid black;
+    }
+}

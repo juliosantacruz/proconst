@@ -5,7 +5,7 @@
     .tabsFiltred{
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-start;
         width: 100%;
         height: 30px;
     
@@ -16,6 +16,7 @@
             border-top-right-radius: 5px;
             border-top-left-radius: 5px;
             background: #fff;
+            margin: 0 2px;
     
         }
         .active{

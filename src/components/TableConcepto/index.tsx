@@ -7,6 +7,7 @@ import { useUxStore } from "../../store/uxStore";
 import editIcon from "../../assets/icons/bx-edit.svg";
 import deleteIcon from "../../assets/icons/bx-trash.svg";
 import { setFormat } from "../../utils/CurrencyFormat";
+import SearchBar from "../SearchBar";
 
 export default function TableConcepto() {
   const [searchValue, setSearchValue]=useState<string>('')
@@ -41,16 +42,8 @@ export default function TableConcepto() {
 
   return (
     <>
-      <div className="searchBar">
-        <label htmlFor="searchInput">Busqueda: </label>
-        <input
-          type="text"
-          className="searchInput"
-          placeholder="Buscas un concepto?"
-          value={searchValue}
-          onChange={leSearchValue}
-        />
-      </div>
+    <SearchBar searchValue={searchValue} setSearchValue={setSearchValue}/>
+     
       <table className="ListadoConceptos">
         <thead>
           <tr>

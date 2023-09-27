@@ -13,6 +13,9 @@ import { useUxStore } from "../../store/uxStore";
 import { Insumo } from "../../types/Insumo";
 import TableConcepto from "../../components/TableConcepto";
 import FormInsumo from "../../components/FormInsumo";
+import plusIcon from '../../assets/icons/bx-plus.svg'
+
+
 
 export default function ListadoConceptos() {
   const { modalFormInsumo,
@@ -36,10 +39,10 @@ export default function ListadoConceptos() {
       <PageTitle title="Mis Conceptos">
         <AddButton
           onClick={handleAddConcepto}
-          bgColor="rgb(31, 57, 204)"
-          fontColor={"rgb(255, 255, 255)"}
+          bgColor="rgb(187, 198, 255)"
+          fontColor={"rgb(0, 0, 0)"}
         >
-          Agregar Concepto
+          + Concepto
         </AddButton>
       </PageTitle>
       <div className="btn-header"></div>

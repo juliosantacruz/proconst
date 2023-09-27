@@ -9,6 +9,7 @@ import { useUxStore } from "../../store/uxStore";
 import "./TableInsumo.scss";
 import { setFormat } from "../../utils/CurrencyFormat";
 import { CategoriasInsumos } from "../../utils/SelectInputOptions";
+import SearchBar from "../SearchBar";
 
 type Props = { insumosData: Insumo[]; addInputInsumo?: (id: string) => void };
 
@@ -63,8 +64,24 @@ export default function TableInsumo({ insumosData, addInputInsumo }: Props) {
       </div>)
   }
 
+  const [searchValue, setSearchValue] = useState<string>("");
+  console.log(searchValue)
+
+  let searchedInsumos:Insumo[] =[]
+  if(searchValue.length>0){
+    searchedInsumos= data.filter((insumo)=>{
+      const description = insumo.descripcion.toLocaleLowerCase()
+      const searchText  = searchValue.toLowerCase() 
+      return description.includes(searchText)
+    })
+  }else{
+    searchedInsumos = data
+  }
+
+
   return (
     <div className="insumoList">
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue}/>
       <TabFilters/>
       <div className="insumosTable">
         <table className="tableInsumo">
@@ -80,7 +97,7 @@ export default function TableInsumo({ insumosData, addInputInsumo }: Props) {
           </thead>
           <tbody>
             {data.length > 0 ? (
-              filtrarCategorias(data, filter)?.map((insumo: Insumo) => {
+              filtrarCategorias(searchedInsumos, filter)?.map((insumo: Insumo) => {
                 return (
                   <tr key={insumo.id}>
                     <td className="clave">{insumo.clave}</td>
