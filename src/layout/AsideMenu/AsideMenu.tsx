@@ -2,9 +2,12 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import {RoutesDirectory} from '../../routes/router'
 import "./AsideMenu.scss";
+import {useWorkingPresupuesto} from '../../store/projectStore'
 
 export default function AsideMenu() {
-   
+   const {id, nombreProyecto}= useWorkingPresupuesto()
+   console.log(id)
+
   return (
     <aside id="sideMenu" className="sideMenu">
       <nav>
@@ -37,17 +40,33 @@ export default function AsideMenu() {
           </li>
           <hr/>
           {/* Menu de presupuesto */}
+
+          {id ?  
+          <>
+          <p>Trabajando en <br/> <span>{nombreProyecto}</span></p>
           <li>
-            {/* <NavLink
-              // to={RoutesDirectory.WORKING_PRESUPUESTO}
+            <NavLink
+              to={RoutesDirectory.GO_WORKING_PRESUPUESTO(id)}
                
-            > */}
+            >
               Presupuesto de Obra
-            {/* </NavLink> */}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={RoutesDirectory.GO_EXPLOSION_INSUMOS(id)}
+               
+            >
+              Explosion de insumos
+            </NavLink>
           </li>
           <li>Catalogo de Conceptos</li>
           <li>Catalogo de Insumos</li>
           <li>Analisis de Presupuesto</li>
+          
+          </>
+          :null}
+          
         </ul>
       </nav>
     </aside>

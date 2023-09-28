@@ -11,6 +11,7 @@ import FormPresupuesto from "../../components/FormPresupuesto";
 import uploadIcon from "../../assets/icons/bx-upload.svg";
 import AnyIcon from "../../components/AnyIcon";
 import FormLoad from "../../components/FormLoad";
+import { Outlet } from "react-router-dom";
 
 export default function Index() {
   const {
@@ -36,6 +37,7 @@ export default function Index() {
  
   return (
     <section className="workspace">
+      
       <PageTitle title="Mis Presupuestos">
         <AddButton
           onClick={handleImportProject}

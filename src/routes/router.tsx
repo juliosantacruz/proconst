@@ -8,6 +8,7 @@ import { ProtectedRoute } from '../libs/ProtectedRoutes';
 import {useAuthStore} from '../store/authStore'
 import Register from '../pages/Register';
 import VerifyUser from '../pages/VerifyUser';
+import ListadoProyectos from '../pages/ListadoProyectos';
 
 const isAuth = useAuthStore.getState().isAuth
 
@@ -23,7 +24,8 @@ export const RoutesDirectory={
   HOME :'/',
   LISTADO_CONCEPTOS:'/listado-de-conceptos',
   LISTADO_INSUMOS:'/listado-de-insumos',
-  WORKING_PRESUPUESTO: '/presupuesto/:projectId',
+  ALL_PRESUPUESTOS: '/presupuesto',
+  WORKING_PRESUPUESTO: ':projectId',
   GO_WORKING_PRESUPUESTO:(projectId:string)=>`/presupuesto/${projectId}`,
   EXPLOSION_INSUMOS: '/analisis/:projectId',
   GO_EXPLOSION_INSUMOS:(projectId:string)=>`/analisis/${projectId}`,
@@ -39,9 +41,11 @@ const AppRoutes = () => {
         { path: RoutesDirectory.HOME, element: <Inicio /> },
         { path: RoutesDirectory.LISTADO_CONCEPTOS, element: <ListadoConceptos /> },
         { path: RoutesDirectory.LISTADO_INSUMOS, element: <ListadoInsumos /> },
-        { path: RoutesDirectory.WORKING_PRESUPUESTO, element: <Presupuesto />, errorElement:<NotFound />,  },
+        { path: RoutesDirectory.ALL_PRESUPUESTOS, element: <ListadoProyectos />, children:[
+          { path: RoutesDirectory.WORKING_PRESUPUESTO, element: <Presupuesto /> },
+        ]},
         { path: RoutesDirectory.EXPLOSION_INSUMOS, element: <ExplosionInsumos />, errorElement:<NotFound />,  },
-
+        
       ] },
 
 
