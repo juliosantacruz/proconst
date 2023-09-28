@@ -23,6 +23,6 @@ export interface Concepto {
   descripcion: string;
   unidad: string;
   cantidad?: number; // Cantidad en Presupesto
-  listadoInsumos?: (ListadoInsumos| Tareas)[];
+  listadoInsumos?: ListadoInsumos[];
   precioUnitario?: number;
 }
