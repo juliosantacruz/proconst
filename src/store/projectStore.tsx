@@ -3,7 +3,6 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { Insumo } from "../types/Insumo";
 import { Concepto } from "../types/Concepto";
 import { ListadoConcepto, Partida, Presupuesto } from "../types/Presupuesto";
-import ListadoConceptos from "../pages/ListadoConceptos";
 
 interface InsumoState {
   insumos: Insumo[];
@@ -38,6 +37,7 @@ interface PresupuestoState {
 
 interface WorkingPresupuesto extends Presupuesto {
   setWorkingPresupuesto: (presupuesto: Presupuesto) => void;
+  emptyWorkingPresupuesto:()=>void;
   addPartida: (partida: Partida) => void;
   deletePartida: (id: string) => void;
   workingPartida: Partida;
@@ -60,6 +60,25 @@ const emptyPartida: Partida = {
   nombre: "",
   montoPartida: 0,
   listadoConceptos: [],
+};
+
+const emptyProject: Presupuesto = {
+  id: "",
+  fechaCreacion: "",
+  nombreProyecto: "",
+  descripcionProyecto: "",
+  domicilioProyecto: "",
+  clienteProyecto: "",
+  partidas: [] as Partida[],
+  fsc: {
+    costoIndirecto: 0,
+    costoOperativo: 0,
+    financiamiento: 0,
+    utilidad: 0,
+    iva: 0,
+    isr: 0,
+  },
+  montoTotal: 0,
 };
 
 export const useInsumoStore = create<InsumoState>()(
@@ -205,6 +224,26 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
           montoTotal: presupuesto.montoTotal,
         }));
       },
+      emptyWorkingPresupuesto: ()=>{
+        set(() => ({
+          id: emptyProject.id,
+          fechaCreacion: emptyProject.fechaCreacion,
+          nombreProyecto: emptyProject.nombreProyecto,
+          descripcionProyecto: emptyProject.descripcionProyecto,
+          domicilioProyecto: emptyProject.domicilioProyecto,
+          clienteProyecto: emptyProject.clienteProyecto,
+          partidas: emptyProject.partidas,
+          fsc: {
+            costoIndirecto: emptyProject.fsc.costoIndirecto,
+            costoOperativo: emptyProject.fsc.costoOperativo,
+            financiamiento: emptyProject.fsc.financiamiento,
+            utilidad: emptyProject.fsc.utilidad,
+            iva: emptyProject.fsc.iva,
+            isr: emptyProject.fsc.isr,
+          },
+          montoTotal: emptyProject.montoTotal,
+        }));
+      },
       id: "",
       fechaCreacion: "",
       nombreProyecto: "",
@@ -266,23 +305,23 @@ export const useWorkingPresupuesto = create<WorkingPresupuesto>()(
           workingPartida: state.partidas.find(
             (partida) => partida.id === partidaId
           ),
-        }))
-          set((state) => ({
-            workingPartida: {
-              ...state.workingPartida,
-              listadoConceptos: (
-                state.workingPartida.listadoConceptos as unknown as ListadoConcepto[]
-              ).filter(
-                (concepto: ListadoConcepto) =>
-                  concepto.conceptoId !== conceptoId
-              ),
-            },
-          }))
-          set((state) => ({
-            partidas: state.partidas.filter(
-              (partida) => partida.id !== state.workingPartida.id
+        }));
+        set((state) => ({
+          workingPartida: {
+            ...state.workingPartida,
+            listadoConceptos: (
+              state.workingPartida
+                .listadoConceptos as unknown as ListadoConcepto[]
+            ).filter(
+              (concepto: ListadoConcepto) => concepto.conceptoId !== conceptoId
             ),
-          })),
+          },
+        }));
+        set((state) => ({
+          partidas: state.partidas.filter(
+            (partida) => partida.id !== state.workingPartida.id
+          ),
+        })),
           set((state) => ({
             partidas: [...state.partidas, state.workingPartida],
           })),

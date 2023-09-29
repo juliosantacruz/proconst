@@ -2,7 +2,7 @@
     height: calc(100vh - 100px);
     width: 80%;
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: scroll;
 
     display: flex;
     flex-direction: column;

@@ -132,7 +132,7 @@ export default function FormConcepto({ ProjectId }: Props) {
     const oldInsumos: ListadoInsumos[] | undefined = formData.listadoInsumos;
     const newInsumo = {
       insumoId: id,
-      cantidad: 0.000,
+      cantidad: 0.000, 
     };
     if (
       formData.listadoInsumos?.find((pu) => pu.insumoId === newInsumo.insumoId)
@@ -260,7 +260,7 @@ export default function FormConcepto({ ProjectId }: Props) {
       </div>
       <div className="inputInsumos">
         {(formData.listadoInsumos as ListadoInsumos[])?.length > 0 ? (
-          <table>
+          <table className="tableDefault tableInputInsumos">
             <thead>
               <tr>
                 <th>Clave</th>
@@ -337,7 +337,10 @@ export default function FormConcepto({ ProjectId }: Props) {
           </div>
         </div>
         {showConceptoTable ? (
-          <TableInsumo insumosData={data} addInputInsumo={addInputInsumo} />
+          <div className="InsumoAddList">
+            <TableInsumo insumosData={data} addInputInsumo={addInputInsumo} />
+
+          </div>
         ) : null}
       </div>
     </form>

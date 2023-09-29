@@ -84,7 +84,7 @@ export default function TableInsumo({ insumosData, addInputInsumo }: Props) {
       <SearchBar searchValue={searchValue} setSearchValue={setSearchValue}/>
       <TabFilters/>
       <div className="insumosTable">
-        <table className="tableInsumo">
+        <table className="tableDefault tableInsumo">
           <thead>
             <tr>
               <td>Clave</td>

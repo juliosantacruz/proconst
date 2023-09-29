@@ -44,7 +44,7 @@ export default function TableConcepto() {
     <>
     <SearchBar searchValue={searchValue} setSearchValue={setSearchValue}/>
      
-      <table className="ListadoConceptos">
+      <table className="tableDefault ListadoConceptos">
         <thead>
           <tr>
             <td>Clave</td>

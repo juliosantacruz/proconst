@@ -14,7 +14,7 @@ body {
   box-sizing: border-box;
   font-family: "Lato", sans-serif;
 }
- 
+
 p {
   margin: 10px 0;
 }
@@ -28,7 +28,6 @@ h6 {
   font-weight: 600 !important;
   margin: 10px 0;
 }
-
 
 .form {
   display: flex;
@@ -71,6 +70,34 @@ h6 {
     .cancelBtn {
       background: #c41818;
       color: #fff;
+    }
+  }
+}
+
+.tableDefault {
+  border-collapse: collapse;
+  width: 100%;
+  table,
+  th,
+  td {
+    border-bottom: 1px solid #9e9e9e;
+    border-left: 1px solid #f3f3f3;
+    padding: 5px;
+  }
+  thead {
+    text-align: center;
+    font-weight: 600;
+   
+  }
+  tbody {
+    overflow-y: scroll;
+    text-align: center;
+    
+    tr:hover {
+      background-color: #ddd;
+    }
+    td:hover {
+      background-color: rgb(241, 241, 241);
     }
   }
 }

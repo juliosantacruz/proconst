@@ -1,15 +1,15 @@
-.insumoList{
+.insumoList {
     width: 100%;
     height: calc(100vh - 180px);
-    
-    .tabsFiltred{
+
+    .tabsFiltred {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         width: 100%;
         height: 30px;
-    
-        .tab{
+
+        .tab {
             padding: 0 10px;
             border: 1px solid rgb(155, 155, 155);
             border-bottom: none;
@@ -17,72 +17,65 @@
             border-top-left-radius: 5px;
             background: #fff;
             margin: 0 2px;
-    
         }
-        .active{
+        .active {
             background: #ebebeb;
-    
         }
     }
-    
-    .insumosTable{
+
+    .insumosTable {
         width: 100%;
-         height: calc(100% - 80px);
-        //  overflow-y: scroll;
-        table {
-            display: block;
-            
-             
-            width: 100%;
-            overflow-y: scroll;
-          }
-        
-        .tableInsumo{
-            border-collapse: collapse;
-            width: 100%;
-            table,
-            th,
-            td {
-                border-bottom: 1px solid #9e9e9e;
-                border-left: 1px solid #f3f3f3;
-                padding: 8px;
-            }
-            thead{
-                text-align: center;
-                font-weight: 600;
+        height: calc(100% - 80px);
+         
+        .tableInsumo {
+            thead {
+                
                 position: sticky;
                 top: 0;
                 background: #fff;
             }
-            
-            tbody{
-                 
-        
+
+            tbody {
+    overflow-y: scroll;
+
                 text-align: center;
                 font-size: 12px;
-                tr{
-                    .clave{ width: 10%;}
-                    .descripcion{width: 40%; text-align: left;}
-                    .unidad{width: 10%;}
-                    .precio{width: 10%;}
-                    .categoria{width: 15%;}
-                    .actions{width: 15%;// display: flex;
+                tr {
+                    .clave {
+                        width: 10%;
+                    }
+                    .descripcion {
+                        width: 40%;
+                        text-align: left;
+                    }
+                    .unidad {
+                        width: 10%;
+                    }
+                    .precio {
+                        width: 10%;
+                    }
+                    .categoria {
+                        width: 15%;
+                    }
+                    .actions {
+                        width: 15%;
+                        // display: flex;
                         // flex-direction: row;
                         // justify-content: space-evenly;
-                        // width: 10%; 
+                        // width: 100%;
+                        // height: 100%;
                         font-style: normal;
                         a {
-                            margin: 0 10px;
+                            margin: 0 5px;
                             cursor: pointer;
-                           
-                        }}
-        
+                        }
+                    }
                 }
                 tr:hover {
                     background-color: #ddd;
                 }
                 td:hover {
-                    background-color: rgb(241, 241, 241)
+                    background-color: rgb(241, 241, 241);
                 }
             }
         }
