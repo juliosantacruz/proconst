@@ -35,8 +35,9 @@ const ErrorMsg = () => {
 export default function FormInsumo() {
   const [editInsumo, setEditInsumo] = useState(false)
   const [formError, setFormError] = useState(false);
-  const { openModalFormInsumo} = useUxStore()
-
+  const { openModalFormInsumo,modalFormTarea,
+    openModalFormTarea,} = useUxStore()
+    console.log('modalFormTarea',modalFormTarea)
   const { addInsumo, insumoToUpdate, setInsumoToUpdate, updateInsumo } = useInsumoStore();
   const [formData, setFormData] = useState<Insumo>(insumoDefaultValue);
   
@@ -115,8 +116,17 @@ export default function FormInsumo() {
     onClear();
     openModalFormInsumo(false);
   };
+  const openTareasForm=()=>{
+   
+    openModalFormTarea(true);
+    openModalFormInsumo(false);
 
+  }
   return (
+    <>
+      <div className="tareaBtn">
+        <button type="button" onClick={openTareasForm }>Agregar Tarea</button>
+      </div>
     <form onSubmit={(event) => onSubmit(event)} className="form formInsumo" >
       <div className="input">
         <label htmlFor="clave">Clave</label>
@@ -220,5 +230,6 @@ export default function FormInsumo() {
         <button type="submit" className="successBtn">Guardar</button>
       </div>
     </form>
+    </>
   );
 }

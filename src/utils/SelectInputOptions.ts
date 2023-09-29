@@ -57,6 +57,7 @@ export const CategoriasInsumos = [
   { name: "Herramienta", simbol: "Herr", category: "Insumos" },
   { name: "Equipos", simbol: "Eq", category: "Insumos" },
   { name: "SubContratos", simbol: "SubCone", category: "Insumos" },
-  { name: "Fletes", simbol: "mat", category: "Insumos" },
+  { name: "Fletes", simbol: "Fl", category: "Insumos" },
+  { name: "Tareas", simbol: "Trs", category: "Insumos" },
 
 ]

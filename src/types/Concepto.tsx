@@ -10,7 +10,8 @@ export interface Tareas {
   clave: string;
   descripcion: string;
   unidad: string;
-  cantidad?: number; // Cantidad en Presupesto
+  categoria: string;
+  cantidad: number; // Cantidad en Presupesto
   listadoInsumos?: ListadoInsumos[];
   precioUnitario?: number;
 }

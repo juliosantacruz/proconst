@@ -1,0 +1,172 @@
+.AddConceptoForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 90%;
+    height: 90%;
+    // border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    // margin: 20px;
+    // overflow: auto;
+    .inputRow {
+        height: 15%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        .clave {
+            width: 15%;
+        }
+        .descripcion {
+            width: 40%;
+        }
+        .unidad {
+            width: 15%;
+        }
+        .precio {
+            width: 15%;
+        }
+        .input {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            height: 100%;
+            label {
+                margin: 5px 0 10px 0;
+            }
+            p {
+                margin: 0 10px;
+                height: 40px;
+                line-height: 40px;
+            }
+            input {
+                height: 30px;
+                border: 1px solid black;
+                padding: 3px;
+                border-radius: 4px;
+                text-align: center;
+            }
+            textarea {
+                height: 30px;
+                border: 1px solid black;
+                padding: 3px;
+                border-radius: 4px;
+            }
+            select {
+                height: 36px;
+                border: 1px solid black;
+                padding: 3px;
+                background: none;
+                border-radius: 4px;
+                text-align: center;
+            }
+        }
+    }
+
+    .inputInsumos {
+        height: 30%;
+        overflow-y: scroll;
+
+        .tableInputInsumos {
+            td,
+            th {
+                // border: 1px solid rgb(0, 0, 0);
+                    font-size: 12px;
+                    padding: 8px;
+            }
+            thead {
+                position: sticky;
+                top: 0;
+                height: 30px;
+
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #f2f2f2;
+                color: black;
+            }
+            tbody {
+                tr {
+                    .clave {
+                        width: 10%;
+                        text-align: center;
+                    }
+                    .descripcion {
+                        text-align: left;
+
+                        width: 40%;
+                    }
+                    .unidad {
+                        width: 10%;
+                        text-align: center;
+                    }
+                    .cantidad {
+                        width: 10%;
+                        input {
+                            width: 80%;
+                        }
+                    }
+                    .precio {
+                        width: 15%;
+                        text-align: center;
+                    }
+                    .total {
+                        width: 15%;
+                        text-align: center;
+                    }
+                    .actions {
+                        text-align: center;
+                        button {
+                            border: none;
+                            background: none;
+                        }
+                    }
+                }
+                // tr:nth-child(even) {
+                //     background-color: #f2f2f2;
+                // }
+                // tr:hover {
+                //     background-color: #ddd;
+                // }
+                td {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: flex-end;
+        height: 5%;
+        button {
+            margin: 0 20px;
+            height: 100%;
+            padding: 5px 20px;
+        }
+    }
+    .InsumoAddList {
+        overflow-y: scroll;
+        height: 80%;
+    }
+    .tableInsumo {
+        padding: 0;
+        height: 50%;
+        hr {
+            margin: 2px 0;
+        }
+        .tableInsumoHeader {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            button {
+                margin: 10px 20px;
+                // height: 30px;
+                padding: 5px 20px;
+            }
+        }
+    }
+}

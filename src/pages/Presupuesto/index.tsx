@@ -38,11 +38,14 @@ import exportIcon from "../../assets/icons/bx-export.svg";
 import FormPresupuesto from "../../components/FormPresupuesto";
 import { useNavigate } from "react-router-dom";
 import { RoutesDirectory } from "../../routes/router";
+import FormTareas from "../../components/FormTareas";
 
 export default function Presupuesto() {
   const {
     modalFormPartida,
     openModalFormPartida,
+    modalFormTarea,
+    openModalFormTarea,
     modalFormConcepto,
     openModalFormConcepto,
     modalFormInsumo,
@@ -418,9 +421,21 @@ export default function Presupuesto() {
           <FormPartida projectId={id} />
         </AsideModal>
       )}
+      {modalFormTarea && (
+        <AsideModal
+          widthModal={"75vw"}
+          clossable={false}
+          title="Agregar Tarea"
+          openModal={modalFormTarea}
+          setOpenModal={openModalFormTarea}
+          modalType={'Insumo'}
+        >
+          <FormTareas   />
+        </AsideModal>
+      )}
       {modalFormConcepto && (
         <AsideModal
-          widthModal={"65vw"}
+          widthModal={"75vw"}
           clossable={false}
           title="Agregar Concepto"
           openModal={modalFormConcepto}
