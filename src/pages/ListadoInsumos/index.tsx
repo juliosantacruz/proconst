@@ -15,6 +15,7 @@ import uploadIcon from "../../assets/icons/bx-upload.svg";
 import { useInsumoStore } from "../../store/projectStore";
 import FormLoad from "../../components/FormLoad";
 import TableInsumo from "../../components/TableInsumo";
+import FormTareas from "../../components/FormTareas";
 
 const TableTabsListInsumo = lazy(
   () => import("../../components/TableTabsListInsumo")
@@ -26,7 +27,10 @@ export default function ListadoInsumos() {
     openModalFormInsumo,
     modalFormLoad,
     openModalFormLoad,
+    modalFormTarea,
+    openModalFormTarea,
   } = useUxStore();
+
   const { insumos } = useInsumoStore();
 
   const handleAddInsumo = () => {
@@ -94,6 +98,18 @@ export default function ListadoInsumos() {
 
         >
           <FormInsumo />
+        </AsideModal>
+      )}
+       {modalFormTarea && (
+        <AsideModal
+          widthModal={"70vw"}
+          clossable={false}
+          title="Agregar Tarea"
+          openModal={modalFormTarea}
+          setOpenModal={openModalFormTarea}
+          modalType={'Insumo'}
+        >
+          <FormTareas   />
         </AsideModal>
       )}
       {modalFormLoad && (

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "./VerifyUser.scss";
 import heroImg from "../../assets/img/bgLogin3-min.jpg";
 import { useNavigate, useParams } from "react-router-dom";
 import { RoutesDirectory } from "../../routes/router";
-import UserPoolCognito, { verifyUser } from "../../utils/UserPool";
+import  { verifyUser } from "../../utils/UserPool";
 import logInImg from "../../assets/img/register_image.svg";
 
  
@@ -11,8 +11,7 @@ import logInImg from "../../assets/img/register_image.svg";
 export default function VerifyUser() {
   const [verifyCode, setVerifyCode] = useState("");
 
-  const [loginData, setLoginData] = useState<any>();
-  const [loginError, setLoginError] = useState<any>();
+ 
   const navigate = useNavigate();
   const {email} = useParams()
 
@@ -20,7 +19,6 @@ export default function VerifyUser() {
 
   const onConfirm = (event: any) => {
     event.preventDefault();
-    // console.log("holis", verifyCode);
     verifyUser(email as string, verifyCode, (err, data) => {
       if (err) {
         // console.log(err);

@@ -1,9 +1,6 @@
 import { Concepto } from "../types/Concepto";
-import { Partida, Presupuesto } from "../types/Presupuesto";
-import {saveAs} from 'file-saver'
-import dayjs from 'dayjs'
-import { Insumo } from "../types/Insumo";
-
+import { Partida } from "../types/Presupuesto";
+ 
 
 // Obtiene el monto por partida
 // Recibe la Partida en cuestion y todos los conceptos del proyecto

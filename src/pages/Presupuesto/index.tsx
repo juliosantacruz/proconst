@@ -11,7 +11,7 @@ import AddButton from "../../components/AddButton";
 import { useUxStore } from "../../store/uxStore";
 import AsideModal from "../../components/AsideModal";
 import FormPartida from "../../components/FormPartida";
-import { ListadoConcepto, Partida, Presupuesto } from "../../types/Presupuesto";
+import {  Partida, Presupuesto } from "../../types/Presupuesto";
 import { setFormat } from "../../utils/CurrencyFormat";
 import FormInsumo from "../../components/FormInsumo";
 import FormConcepto from "../../components/FormConcepto";
@@ -24,7 +24,6 @@ import {
   sumMontoPartida,
 } from "../../utils/ProjectFunctions";
 import {
-  createJSONFile,
   createPresupuestoJSON,
   createPresupuetoCVS,
 } from "../../utils/ExportFunctions";
@@ -421,9 +420,21 @@ export default function Presupuesto() {
           <FormPartida projectId={id} />
         </AsideModal>
       )}
+        {modalFormConcepto && (
+          <AsideModal
+            widthModal={"75vw"}
+            clossable={false}
+            title="Agregar Concepto"
+            openModal={modalFormConcepto}
+            setOpenModal={openModalFormConcepto}
+            modalType={'Concepto'}
+          >
+            <FormConcepto ProjectId={projectId as string} />
+          </AsideModal>
+        )}
       {modalFormTarea && (
         <AsideModal
-          widthModal={"75vw"}
+          widthModal={"70vw"}
           clossable={false}
           title="Agregar Tarea"
           openModal={modalFormTarea}
@@ -431,18 +442,6 @@ export default function Presupuesto() {
           modalType={'Insumo'}
         >
           <FormTareas   />
-        </AsideModal>
-      )}
-      {modalFormConcepto && (
-        <AsideModal
-          widthModal={"75vw"}
-          clossable={false}
-          title="Agregar Concepto"
-          openModal={modalFormConcepto}
-          setOpenModal={openModalFormConcepto}
-          modalType={'Concepto'}
-        >
-          <FormConcepto ProjectId={projectId as string} />
         </AsideModal>
       )}
       {modalFormInsumo && (

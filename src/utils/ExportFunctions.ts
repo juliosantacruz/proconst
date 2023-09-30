@@ -1,5 +1,5 @@
 import { Concepto } from "../types/Concepto";
-import { Partida, Presupuesto } from "../types/Presupuesto";
+import {  Presupuesto } from "../types/Presupuesto";
 import { Insumo } from "../types/Insumo";
 import {saveAs} from 'file-saver'
 import dayjs from 'dayjs'

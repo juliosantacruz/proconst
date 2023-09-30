@@ -8,19 +8,14 @@ import {
 } from "../../store/projectStore";
 import { RoutesDirectory } from "../../routes/router";
 import { Presupuesto } from "../../types/Presupuesto";
-import { Insumo } from "../../types/Insumo";
+import { Insumo, InsumosExp } from "../../types/Insumo";
 import { setFormat } from "../../utils/CurrencyFormat";
 import { CategoriasInsumos } from "../../utils/SelectInputOptions";
 import "./ExplosionInsumos.scss";
 import ChartDougnut from "../../components/ChartDougnut";
 import { costoFinalCategoria, costoFinalInsumo, setInsumosByCategory, sumatoriaInsumos } from "../../utils/ExplosionInsumos";
 
-export interface InsumosExp extends Insumo {
-  cantidadTotal: number;
-  cantidadInsumo: number;
-  cantidadConcepto: number | undefined;
-  conceptoId: string;
-}
+
 
 
 

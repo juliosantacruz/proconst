@@ -5,12 +5,15 @@ import { CategoriasInsumos } from "../../utils/SelectInputOptions";
 import "./ChartDougnut.scss";
 import {
   costoFinalCategoria,
-  costoFinalInsumo,
+   
   setInsumosByCategory,
   sumatoriaInsumos,
 } from "../../utils/ExplosionInsumos";
+import {  InsumosExp } from "../../types/Insumo";
 
-export default function ChartDougnut({ arrInsumos }: any) {
+
+type Props ={ arrInsumos: InsumosExp[]}
+export default function ChartDougnut({ arrInsumos }: Props) {
   const chartLabels: string[] = [];
   const chartCostos: number[] = [];
 

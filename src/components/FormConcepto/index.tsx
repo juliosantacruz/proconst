@@ -74,7 +74,7 @@ export default function FormConcepto({ ProjectId }: Props) {
         precioUnitario: 0.00,
       });
     }
-  }, []);
+  }, [ProjectId, conceptoToUpdate]);
 
   const data: Insumo[] = insumos;
 

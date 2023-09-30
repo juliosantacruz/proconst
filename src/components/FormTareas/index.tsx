@@ -15,7 +15,7 @@ import { setFormat } from "../../utils/CurrencyFormat";
 import { Unidades } from "../../utils/SelectInputOptions";
 
 // Types
-import { Tareas, Concepto, ListadoInsumos } from "../../types/Concepto";
+import { Concepto, ListadoInsumos } from "../../types/Concepto";
 import { Insumo } from "../../types/Insumo";
 
 // Styles
@@ -27,15 +27,15 @@ import minusIcon from "../../assets/icons/bx-minus-circle.svg";
 
 const tareaDefaultValue = {
   id: "",
-  conceptoId: "",
   fechaCreacion: "",
   clave: "",
   descripcion: "",
   unidad: "",
   categoria: "",
-  cantidad: 0,
+  isTarea:false,
+  precioProyecto: [],
   listadoInsumos: [],
-  precioUnitario: 0,
+  precio: 0,
 };
 
 const ErrorMsg = () => {
@@ -53,30 +53,29 @@ export default function FormTareas({ ConceptoId }: Props) {
   const [editConcepto, setEditConcepto] = useState(false);
   const [formError, setFormError] = useState(false);
   const [showConceptoTable, setShowConceptoTable] = useState(false);
-  const [formData, setFormData] = useState<Tareas>(tareaDefaultValue);
-  const { openModalFormInsumo, openModalFormConcepto } = useUxStore();
-  const { addConcepto, conceptoToUpdate, setConceptoToUpdate, updateConcepto } =
-    useConceptoStore();
+  const [formData, setFormData] = useState<Insumo>(tareaDefaultValue);
+  const { openModalFormInsumo, openModalFormTarea } = useUxStore();
+  
   const { addConceptoPartida } = useWorkingPresupuesto();
-  const { insumos } = useInsumoStore();
+  const { insumos, addInsumo,insumoToUpdate,setInsumoToUpdate,updateInsumo } = useInsumoStore();
 
   console.log();
   useEffect(() => {
-    if (conceptoToUpdate !== undefined) {
-      //   setFormData(conceptoToUpdate);
+    if (insumoToUpdate !== undefined) {
+        setFormData(insumoToUpdate);
       setEditConcepto(true);
     } else {
       setFormData({
         id: v4(),
-        conceptoId: ConceptoId,
         fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
         clave: "",
         descripcion: "",
         unidad: "",
         categoria: "Tareas",
-        cantidad: 0.0,
+        isTarea:true,
+        precioProyecto:[],
         listadoInsumos: [],
-        precioUnitario: 0.0,
+        precio: 0.0,
       });
     }
   }, []);
@@ -99,20 +98,21 @@ export default function FormTareas({ ConceptoId }: Props) {
     }
 
     if (editConcepto) {
-      updateConcepto(formData);
+      updateInsumo(formData);
     } else {
-      addConcepto(formData);
-      addConceptoPartida({
-        conceptoId: formData.id,
-        cantidad: 0.0,
-        fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
-      });
+      console.log('soy la data',formData)
+      addInsumo(formData);
+      // addConceptoPartida({
+      //   conceptoId: formData.id,
+      //   cantidad: 0.0,
+      //   fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
+      // });
     }
 
     onClear();
     setFormError(false);
     setEditConcepto(false);
-    openModalFormConcepto(false);
+    openModalFormTarea(false);
   };
 
   const onChange = (event: any) => {
@@ -125,12 +125,12 @@ export default function FormTareas({ ConceptoId }: Props) {
 
   const onClear = () => {
     setFormData(tareaDefaultValue);
-    setConceptoToUpdate(undefined);
+    setInsumoToUpdate(undefined);
   };
 
   const onCancel = () => {
     onClear();
-    openModalFormConcepto(false);
+    openModalFormTarea(false);
   };
 
   const addInputInsumo = (id: string) => {
@@ -189,7 +189,7 @@ export default function FormTareas({ ConceptoId }: Props) {
     setFormData({
       ...formData,
       listadoInsumos: newArr,
-      precioUnitario: precioTotal,
+      precio: precioTotal,
     });
   };
 

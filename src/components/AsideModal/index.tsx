@@ -1,8 +1,7 @@
 import "./AsideModal.scss";
-import { useUxStore } from "../../store/uxStore";
 import AnyIcon from "../AnyIcon";
 import closeIcon from "../../assets/icons/bx-x.svg";
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode } from "react";
 
 type AsideProps = {
   children:ReactNode;
@@ -25,18 +24,9 @@ export default function AsideModal(Props: AsideProps) {
     modalType,
   } = Props;
 
-  const modalRef = useRef();
+  
 
-  // useEffect(() => {
-  //   const handler = (event: any) => {
-  //     if (!(modalRef.current as any).contains(event.target)) {
-  //       // console.log(modalRef);
-  //       setOpenModal(false);
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", (event) => handler(event));
-  // }, []);
+ 
 
   const ColorType=[
     {type:'Insumo', bgColor:'#b7987e50'},
@@ -61,7 +51,7 @@ export default function AsideModal(Props: AsideProps) {
     <aside
       className={classModal()}
       style={{ width: widthModal, backgroundColor:bgColor }}
-      ref={modalRef as any}
+     
     >
       <div className="header" >
         <h3 >{title}</h3>

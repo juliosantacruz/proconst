@@ -1,9 +1,9 @@
 // React
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // Librerias
 import { v4 } from "uuid";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
 // Local Reference
 import { useInsumoStore } from "../../store/projectStore";
@@ -16,7 +16,6 @@ import { Insumo } from "../../types/Insumo";
 // Styles
 import "./FormInsumo.scss";
 
-
 const insumoDefaultValue = {
   id: "",
   clave: "",
@@ -24,69 +23,78 @@ const insumoDefaultValue = {
   unidad: "",
   precio: 0.0,
   categoria: "",
-  fechaCreacion:''
+  fechaCreacion: "",
 };
 
 const ErrorMsg = () => {
-  return <p>Error!.. verificar datos, no dejar espacios vacios o numeros negativos</p>;
+  return (
+    <p>
+      Error!.. verificar datos, no dejar espacios vacios o numeros negativos
+    </p>
+  );
 };
- 
 
 export default function FormInsumo() {
-  const [editInsumo, setEditInsumo] = useState(false)
+  const [editInsumo, setEditInsumo] = useState(false);
   const [formError, setFormError] = useState(false);
-  const { openModalFormInsumo,modalFormTarea,
-    openModalFormTarea,} = useUxStore()
-    console.log('modalFormTarea',modalFormTarea)
-  const { addInsumo, insumoToUpdate, setInsumoToUpdate, updateInsumo } = useInsumoStore();
+  const { openModalFormInsumo, modalFormTarea, openModalFormTarea } =
+    useUxStore();
+
+  const { addInsumo, insumoToUpdate, setInsumoToUpdate, updateInsumo } =
+    useInsumoStore();
   const [formData, setFormData] = useState<Insumo>(insumoDefaultValue);
-  
+
   useEffect(() => {
-    if (insumoToUpdate !== undefined){
-      setFormData(insumoToUpdate)
-      setEditInsumo(true)
-    }else{
+    if (insumoToUpdate !== undefined) {
+      setFormData(insumoToUpdate);
+      setEditInsumo(true);
+    } else {
       setFormData({
-      id: v4(),
-      clave: "",
-      descripcion: "",
-      unidad: "",
-      precio: 0.0,
-      categoria: "",
-      fechaCreacion: dayjs().format('YYYY-MM-DD, h:mm:ss A')
-    });
+        id: v4(),
+        fechaCreacion: dayjs().format("YYYY-MM-DD, h:mm:ss A"),
+        clave: "",
+        descripcion: "",
+        unidad: "",
+        categoria: "",
+        isTarea: false,
+        precioProyecto: [],
+        listadoInsumos: [],
+        precio: 0.0,
+      });
     }
-    
   }, []);
 
   const onSubmit = (event: any) => {
     event.preventDefault();
 
     // Form Validations (No empty arrays)
-    if (formData.clave === "" ||formData.descripcion === "" || formData.unidad === "" || formData.categoria === "") {
+    if (
+      formData.clave === "" ||
+      formData.descripcion === "" ||
+      formData.unidad === "" ||
+      formData.categoria === ""
+    ) {
       console.log(formData);
-      setFormError(true)
+      setFormError(true);
       return console.log("error de datos");
-
-    } 
+    }
     // Form Validations (No negative numbers)
 
-    if (formData.precio<0){
+    if (formData.precio < 0) {
       console.log(formData.precio);
-      setFormError(true)
+      setFormError(true);
       return console.log("No puedes tener numero negativo");
     }
 
-    if(editInsumo){
-      updateInsumo(formData)
-    }else{
+    if (editInsumo) {
+      updateInsumo(formData);
+    } else {
       addInsumo(formData);
     }
 
-    
-    setFormError(false)
-    setEditInsumo(false)
-    onClear();    
+    setFormError(false);
+    setEditInsumo(false);
+    onClear();
   };
 
   const onChange = (event: any) => {
@@ -108,7 +116,7 @@ export default function FormInsumo() {
   const onClear = () => {
     setFormData(insumoDefaultValue);
 
-    setInsumoToUpdate(undefined)
+    setInsumoToUpdate(undefined);
     openModalFormInsumo(false);
   };
 
@@ -116,41 +124,41 @@ export default function FormInsumo() {
     onClear();
     openModalFormInsumo(false);
   };
-  const openTareasForm=()=>{
-   
+  const openTareasForm = () => {
     openModalFormTarea(true);
     openModalFormInsumo(false);
-
-  }
+  };
   return (
     <>
       <div className="tareaBtn">
-        <button type="button" onClick={openTareasForm }>Agregar Tarea</button>
+        <button type="button" onClick={openTareasForm}>
+          Agregar Tarea
+        </button>
       </div>
-    <form onSubmit={(event) => onSubmit(event)} className="form formInsumo" >
-      <div className="input">
-        <label htmlFor="clave">Clave</label>
-        <input
-          type="text"
-          name="clave"
-          id="clave"
-          placeholder="MT001"
-          onChange={(event) => onChange(event)}
-          value={formData.clave}
-        />
-      </div>
-      <div className="input">
-        <label htmlFor="descripcion">Descripcion</label>
-        <textarea
-          // type="text"
-          name="descripcion"
-          id="descripcion"
-          placeholder="Acero de refuerzo #6"
-          onChange={(event) => onChange(event)}
-          value={formData.descripcion}
-        />
-      </div>
-      {/* <div className="input">
+      <form onSubmit={(event) => onSubmit(event)} className="form formInsumo">
+        <div className="input">
+          <label htmlFor="clave">Clave</label>
+          <input
+            type="text"
+            name="clave"
+            id="clave"
+            placeholder="MT001"
+            onChange={(event) => onChange(event)}
+            value={formData.clave}
+          />
+        </div>
+        <div className="input">
+          <label htmlFor="descripcion">Descripcion</label>
+          <textarea
+            // type="text"
+            name="descripcion"
+            id="descripcion"
+            placeholder="Acero de refuerzo #6"
+            onChange={(event) => onChange(event)}
+            value={formData.descripcion}
+          />
+        </div>
+        {/* <div className="input">
         <label htmlFor="unidad">Unidad</label>
         <input
           type="text"
@@ -161,36 +169,36 @@ export default function FormInsumo() {
           value={formData.unidad}
         />
       </div> */}
-      <div className="input">
-        <label htmlFor="unidad">Unidad</label>
-        <select
-          name="unidad"
-          id="unidad"
-          onChange={(event) => onChange(event)}
-          value={formData.unidad}
-        >
-          <option value="m2"></option>
-          {Unidades.map((unidad) => {
-            return (
-              <option value={unidad.simbol} key={unidad.name}>
-                {unidad.simbol}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <div className="input">
-        <label htmlFor="precio">Precio</label>
-        <input
-          type="number"
-          name="precio"
-          id="precio"
-          placeholder="$0.00"
-          onChange={(event) => onChange(event)}
-          value={formData.precio}
-        />
-      </div>
-      {/* <div className="input">
+        <div className="input">
+          <label htmlFor="unidad">Unidad</label>
+          <select
+            name="unidad"
+            id="unidad"
+            onChange={(event) => onChange(event)}
+            value={formData.unidad}
+          >
+            <option value="m2"></option>
+            {Unidades.map((unidad) => {
+              return (
+                <option value={unidad.simbol} key={unidad.name}>
+                  {unidad.simbol}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="input">
+          <label htmlFor="precio">Precio</label>
+          <input
+            type="number"
+            name="precio"
+            id="precio"
+            placeholder="$0.00"
+            onChange={(event) => onChange(event)}
+            value={formData.precio}
+          />
+        </div>
+        {/* <div className="input">
         <label htmlFor="categoria">Categoria</label>
         <input
           type="text"
@@ -201,35 +209,34 @@ export default function FormInsumo() {
           value={formData.categoria}
         />
       </div> */}
-      <div className="input">
-        <label htmlFor="categoria">Categoria</label>
-        <select
-          name="categoria"
-          id="categoria"
-          onChange={(event) => onChange(event)}
-          value={formData.categoria}
-        >
-          <option value="m2"></option>
-          {CategoriasInsumos.map((Categoria) => {
-            return (
-              <option value={Categoria.name} key={Categoria.simbol}>
-                {Categoria.name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      {formError&&
-      
-      <ErrorMsg />
-      }
-      <div className="btn-group">
-        <button type="button" onClick={onCancel} className="cancelBtn">
-          Cancelar
-        </button>
-        <button type="submit" className="successBtn">Guardar</button>
-      </div>
-    </form>
+        <div className="input">
+          <label htmlFor="categoria">Categoria</label>
+          <select
+            name="categoria"
+            id="categoria"
+            onChange={(event) => onChange(event)}
+            value={formData.categoria}
+          >
+            <option value="m2"></option>
+            {CategoriasInsumos.map((Categoria) => {
+              return (
+                <option value={Categoria.name} key={Categoria.simbol}>
+                  {Categoria.name}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        {formError && <ErrorMsg />}
+        <div className="btn-group">
+          <button type="button" onClick={onCancel} className="cancelBtn">
+            Cancelar
+          </button>
+          <button type="submit" className="successBtn">
+            Guardar
+          </button>
+        </div>
+      </form>
     </>
   );
 }

@@ -1,4 +1,5 @@
-import { InsumosExp } from "../pages/ExplosionInsumos";
+import { InsumosExp } from "../types/Insumo";
+
 
 export const setInsumosByCategory = (arrInsumos: InsumosExp[], category: string) => {
     const newArr: InsumosExp[] = [];

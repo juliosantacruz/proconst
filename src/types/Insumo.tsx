@@ -1,3 +1,5 @@
+import { ListadoInsumos } from "./Concepto";
+
 export interface PrecioProyectos{
   proyectoId:string,
   precio:number,
@@ -6,11 +8,22 @@ export interface PrecioProyectos{
 
 export interface Insumo {
     id: string;
+    fechaCreacion: string;
     clave: string;
     descripcion: string;
     unidad: string;
-    precio: number;
-    precioProyecto?:PrecioProyectos[]
     categoria: string;
-    fechaCreacion: string;
+    isTarea?:boolean
+    precioProyecto?:PrecioProyectos[]
+    listadoInsumos?: ListadoInsumos[];
+    precio: number;
+
+  }
+
+
+  export interface InsumosExp extends Insumo {
+    cantidadTotal: number;
+    cantidadInsumo: number;
+    cantidadConcepto: number | undefined;
+    conceptoId: string;
   }
