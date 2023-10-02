@@ -1,5 +1,22 @@
 
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
+
+    .explotarBtn{
+        margin-right: 20px;
+        border-radius: 15px;
+        border: 1px solid black;
+        background: none;
+    }
+    .active{
+        background: #000;
+        color: white;
+    }
+
+}
 
 .explosionInsumos{
     width: 100%;

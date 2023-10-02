@@ -32,6 +32,17 @@
                     font-weight: 600;
                 }
             }
+            p{
+                width: 100%;
+                .subtitle{
+                    font-size: 12px;
+                }
+                .projectName{
+                    display: block;
+                    font-size: 18px;
+                    text-align: center;
+                }
+            }
         }
         .bottonNav{
              

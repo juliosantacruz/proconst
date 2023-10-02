@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useConceptoStore,
@@ -20,6 +20,7 @@ import { costoFinalCategoria, costoFinalInsumo, setInsumosByCategory, sumatoriaI
 
 
 export default function ExplosionInsumos() {
+  const [explotarTareas, setExplotarTareas] = useState(false)
   const { presupuestos } = usePresupuestoStore();
   const { conceptos } = useConceptoStore();
   const { insumos } = useInsumoStore();
@@ -28,7 +29,7 @@ export default function ExplosionInsumos() {
 
   const navigate = useNavigate();
   const { projectId } = useParams();
-
+  console.log('id',projectId)
   const allConceptos = conceptos;
   const allInsumos = insumos;
 
@@ -73,6 +74,14 @@ export default function ExplosionInsumos() {
     });
   });
 
+const handleExplotarTareas=()=>{
+  setExplotarTareas(!explotarTareas)
+
+
+  console.log('explotar tareas')
+}
+
+
 
   // const materialesInsumos = sumatoriaInsumos(
   //   setInsumosByCategory(projectInsumos, "Materiales")
@@ -81,7 +90,11 @@ export default function ExplosionInsumos() {
 
   return (
     <section className="workspace">
+      <div className="header">
       <h2>Explosion de insumos :D</h2>
+      <button className={explotarTareas?'explotarBtn active':'explotarBtn'} onClick={handleExplotarTareas}>Explotar Tareas</button>
+
+      </div>
 
       <h3>{workingProject.nombreProyecto}</h3>
 
@@ -90,7 +103,7 @@ export default function ExplosionInsumos() {
           <ChartDougnut arrInsumos={projectInsumos} />
         </div>
 
-        <table className="listadoInsumos">
+        <table className="tableDefault listadoInsumos">
           <thead>
             <tr>
               <th>Clave</th>
@@ -140,9 +153,7 @@ export default function ExplosionInsumos() {
                     );
                   })
                 ) : (
-                  <tr>
-                    <td>no hay insumos</td>
-                  </tr>
+                  null
                 )}
               </tbody>
             );

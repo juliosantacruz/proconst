@@ -7,13 +7,12 @@ import { useWorkingPresupuesto } from "../../store/projectStore";
 export default function AsideMenu() {
   const { id, nombreProyecto, emptyWorkingPresupuesto } =
     useWorkingPresupuesto();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-
-  const closeProject=()=>{
+  const closeProject = () => {
     emptyWorkingPresupuesto();
-    navigate(RoutesDirectory.HOME)
-  }
+    navigate(RoutesDirectory.HOME);
+  };
 
   return (
     <aside id="sideMenu" className="sideMenu">
@@ -39,7 +38,7 @@ export default function AsideMenu() {
           {id ? (
             <>
               <p>
-                Trabajando en <br /> <span>{nombreProyecto}</span>
+                <span className="subtitle">Trabajando en</span> <br /> <span className="projectName">{nombreProyecto}</span>
               </p>
               <li>
                 <NavLink to={RoutesDirectory.GO_WORKING_PRESUPUESTO(id)}>
@@ -51,21 +50,28 @@ export default function AsideMenu() {
                   Explosion de insumos
                 </NavLink>
               </li>
-              <li>Catalogo de Conceptos</li>
-              <li>Catalogo de Insumos</li>
-              <li>Analisis de Presupuesto</li>
+              <li>
+                <NavLink to={RoutesDirectory.GO_CATALOGO_INSUMOS(id)}>
+                  Catalogo de Insumos
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={RoutesDirectory.GO_CATALOGO_CONCEPTOS(id)}>
+                  Catalogo de Conceptos
+                </NavLink>
+              </li>
+              <li>Analisis de Precios Unitarios</li>
               {/* <button className="btnCerrar" onClick={emptyWorkingPresupuesto}>Cerrar Presupuesto</button> */}
             </>
           ) : null}
         </ul>
-        {id &&
+        {id && (
           <div className="bottonNav">
             <button className="btnCerrar" onClick={closeProject}>
               Cerrar Presupuesto
             </button>
           </div>
-        }
-        
+        )}
       </nav>
     </aside>
   );

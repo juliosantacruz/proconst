@@ -9,6 +9,8 @@ import {useAuthStore} from '../store/authStore'
 import Register from '../pages/Register';
 import VerifyUser from '../pages/VerifyUser';
 import ListadoProyectos from '../pages/ListadoProyectos';
+import CatalogoInsumos from '../pages/CatalogoInsumos';
+import CatalogoConceptos from '../pages/CatalogoConceptos';
 
 const isAuth = useAuthStore.getState().isAuth
 
@@ -29,6 +31,10 @@ export const RoutesDirectory={
   GO_WORKING_PRESUPUESTO:(projectId:string)=>`/presupuesto/${projectId}`,
   EXPLOSION_INSUMOS: '/analisis/:projectId',
   GO_EXPLOSION_INSUMOS:(projectId:string)=>`/analisis/${projectId}`,
+  CATALOGO_INSUMOS: '/catalogoInsumos/:projectId',
+  GO_CATALOGO_INSUMOS:(projectId:string)=>`/catalogoInsumos/${projectId}`, 
+  CATALOGO_CONCEPTOS: '/catalogoConceptos/:projectId',
+  GO_CATALOGO_CONCEPTOS:(projectId:string)=>`/catalogoConceptos/${projectId}`,
 
 }
 
@@ -45,6 +51,8 @@ const AppRoutes = () => {
           { path: RoutesDirectory.WORKING_PRESUPUESTO, element: <Presupuesto /> },
         ]},
         { path: RoutesDirectory.EXPLOSION_INSUMOS, element: <ExplosionInsumos />, errorElement:<NotFound />,  },
+        { path: RoutesDirectory.CATALOGO_INSUMOS, element: <CatalogoInsumos />, errorElement:<NotFound />,  },
+        { path: RoutesDirectory.CATALOGO_CONCEPTOS, element: <CatalogoConceptos />, errorElement:<NotFound />,  },
         
       ] },
 
