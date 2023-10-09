@@ -47,8 +47,12 @@ export const Unidades = [
   { name: "Pieza", simbol: "pza", category: "Pieza" },
   { name: "Caja", simbol: "cja", category: "Pieza" },
   { name: "Lote", simbol: "lote", category: "Pieza" },
-  { name: "Herramienta", simbol: "%her", category: "Pieza" },
-  { name: "Equipo", simbol: "%eq", category: "Pieza" },
+  // Unidades porcentajes
+  { name: "%Material", simbol: "%mat", category: "Portcentaje" },
+  { name: "%ManoObra", simbol: "%mo", category: "Portcentaje" },
+  { name: "%Herramienta", simbol: "%her", category: "Portcentaje" },
+  { name: "%Equipos", simbol: "%eq", category: "Portcentaje" },
+
 ];
 
 export const CategoriasInsumos = [

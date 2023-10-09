@@ -1,103 +1,107 @@
-h4{margin: 0 10px;}
-.fsrButton{
-    padding: 3px 10px;
-    border-radius: 8px;
-    border: 1px solid black;
-    background: #dfdfdf;
-}
-.fsrActive {
-    border: 1px solid rgb(255, 255, 255);
-    background: #000;
-    color: white;
-}
-
-.Presupuesto {
+.workspacePresupuesto{
+    width: 85%;
+    h4{margin: 0 10px;}
+    .fsrButton{
+        padding: 3px 10px;
+        border-radius: 8px;
+        border: 1px solid black;
+        background: #dfdfdf;
+    }
+    .fsrActive {
+        border: 1px solid rgb(255, 255, 255);
+        background: #000;
+        color: white;
+    }
     
-    a {
-        border: none;
-    }
-    table,
-    th,
-    td {
-        border-bottom: 1px solid #9e9e9e;
-        padding: 5px;
-    }
-    tr:last-child td {
-        border-bottom: 1px solid #5c5c5c;
-    }
-    table {
-        border: 1px solid rgb(112, 112, 112);
-        width: 98%;
-        margin: 0 auto;
-        text-align: center;
-        border-collapse: collapse;
-        .tableHeader {
-            background: #fff3f3;
-            font-weight: 600;
-            // font-style: oblique;
+    .Presupuesto {
+        
+        a {
+            border: none;
         }
-        .partida {
-            background: #f7fff3;
-            font-weight: 600;
-            font-style: italic;
-            // cursor: pointer;
+        table,
+        th,
+        td {
+            border-bottom: 1px solid #9e9e9e;
+            padding: 5px;
         }
-        .concepto {
-            background-color: #f2f2f2;
+        tr:last-child td {
+            border-bottom: 1px solid #5c5c5c;
         }
-        // .concepto:nth-child(even) {
-        //     background-color: #ffffff;
-        // }
-        .concepto:hover {
-            background-color: #ddd;
-        }
-
-        .clave {
-            width: 10%;
-        }
-        .descripcion {
-            width: 40%;
-            text-align: left;
-        }
-        .unidad {
-            width: 8%;
-        }
-        .precioUnitario {
-            width: 10%;
-        }
-        .cantidad {
-            width: 10%;
-            input[type="number"] {
-                -moz-appearance: textfield;
-                border: 1px solid #0000004b;
-                text-align: center;
-                background-color: #ff000000;
-                line-height: 100%;
-                width: 80%;
-                height: 100%;
-                padding: 15px 0;
-                cursor: pointer;
+        table {
+            border: 1px solid rgb(112, 112, 112);
+            width: 98%;
+            margin: 0 auto;
+            text-align: center;
+            border-collapse: collapse;
+            .tableHeader {
+                background: #fff3f3;
+                font-weight: 600;
+                // font-style: oblique;
             }
-            input::-webkit-outer-spin-button,
-            input::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
+            .partida {
+                background: #f7fff3;
+                font-weight: 600;
+                font-style: italic;
+                // cursor: pointer;
             }
-        }
-        .total {
-            width: 10%;
-        }
-        .actions {
-            // display: flex;
-            // flex-direction: row;
-            // justify-content: space-evenly;
-            // width: 10%; 
-            font-style: normal;
-            a {
-                margin: 0 3px;
-                cursor: pointer;
-               
+            .concepto {
+                background-color: #f2f2f2;
+            }
+            // .concepto:nth-child(even) {
+            //     background-color: #ffffff;
+            // }
+            .concepto:hover {
+                background-color: #ddd;
+            }
+    
+            .clave {
+                width: 10%;
+            }
+            .descripcion {
+                width: 40%;
+                text-align: left;
+            }
+            .unidad {
+                width: 8%;
+            }
+            .precioUnitario {
+                width: 10%;
+            }
+            .cantidad {
+                width: 10%;
+                input[type="number"] {
+                    -moz-appearance: textfield;
+                    border: 1px solid #0000004b;
+                    text-align: center;
+                    background-color: #ff000000;
+                    line-height: 100%;
+                    width: 80%;
+                    height: 100%;
+                    padding: 15px 0;
+                    cursor: pointer;
+                }
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            }
+            .total {
+                width: 10%;
+            }
+            .actions {
+                // display: flex;
+                // flex-direction: row;
+                // justify-content: space-evenly;
+                // width: 10%; 
+                font-style: normal;
+                a {
+                    margin: 0 3px;
+                    cursor: pointer;
+                   
+                }
             }
         }
     }
 }
+

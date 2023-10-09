@@ -89,7 +89,7 @@ const handleExplotarTareas=()=>{
   // console.log(materialesInsumos);
 
   return (
-    <section className="workspace">
+    <section className="workspaceExplosionInsumos">
       <div className="header">
       <h2>Explosion de insumos :D</h2>
       <button className={explotarTareas?'explotarBtn active':'explotarBtn'} onClick={handleExplotarTareas}>Explotar Tareas</button>

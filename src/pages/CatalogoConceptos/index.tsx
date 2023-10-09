@@ -5,7 +5,7 @@ function CatalogoConceptos() {
   const { projectId } = useParams();
 
   return (
-    <section className='workspace'>
+    <section className='workspaceCatalogoConceptos'>
     project id {projectId}
 </section>
   )

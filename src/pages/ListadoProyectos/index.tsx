@@ -66,7 +66,7 @@ const Original =()=>{
     console.log("cargar :D");
   };
   return (
-    <section className="workspace">
+    <section className="workspaceListadoConceptos">
       <PageTitle title="Mis Presupuestos">
         <AddButton
           onClick={handleImportProject}

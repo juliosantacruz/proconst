@@ -37,6 +37,7 @@ const ErrorMsg = () => {
 export default function FormInsumo() {
   const [editInsumo, setEditInsumo] = useState(false);
   const [formError, setFormError] = useState(false);
+  const [unidadPorcetaje, setUnidadPorcentaje] = useState(false);
   const { openModalFormInsumo, modalFormTarea, openModalFormTarea } =
     useUxStore();
 
@@ -64,6 +65,21 @@ export default function FormInsumo() {
     }
   }, []);
 
+  useEffect(() => {
+    if (formData.unidad[0] === "%") {
+      setFormData({
+        ...formData,
+        precio: 0,
+      });
+      setUnidadPorcentaje(true);
+    } else {
+      setUnidadPorcentaje(false);
+    }
+
+    console.log("unidad es ", unidadPorcetaje);
+  }, [formData.unidad]);
+
+  console.log(formData);
   const onSubmit = (event: any) => {
     event.preventDefault();
 
@@ -74,17 +90,18 @@ export default function FormInsumo() {
       formData.unidad === "" ||
       formData.categoria === ""
     ) {
-      console.log(formData);
       setFormError(true);
       return console.log("error de datos");
     }
     // Form Validations (No negative numbers)
 
-    if (formData.precio < 0) {
+    if (formData.precio <= 0) {
       console.log(formData.precio);
       setFormError(true);
       return console.log("No puedes tener numero negativo");
     }
+
+    // if(formData.categoria[0])
 
     if (editInsumo) {
       updateInsumo(formData);
@@ -100,17 +117,26 @@ export default function FormInsumo() {
   const onChange = (event: any) => {
     const dato = event?.target.value;
 
+    // Validacion de porcentajes
+    if (formData.unidad[0] === "%") {
+      console.log("precio debe ser", 0);
+      selectUnidadPorcetaje(formData.unidad[0]);
+    }
+
     // Precio Validations
     if (event.target.name === "precio") {
       setFormData({
         ...formData,
         [event.target.name]: Number(dato),
       });
+    } else {
+      setFormData({
+        ...formData,
+        [event.target.name]: dato,
+      });
     }
-    setFormData({
-      ...formData,
-      [event.target.name]: dato,
-    });
+
+    console.log(formData);
   };
 
   const onClear = () => {
@@ -124,10 +150,25 @@ export default function FormInsumo() {
     onClear();
     openModalFormInsumo(false);
   };
+
   const openTareasForm = () => {
     openModalFormTarea(true);
     openModalFormInsumo(false);
   };
+
+  const selectUnidadPorcetaje = (value: string) => {
+    if (formData.unidad[0] === "%") {
+      setUnidadPorcentaje(true);
+      setFormData({
+        ...formData,
+        precio: 0,
+      });
+    } else {
+      setUnidadPorcentaje(false);
+    }
+    console.log("se selecciono ", value);
+  };
+
   return (
     <>
       <div className="tareaBtn">
@@ -158,17 +199,7 @@ export default function FormInsumo() {
             value={formData.descripcion}
           />
         </div>
-        {/* <div className="input">
-        <label htmlFor="unidad">Unidad</label>
-        <input
-          type="text"
-          name="unidad"
-          id="unidad"
-          placeholder="kg"
-          onChange={(event) => onChange(event)}
-          value={formData.unidad}
-        />
-      </div> */}
+
         <div className="input">
           <label htmlFor="unidad">Unidad</label>
           <select
@@ -190,25 +221,15 @@ export default function FormInsumo() {
         <div className="input">
           <label htmlFor="precio">Precio</label>
           <input
+            disabled={unidadPorcetaje}
             type="number"
             name="precio"
             id="precio"
-            placeholder="$0.00"
             onChange={(event) => onChange(event)}
             value={formData.precio}
           />
         </div>
-        {/* <div className="input">
-        <label htmlFor="categoria">Categoria</label>
-        <input
-          type="text"
-          name="categoria"
-          id="categoria"
-          placeholder="Materiales"
-          onChange={(event) => onChange(event)}
-          value={formData.categoria}
-        />
-      </div> */}
+
         <div className="input">
           <label htmlFor="categoria">Categoria</label>
           <select

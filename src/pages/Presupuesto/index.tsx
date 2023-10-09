@@ -157,7 +157,7 @@ export default function Presupuesto() {
   };
 
   return (
-    <section className="workspace">
+    <section className="workspacePresupuesto">
       <PageTitle title="Presupuesto de obra">
         <button
           type="button"

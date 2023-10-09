@@ -60,7 +60,7 @@ export default function ListadoInsumos() {
   };
 
   return (
-    <section className="workspace">
+    <section className="workspaceListadoInsumos">
       <PageTitle title="Mis Insumos">
         <AddButton onClick={() => handleExportInsumo(insumos)}>
           <AnyIcon iconSrc={downloadIcon} />

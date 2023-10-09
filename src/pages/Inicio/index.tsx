@@ -36,7 +36,7 @@ export default function Index() {
   };
  
   return (
-    <section className="workspace">
+    <section className="workspaceIncio">
       
       <PageTitle title="Mis Presupuestos">
         <AddButton

@@ -5,7 +5,7 @@ export default function CatalogoInsumos() {
   const { projectId } = useParams();
 
   return (
-    <section className='workspace'>
+    <section className='workspaceCatalogoInsumos'>
         project id {projectId}
     </section>
   )

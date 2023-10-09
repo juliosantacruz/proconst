@@ -35,7 +35,7 @@ export default function ListadoConceptos() {
 
 
   return (
-    <section className="workspace">
+    <section className="workspaceListadoConceptos">
       <PageTitle title="Mis Conceptos">
         <AddButton
           onClick={handleAddConcepto}
