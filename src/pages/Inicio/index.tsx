@@ -12,6 +12,7 @@ import uploadIcon from "../../assets/icons/bx-upload.svg";
 import AnyIcon from "../../components/AnyIcon";
 import FormLoad from "../../components/FormLoad";
 import { Outlet } from "react-router-dom";
+import Navbar from "../../layout/TopMenu/Navbar";
 
 export default function Index() {
   const {
@@ -36,9 +37,8 @@ export default function Index() {
   };
  
   return (
-    <section className="workspaceIncio">
-      
-      <PageTitle title="Mis Presupuestos">
+    <section className="workspace inicioPage">
+      <Navbar>
         <AddButton
           onClick={handleImportProject}
           bgColor="rgb(226, 230, 255)"
@@ -46,6 +46,7 @@ export default function Index() {
         >
           <AnyIcon iconSrc={uploadIcon} /> Proyecto
         </AddButton>
+
         <AddButton
           onClick={handleAddProject}
           bgColor="rgb(31, 57, 204)"
@@ -53,7 +54,10 @@ export default function Index() {
         >
           + Proyecto
         </AddButton>
-      </PageTitle>
+
+      </Navbar>
+      {/* <PageTitle title="Mis Presupuestos">
+      </PageTitle> */}
       <div className="btn-header"></div>
       <div className="Presupuestos">
         {presupuestos.map((presupuesto) => {

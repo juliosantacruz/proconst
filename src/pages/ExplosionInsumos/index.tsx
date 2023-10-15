@@ -13,14 +13,16 @@ import { setFormat } from "../../utils/CurrencyFormat";
 import { CategoriasInsumos } from "../../utils/SelectInputOptions";
 import "./ExplosionInsumos.scss";
 import ChartDougnut from "../../components/ChartDougnut";
-import { costoFinalCategoria, costoFinalInsumo, setInsumosByCategory, sumatoriaInsumos } from "../../utils/ExplosionInsumos";
-
-
-
-
+import {
+  costoFinalCategoria,
+  costoFinalInsumo,
+  setInsumosByCategory,
+  sumatoriaInsumos,
+} from "../../utils/ExplosionInsumos";
+import Navbar from "../../layout/TopMenu/Navbar";
 
 export default function ExplosionInsumos() {
-  const [explotarTareas, setExplotarTareas] = useState(false)
+  const [explotarTareas, setExplotarTareas] = useState(false);
   const { presupuestos } = usePresupuestoStore();
   const { conceptos } = useConceptoStore();
   const { insumos } = useInsumoStore();
@@ -29,7 +31,7 @@ export default function ExplosionInsumos() {
 
   const navigate = useNavigate();
   const { projectId } = useParams();
-  console.log('id',projectId)
+  console.log("id", projectId);
   const allConceptos = conceptos;
   const allInsumos = insumos;
 
@@ -44,8 +46,6 @@ export default function ExplosionInsumos() {
       setWorkingPresupuesto(projectData as Presupuesto);
     }
   }, []);
-
-
 
   const projectInsumos: InsumosExp[] = [];
 
@@ -74,14 +74,11 @@ export default function ExplosionInsumos() {
     });
   });
 
-const handleExplotarTareas=()=>{
-  setExplotarTareas(!explotarTareas)
+  const handleExplotarTareas = () => {
+    setExplotarTareas(!explotarTareas);
 
-
-  console.log('explotar tareas')
-}
-
-
+    console.log("explotar tareas");
+  };
 
   // const materialesInsumos = sumatoriaInsumos(
   //   setInsumosByCategory(projectInsumos, "Materiales")
@@ -89,11 +86,17 @@ const handleExplotarTareas=()=>{
   // console.log(materialesInsumos);
 
   return (
-    <section className="workspaceExplosionInsumos">
+    <section className="workspace explosionInsumosPage">
+      <Navbar>
+        <button
+          className={explotarTareas ? "explotarBtn active" : "explotarBtn"}
+          onClick={handleExplotarTareas}
+        >
+          Explotar Tareas
+        </button>
+      </Navbar>
       <div className="header">
-      <h2>Explosion de insumos :D</h2>
-      <button className={explotarTareas?'explotarBtn active':'explotarBtn'} onClick={handleExplotarTareas}>Explotar Tareas</button>
-
+        <h2>Explosion de insumos :D</h2>
       </div>
 
       <h3>{workingProject.nombreProyecto}</h3>
@@ -136,25 +139,29 @@ const handleExplotarTareas=()=>{
                   <th> </th>
                   <th> </th>
                   <th>{setFormat(costoCategoria)} </th>
-                  <th>{insumosList.length>0?' 100 %': ''}</th>
+                  <th>{insumosList.length > 0 ? " 100 %" : ""}</th>
                 </tr>
-                {insumosList.length > 0 ? (
-                  insumosList.map((insumo) => {
-                    return (
-                      <tr key={insumo.id}>
-                        <td>{insumo.clave}</td>
-                        <td>{insumo.descripcion}</td>
-                        <td>{insumo.unidad}</td>
-                        <td>{setFormat(insumo.precio)}</td>
-                        <td>{insumo.cantidadTotal.toFixed(2)}</td>
-                        <td>{setFormat(costoFinalInsumo(insumo))}</td>
-                        <td>{ ((costoFinalInsumo(insumo)/ costoCategoria)*100 ).toFixed(2)}%</td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  null
-                )}
+                {insumosList.length > 0
+                  ? insumosList.map((insumo) => {
+                      return (
+                        <tr key={insumo.id}>
+                          <td>{insumo.clave}</td>
+                          <td>{insumo.descripcion}</td>
+                          <td>{insumo.unidad}</td>
+                          <td>{setFormat(insumo.precio)}</td>
+                          <td>{insumo.cantidadTotal.toFixed(2)}</td>
+                          <td>{setFormat(costoFinalInsumo(insumo))}</td>
+                          <td>
+                            {(
+                              (costoFinalInsumo(insumo) / costoCategoria) *
+                              100
+                            ).toFixed(2)}
+                            %
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : null}
               </tbody>
             );
           })}

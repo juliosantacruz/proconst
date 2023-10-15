@@ -1,19 +1,15 @@
-.workspaceIncio{
-    height: calc(100vh - 100px);
-    width: 80%;
-    overflow: scroll;
+.inicioPage {
+  overflow: scroll;
 
-    .Title{
-        
-        border-bottom: 1px solid black;
-        margin: 0 10px;
-        
-    }
-    .Presupuestos{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin: 10px 20px;
-    }
+  .Title {
+    border-bottom: 1px solid black;
+    margin: 0 10px;
+  }
+  .Presupuestos {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 20px;
+  }
 }

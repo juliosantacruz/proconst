@@ -38,6 +38,7 @@ import FormPresupuesto from "../../components/FormPresupuesto";
 import { useNavigate } from "react-router-dom";
 import { RoutesDirectory } from "../../routes/router";
 import FormTareas from "../../components/FormTareas";
+import Navbar from "../../layout/TopMenu/Navbar";
 
 export default function Presupuesto() {
   const {
@@ -157,8 +158,8 @@ export default function Presupuesto() {
   };
 
   return (
-    <section className="workspacePresupuesto">
-      <PageTitle title="Presupuesto de obra">
+    <section className="workspace presupuestoPage">
+      <Navbar  >
         <button
           type="button"
           onClick={() => handleExportarJSON(workingProject)}
@@ -178,7 +179,7 @@ export default function Presupuesto() {
         >
           Agregar FSR
         </AddButton>
-      </PageTitle>
+      </Navbar>
 
       <h4>
         {nombreProyecto} - {setFormat(montoProyectoFinal)}

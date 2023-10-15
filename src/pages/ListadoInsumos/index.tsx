@@ -16,6 +16,7 @@ import { useInsumoStore } from "../../store/projectStore";
 import FormLoad from "../../components/FormLoad";
 import TableInsumo from "../../components/TableInsumo";
 import FormTareas from "../../components/FormTareas";
+import Navbar from "../../layout/TopMenu/Navbar";
 
 const TableTabsListInsumo = lazy(
   () => import("../../components/TableTabsListInsumo")
@@ -60,8 +61,8 @@ export default function ListadoInsumos() {
   };
 
   return (
-    <section className="workspaceListadoInsumos">
-      <PageTitle title="Mis Insumos">
+    <section className="workspace listadoInsumosPage">
+      <Navbar>
         <AddButton onClick={() => handleExportInsumo(insumos)}>
           <AnyIcon iconSrc={downloadIcon} />
           Descargar
@@ -79,6 +80,9 @@ export default function ListadoInsumos() {
         >
           + Insumo
         </AddButton>
+        
+      </Navbar>
+      <PageTitle title="Mis Insumos">
       </PageTitle>
       <div className="btn-header"></div>
 

@@ -39,7 +39,11 @@ h6 {
   font-weight: 600 !important;
   margin: 10px 0;
 }
-
+.workspace{
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
 .form {
   display: flex;
   flex-direction: column;

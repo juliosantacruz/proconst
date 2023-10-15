@@ -14,6 +14,7 @@ import { Insumo } from "../../types/Insumo";
 import TableConcepto from "../../components/TableConcepto";
 import FormInsumo from "../../components/FormInsumo";
 import plusIcon from '../../assets/icons/bx-plus.svg'
+import Navbar from "../../layout/TopMenu/Navbar";
 
 
 
@@ -35,8 +36,8 @@ export default function ListadoConceptos() {
 
 
   return (
-    <section className="workspaceListadoConceptos">
-      <PageTitle title="Mis Conceptos">
+    <section className="workspace listadoConceptosPage">
+      <Navbar>
         <AddButton
           onClick={handleAddConcepto}
           bgColor="rgb(187, 198, 255)"
@@ -44,7 +45,9 @@ export default function ListadoConceptos() {
         >
           + Concepto
         </AddButton>
-      </PageTitle>
+
+      </Navbar>
+       
       <div className="btn-header"></div>
 
       <TableConcepto/>

@@ -1,8 +1,10 @@
 #proConst{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 main{
     display: flex;
+    flex-direction: column;
+    width: 85%;
 }
