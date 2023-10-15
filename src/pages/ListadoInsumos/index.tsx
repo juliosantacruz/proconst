@@ -82,9 +82,7 @@ export default function ListadoInsumos() {
         </AddButton>
         
       </Navbar>
-      <PageTitle title="Mis Insumos">
-      </PageTitle>
-      <div className="btn-header"></div>
+     
 
       <div className="insumosGroup">
         <Suspense fallback={<div> loading </div>}>

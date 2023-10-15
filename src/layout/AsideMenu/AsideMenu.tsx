@@ -37,7 +37,7 @@ export default function AsideMenu() {
               Listado de Insumos
             </NavLink>
           </li>
-          <hr />
+          <hr className="separator"/>
           {/* Menu de presupuesto */}
 
           {id ? (

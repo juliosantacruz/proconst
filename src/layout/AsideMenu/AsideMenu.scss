@@ -19,7 +19,10 @@
     }
     ul {
       padding: 0;
-
+.separator{
+  margin: 0 auto;
+  width: 90%;
+}
       li {
         width: calc( 100% - 22px);
         list-style: none;

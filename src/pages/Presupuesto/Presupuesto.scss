@@ -1,6 +1,14 @@
 .presupuestoPage{
    
-    h4{margin: 0 10px;}
+    .headerPresupuesto{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin:10px 0;
+        h4{
+            font-size: 20px;
+            margin: 0 10px;}
+    }
     .fsrButton{
         padding: 3px 10px;
         border-radius: 8px;
@@ -28,24 +36,26 @@
             border-bottom: 1px solid #5c5c5c;
         }
         table {
-            border: 1px solid rgb(112, 112, 112);
+            // border: 1px solid rgb(112, 112, 112);
             width: 98%;
             margin: 0 auto;
             text-align: center;
             border-collapse: collapse;
             .tableHeader {
-                background: #fff3f3;
-                font-weight: 600;
+                background: #ffffff;
+                 
+                font-size: 12px;
+                font-weight: 500;
                 // font-style: oblique;
             }
             .partida {
-                background: #f7fff3;
+                background: #bbff99;
                 font-weight: 600;
                 font-style: italic;
                 // cursor: pointer;
             }
             .concepto {
-                background-color: #f2f2f2;
+                background-color: #ffffff;
             }
             // .concepto:nth-child(even) {
             //     background-color: #ffffff;
@@ -53,12 +63,13 @@
             .concepto:hover {
                 background-color: #ddd;
             }
-    
+            .icon{
+            width: 3%;}
             .clave {
                 width: 10%;
             }
             .descripcion {
-                width: 40%;
+                width: 35%;
                 text-align: left;
             }
             .unidad {

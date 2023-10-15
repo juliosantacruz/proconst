@@ -6,7 +6,6 @@ import {
   useWorkingPresupuesto,
 } from "../../store/projectStore";
 import { useParams } from "react-router-dom";
-import PageTitle from "../../components/PageTitle";
 import AddButton from "../../components/AddButton";
 import { useUxStore } from "../../store/uxStore";
 import AsideModal from "../../components/AsideModal";
@@ -181,14 +180,21 @@ export default function Presupuesto() {
         </AddButton>
       </Navbar>
 
+      <div className="headerPresupuesto">
       <h4>
-        {nombreProyecto} - {setFormat(montoProyectoFinal)}
+        {nombreProyecto} 
       </h4>
+      <h4>
+          {setFormat(montoProyectoFinal)}
+      </h4>
+
+      </div>
       <p>{descripcionProyecto}</p>
       <div className="Presupuesto">
         <table className="Presupuesto">
           <thead>
             <tr className="tableHeader">
+              <th></th>
               <th>Clave</th>
               <th>Descripcion</th>
               <th>Unidad</th>
@@ -226,6 +232,8 @@ export default function Presupuesto() {
                   return (
                     <React.Fragment >
                       <tr key={element.id} className="partida">
+                       <td className="icon"> /+/</td>
+
                         <td className="clave">{element.clave}</td>
                         <td className="descripcion">{element.nombre}</td>
                         <td className="unidad"></td>
@@ -332,6 +340,7 @@ export default function Presupuesto() {
                                   key={concepto.conceptoId}
                                   className="concepto"
                                 >
+                                  <td className="icon"></td>
                                   <td className="clave">{leConcept?.clave}</td>
                                   <td className="descripcion">
                                     {leConcept?.descripcion}
