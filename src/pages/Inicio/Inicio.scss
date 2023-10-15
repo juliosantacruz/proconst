@@ -1,15 +1,17 @@
 .inicioPage {
   overflow: scroll;
 
-  .Title {
-    border-bottom: 1px solid black;
-    margin: 0 10px;
-  }
-  .Presupuestos {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 10px 20px;
+  .Presupuestos{
+        display: flex;
+        flex-direction: column;
+        margin: 0 20px;
+
+      .PresupuestosGroup {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        // margin: 10px 20px;
+      }
   }
 }

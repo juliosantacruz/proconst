@@ -13,6 +13,7 @@ import AnyIcon from "../../components/AnyIcon";
 import FormLoad from "../../components/FormLoad";
 import { Outlet } from "react-router-dom";
 import Navbar from "../../layout/TopMenu/Navbar";
+import Banner from "../../components/Banner";
 
 export default function Index() {
   const {
@@ -35,7 +36,7 @@ export default function Index() {
     openModalFormLoad(!modalFormLoad);
     console.log("cargar :D");
   };
- 
+
   return (
     <section className="workspace inicioPage">
       <Navbar>
@@ -54,19 +55,19 @@ export default function Index() {
         >
           + Proyecto
         </AddButton>
-
       </Navbar>
-      {/* <PageTitle title="Mis Presupuestos">
-      </PageTitle> */}
-      <div className="btn-header"></div>
-      <div className="Presupuestos">
-        {presupuestos.map((presupuesto) => {
-          return (
-            <ProjectCard key={presupuesto.id} projectId={presupuesto.id} />
-          );
-        })}
-      </div>
 
+      <Banner />
+      <div className="Presupuestos">
+        <h2>Mis Presupuestos</h2>
+        <div className="PresupuestosGroup">
+          {presupuestos.map((presupuesto) => {
+            return (
+              <ProjectCard key={presupuesto.id} projectId={presupuesto.id} />
+            );
+          })}
+        </div>
+      </div>
       {modalFormProject && (
         <AsideModal
           widthModal={"50vw"}
@@ -74,7 +75,7 @@ export default function Index() {
           clossable={true}
           openModal={modalFormProject}
           setOpenModal={openModalFormProject}
-          modalType={'Presupuesto'}
+          modalType={"Presupuesto"}
         >
           <FormPresupuesto />
         </AsideModal>
@@ -87,10 +88,9 @@ export default function Index() {
           clossable={true}
           openModal={modalFormLoad}
           setOpenModal={openModalFormLoad}
-          modalType={'Load'}
-
+          modalType={"Load"}
         >
-          <FormLoad typeForm='presupuesto'/>
+          <FormLoad typeForm="presupuesto" />
         </AsideModal>
       )}
     </section>
