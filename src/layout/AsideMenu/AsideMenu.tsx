@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { RoutesDirectory } from "../../routes/router";
 import "./AsideMenu.scss";
 import { useWorkingPresupuesto } from "../../store/projectStore";
+import logoProConst from "../../assets/newLogo.svg";
+import logoJS from "../../assets/JS Icon.svg";
 
 export default function AsideMenu() {
   const { id, nombreProyecto, emptyWorkingPresupuesto } =
@@ -17,6 +19,9 @@ export default function AsideMenu() {
   return (
     <aside id="sideMenu" className="sideMenu">
       <nav>
+        <div className="logoProconst">
+          <img src={logoProConst} alt="logo" />
+        </div>
         <ul>
           {/* Menu general */}
           <li>
@@ -38,7 +43,8 @@ export default function AsideMenu() {
           {id ? (
             <>
               <p>
-                <span className="subtitle">Trabajando en</span> <br /> <span className="projectName">{nombreProyecto}</span>
+                <span className="subtitle">Trabajando en</span> <br />{" "}
+                <span className="projectName">{nombreProyecto}</span>
               </p>
               <li>
                 <NavLink to={RoutesDirectory.GO_WORKING_PRESUPUESTO(id)}>
@@ -73,6 +79,9 @@ export default function AsideMenu() {
           </div>
         )}
       </nav>
+        <div className="logoJS">
+          <img src={logoJS} alt="logo" />
+        </div>
     </aside>
   );
 }

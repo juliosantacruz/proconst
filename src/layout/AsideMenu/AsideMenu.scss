@@ -1,67 +1,93 @@
-.sideMenu{
-     
-    width: 15%;
-    height: calc(100vh - 100px);
-    background: #bdafaf;
-    
-    nav{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-        ul{
-            padding: 0;
-            margin: 15px 20px;
-            
-            li{
-                list-style: none;
-                margin: 10px 0;
-                
+.sideMenu {
+  width: 15%;
+  height: 100vh;
+  background-color: var(--asideNavbarBgColor);
+  color: var(--asideNavbarTextColor);
+  font-size: var(--asideNavbarFontSize);
 
-                a{
-                    width: 100%;
-                    text-decoration: none;
-                }
-            }
-            li:has(a.active){
-                
-                box-shadow: rgba(0, 0, 0, 0.336) 0px 8px 15px,rgba(0, 0, 0, 0.336) 0px 6px 6px;
-                border: 1px solid black;
-                a{
-                    color: red; 
-                    font-weight: 600;
-                }
-            }
-            p{
-                width: 100%;
-                .subtitle{
-                    font-size: 12px;
-                }
-                .projectName{
-                    display: block;
-                    font-size: 18px;
-                    text-align: center;
-                }
-            }
-        }
-        .bottonNav{
-             
-            width: 100%;
-            display: flex;
-            .btnCerrar{
-                width: 90%;
-                background:rgb(17, 0, 255);
-                color: white;
-                // border: none;
-                border-radius: 5px;
-                padding: 3px 8px;
-                margin: 0 auto;
-                font-size: 14px;
-                font-weight: 600;
-                // float: right;
-            }
-
-        }
-         
+  nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: calc(100% - 60px);
+    .logoProconst {
+      margin: 10px auto;
+      padding: 5px 20px;
+      border: 1px solid rgba(128, 128, 128, 0.329);
+      border-radius: 10px;
+      background: #fff;
     }
+    ul {
+      padding: 0;
+
+      li {
+        width: calc( 100% - 22px);
+        list-style: none;
+        margin: 10px 0 10px 20px;
+
+        a {
+          width: 100%;
+          text-decoration: none;
+          color: var(--asideNavbarTextColor);
+        }
+      }
+      li:has(a.active) {
+        margin: 10px 0;
+        padding: 10px 0 10px 20px;
+
+        background-color: var(--asideNavbarActiveBgColor);
+
+        box-shadow: rgba(0, 0, 0, 0.336) 0px 3px 2px;
+        border: 1px solid rgba(0, 0, 0, 0.493);
+        a {
+          color: var(--asideNavbarActiveTextColor);
+
+          font-weight: 600;
+        }
+      }
+      p {
+        width: 100%;
+        .subtitle {
+          font-size: 12px;
+          margin: 0 20px;
+        }
+        .projectName {
+          display: block;
+          font-size: 18px;
+          text-align: center;
+        }
+      }
+    }
+    .bottonNav {
+      width: 100%;
+      display: flex;
+      .btnCerrar {
+        width: 90%;
+        background: rgb(17, 0, 255);
+        color: white;
+        // border: none;
+        border-radius: 5px;
+        padding: 3px 8px;
+        margin: 0 auto;
+        font-size: var(--asideNavbarFontSize);
+        font-weight: 600;
+        // float: right;
+      }
+    }
+  }
+  .logoJS {
+    display: flex;
+    // padding: 5px 20px;
+    margin: 0 auto;
+    width: 100%;
+    //   height: auto;
+
+
+    img {
+      width: auto;
+      height: 50px;
+      // text-align: center;
+      margin: 0 auto;
+    }
+  }
 }

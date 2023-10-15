@@ -32,12 +32,12 @@ export default function MainLayout({children}:Props) {
     return (
       <div id='proConst'>
           
-          <Navbar/>
+          {/* <Navbar/> */}
           <main>
           <AsideMenu/>
              {children}
           </main>
-          <Footer/>
+          {/* <Footer/> */}
          
       </div>
     )
