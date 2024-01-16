@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./DropDown.scss";
-import user from "../../assets/icons/bx-user-circle.svg";
-import logout from "../../assets/icons/bx-log-out.svg";
+// import user from "../../assets/icons/bx-download.svg";
+// import logout from "../../assets/icons/bx-log-out.svg";
 import { useAuthStore } from "../../store/authStore";
 
 
@@ -31,7 +31,7 @@ export default function DropDown() {
       <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
         <div className="dropdownIcon">
 
-        <img src={user} alt="" />
+        {/* <img src={user} alt="" /> */}
         </div>
         <h3>
           {(profile as any).name} <br /> <span>{(profile as any).email}</span>
@@ -60,7 +60,7 @@ function LogOut() {
 
   return (
     <li className="dropdownItem noBtn">
-      <img src={logout} alt="icon" />
+      {/* <img src={logout} alt="icon" /> */}
       <button type="button" onClick={LogOut}>
         Cerrar Session
       </button>
@@ -71,7 +71,7 @@ function LogOut() {
 function DropDownItem() {
   return (
     <li className="dropdownItem">
-      <img src={user} alt="icon" />
+      {/* <img src={user} alt="icon" /> */}
       <a href="">link</a>
     </li>
   );

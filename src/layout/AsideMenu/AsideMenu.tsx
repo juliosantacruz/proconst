@@ -79,9 +79,12 @@ export default function AsideMenu() {
           </div>
         )}
       </nav>
+          <a href="https://www.juliosantacruz.dev" target="_blank">
         <div className="logoJS">
           <img src={logoJS} alt="logo" />
+
         </div>
+          </a>
     </aside>
   );
 }

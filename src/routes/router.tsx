@@ -43,7 +43,7 @@ const AppRoutes = () => {
       { path: RoutesDirectory.LOG_IN, element: <LogIn /> },
       { path: RoutesDirectory.SIGN_IN, element: <Register /> },
       { path: RoutesDirectory.VERIFY_USER, element: <VerifyUser /> },
-      { element: <ProtectedRoute isAllowed={isAuth} />, children:[
+      { element: <ProtectedRoute isAllowed={true} />, children:[
         { path: RoutesDirectory.HOME, element: <Inicio /> },
         { path: RoutesDirectory.LISTADO_CONCEPTOS, element: <ListadoConceptos /> },
         { path: RoutesDirectory.LISTADO_INSUMOS, element: <ListadoInsumos /> },
